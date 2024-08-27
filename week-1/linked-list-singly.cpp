@@ -113,7 +113,10 @@ class LinkedList {
         };
 
         if (index == 0) {
-            this->first = this->first->getNext();
+            currentNode = this->first;
+            this->first = currentNode->getNext();
+
+            delete currentNode;
 
             return;
         };
@@ -125,7 +128,10 @@ class LinkedList {
             position++;
         }
 
-        currentNode->setNext(currentNode->getNext()->getNext());
+        Node *tempNode = currentNode->getNext();
+        currentNode->setNext(tempNode->getNext());
+
+        delete tempNode;
     };
 };
 
