@@ -1,44 +1,57 @@
 #include <iostream>
 
+template <typename Type>
 class Node {
    private:
-    char value;
-    Node *next;
+    Type value;
+    Node<Type> *next;
 
    public:
-    Node(char value) {
+    Node(Type value) {
         this->value = value;
         this->next = nullptr;
     };
 
-    char getValue() {
+    Type getValue() {
         return this->value;
     };
 
-    Node *getNext() {
+    Node<Type> *getNext() {
         return this->next;
     };
 
-    void setNext(Node *next) {
+    void setNext(Node<Type> *next) {
         this->next = next;
     };
 };
 
+template <typename Type>
 class LinkedList {
    private:
-    Node *first;
+    Node<Type> *first;
 
    public:
     LinkedList() {
         this->first = nullptr;
     };
 
-    Node *getFirst() {
+    Node<Type> *getFirst() {
         return this->first;
     };
 
+    int length() {
+        int count = 0;
+        Node<Type> *currentNode = this->first;
+        while (currentNode != nullptr) {
+            currentNode = currentNode->getNext();
+            count += 1;
+        };
+
+        return count;
+    };
+
     void show() {
-        Node *currentNode = this->first;
+        Node<Type> *currentNode = this->first;
         while (currentNode != nullptr) {
             std::cout << currentNode->getValue() << " -> ";
 
@@ -48,26 +61,15 @@ class LinkedList {
         std::cout << "end" << std::endl;
     };
 
-    int length() {
-        int count = 0;
-        Node *currentNode = this->first;
-        while (currentNode != nullptr) {
-            currentNode = currentNode->getNext();
-            count += 1;
-        };
-
-        return count;
-    };
-
     void add(char value) {
-        Node *newNode = new Node(value);
+        Node<Type> *newNode = new Node<Type>(value);
         if (this->first == nullptr) {
             this->first = newNode;
 
             return;
         };
 
-        Node *currentNode = this->first;
+        Node<Type> *currentNode = this->first;
         while (currentNode->getNext() != nullptr) {
             currentNode = currentNode->getNext();
         };
@@ -87,7 +89,7 @@ class LinkedList {
             return;
         };
 
-        Node *currentNode = this->first;
+        Node<Type> *currentNode = this->first;
         while (currentNode->getNext()->getNext() != nullptr) {
             currentNode = currentNode->getNext();
         }
@@ -102,7 +104,7 @@ class LinkedList {
         };
 
         int currentIndex = 0;
-        Node *currentNode = this->first;
+        Node<Type> *currentNode = this->first;
         while (currentIndex < index) {
             currentNode = currentNode->getNext();
             currentIndex++;
@@ -116,7 +118,7 @@ class LinkedList {
             throw std::runtime_error("Index out of bound");
         };
 
-        Node *newNode = new Node(value);
+        Node<Type> *newNode = new Node<Type>(value);
         if (index == 0) {
             newNode->setNext(this->first);
             this->first = newNode;
@@ -129,7 +131,7 @@ class LinkedList {
         };
 
         int currentIndex = 0;
-        Node *currentNode = this->first;
+        Node<Type> *currentNode = this->first;
         while (currentIndex < (index - 1)) {
             currentNode = currentNode->getNext();
             currentIndex++;
@@ -149,7 +151,7 @@ class LinkedList {
         };
 
         if (index == 0) {
-            Node *tempNode = this->first;
+            Node<Type> *tempNode = this->first;
             this->first = tempNode->getNext();
 
             delete tempNode;
@@ -162,13 +164,13 @@ class LinkedList {
         };
 
         int currentIndex = 0;
-        Node *currentNode = this->first;
+        Node<Type> *currentNode = this->first;
         while (currentIndex < (index - 1)) {
             currentNode = currentNode->getNext();
             currentIndex++;
         };
 
-        Node *tempNode = currentNode->getNext();
+        Node<Type> *tempNode = currentNode->getNext();
         currentNode->setNext(tempNode->getNext());
 
         delete tempNode;
@@ -176,20 +178,26 @@ class LinkedList {
 };
 
 int main() {
-    LinkedList *linkedList1 = new LinkedList();
+    LinkedList<char> *linkedList1 = new LinkedList<char>();
     linkedList1->add('x');
     linkedList1->add('y');
     linkedList1->add('z');
+
+    LinkedList<int> *linkedList2 = new LinkedList<int>();
+    linkedList2->add(7);
+    linkedList2->add(8);
+    linkedList2->add(9);
 
     std::cout << std::endl;
     std::cout << std::endl;
     std::cout << std::endl;
     linkedList1->show();
+    linkedList2->show();
 
     // linkedList1->pop();
     // linkedList1->show();
 
-    std::cout << linkedList1->get(0) << std::endl;
+    // std::cout << linkedList1->get(0) << std::endl;
 
     // linkedList1->insert('a', 0);
     // linkedList1->show();
