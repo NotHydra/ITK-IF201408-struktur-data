@@ -135,22 +135,15 @@ class LinkedList {
             return;
         };
 
-        int currentIndex = 0;
-        Node *currentNode = this->first;
-        while (currentNode != nullptr) {
-            currentNode = currentNode->getNext();
-            currentIndex++;
-        };
-
-        if ((currentIndex - 1) < index) {
+        if (this->length() <= index) {
             throw std::runtime_error("Index out of bound");
         };
 
-        int position = 0;
-        currentNode = this->first;
-        while (position != (index - 1)) {
+        int currentIndex = 0;
+        Node *currentNode = this->first;
+        while (currentIndex < (index - 1)) {
             currentNode = currentNode->getNext();
-            position++;
+            currentIndex++;
         };
 
         newNode->setNext(currentNode->getNext());
@@ -194,41 +187,28 @@ class LinkedList {
 
 int main() {
     LinkedList *linkedList1 = new LinkedList();
-    linkedList1->add('a');
-    linkedList1->add('b');
-    linkedList1->add('c');
-    // linkedList1->add('d');
-    // linkedList1->add('e');
+    linkedList1->add('x');
+    linkedList1->add('y');
+    linkedList1->add('z');
 
     std::cout << std::endl;
     std::cout << std::endl;
     std::cout << std::endl;
     linkedList1->show();
 
-    linkedList1->pop();
-    linkedList1->show();
-
-    linkedList1->pop();
-    linkedList1->show();
-
-    linkedList1->pop();
-    linkedList1->show();
-
-    // linkedList1->insert('x', 1);
+    // linkedList1->pop();
     // linkedList1->show();
 
-    // linkedList1->insert('y', 2);
-    // linkedList1->show();
+    linkedList1->insert('a', 2);
+    linkedList1->show();
 
-    // linkedList1->insert('z', 3);
+    // linkedList1->pop();
     // linkedList1->show();
 
     // linkedList1->remove(0);
     // linkedList1->show();
 
     // std::cout << linkedList1->get(0) << std::endl;
-    // std::cout << linkedList1->get(1) << std::endl;
-    // std::cout << linkedList1->get(2) << std::endl;
 
     std::cout << std::endl;
     std::cout << std::endl;
