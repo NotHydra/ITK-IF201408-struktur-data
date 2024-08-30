@@ -97,26 +97,15 @@ class LinkedList {
     }
 
     char get(int index) {
-        int length = 0;
-        Node *currentNode = this->first;
-        while (currentNode != nullptr) {
-            currentNode = currentNode->getNext();
-            length++;
-        };
-
-        if ((length - 1) < index) {
+        if (this->length() <= index) {
             throw std::runtime_error("Index out of bound");
         };
 
-        if (index == 0) {
-            return this->first->getValue();
-        };
-
-        int position = 0;
-        currentNode = this->first;
-        while (position != index) {
+        int currentIndex = 0;
+        Node *currentNode = this->first;
+        while (currentIndex < index) {
             currentNode = currentNode->getNext();
-            position++;
+            currentIndex++;
         };
 
         return currentNode->getValue();
@@ -188,9 +177,9 @@ class LinkedList {
 
 int main() {
     LinkedList *linkedList1 = new LinkedList();
-    // linkedList1->add('x');
-    // linkedList1->add('y');
-    // linkedList1->add('z');
+    linkedList1->add('x');
+    linkedList1->add('y');
+    linkedList1->add('z');
 
     std::cout << std::endl;
     std::cout << std::endl;
@@ -200,13 +189,13 @@ int main() {
     // linkedList1->pop();
     // linkedList1->show();
 
-    // std::cout << linkedList1->get(0) << std::endl;
+    std::cout << linkedList1->get(0) << std::endl;
 
-    // linkedList1->insert('a', 2);
+    // linkedList1->insert('a', 0);
     // linkedList1->show();
 
-    linkedList1->remove(0);
-    linkedList1->show();
+    // linkedList1->remove(0);
+    // linkedList1->show();
 
     std::cout << std::endl;
     std::cout << std::endl;
