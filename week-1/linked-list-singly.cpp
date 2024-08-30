@@ -50,7 +50,6 @@ class LinkedList {
 
     void add(char value) {
         Node *newNode = new Node(value);
-
         if (this->first == nullptr) {
             this->first = newNode;
 
@@ -64,6 +63,27 @@ class LinkedList {
 
         currentNode->setNext(newNode);
     };
+
+    void pop() {
+        if (this->first == nullptr) {
+            return;
+        };
+
+        if (this->first->getNext() == nullptr) {
+            delete this->first;
+            this->first = nullptr;
+
+            return;
+        };
+
+        Node *currentNode = this->first;
+        while (currentNode->getNext()->getNext() != nullptr) {
+            currentNode = currentNode->getNext();
+        }
+
+        delete currentNode->getNext();
+        currentNode->setNext(nullptr);
+    }
 
     char get(int index) {
         int length = 0;
@@ -174,6 +194,15 @@ int main() {
     std::cout << std::endl;
     linkedList1->show();
 
+    linkedList1->pop();
+    linkedList1->show();
+
+    linkedList1->pop();
+    linkedList1->show();
+
+    linkedList1->pop();
+    linkedList1->show();
+
     // linkedList1->insert('x', 1);
     // linkedList1->show();
 
@@ -186,9 +215,9 @@ int main() {
     // linkedList1->remove(0);
     // linkedList1->show();
 
-    std::cout << linkedList1->get(0) << std::endl;
-    std::cout << linkedList1->get(1) << std::endl;
-    std::cout << linkedList1->get(2) << std::endl;
+    // std::cout << linkedList1->get(0) << std::endl;
+    // std::cout << linkedList1->get(1) << std::endl;
+    // std::cout << linkedList1->get(2) << std::endl;
 
     std::cout << std::endl;
     std::cout << std::endl;
