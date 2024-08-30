@@ -48,6 +48,17 @@ class LinkedList {
         std::cout << "end" << std::endl;
     };
 
+    int length() {
+        int count = 0;
+        Node *currentNode = this->first;
+        while (currentNode != nullptr) {
+            currentNode = currentNode->getNext();
+            count += 1;
+        };
+
+        return count;
+    };
+
     void add(char value) {
         Node *newNode = new Node(value);
         if (this->first == nullptr) {
@@ -112,26 +123,26 @@ class LinkedList {
     };
 
     void insert(char value, int index) {
+        if (index < 0) {
+            throw std::runtime_error("Index out of bound");
+        };
+
         Node *newNode = new Node(value);
-
         if (index == 0) {
-            if (this->first != nullptr) {
-                newNode->setNext(this->first);
-            }
-
+            newNode->setNext(this->first);
             this->first = newNode;
 
             return;
         };
 
-        int length = 0;
+        int currentIndex = 0;
         Node *currentNode = this->first;
         while (currentNode != nullptr) {
             currentNode = currentNode->getNext();
-            length++;
+            currentIndex++;
         };
 
-        if ((length - 1) < index) {
+        if ((currentIndex - 1) < index) {
             throw std::runtime_error("Index out of bound");
         };
 
