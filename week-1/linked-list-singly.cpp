@@ -151,31 +151,32 @@ class LinkedList {
     };
 
     void remove(int index) {
-        int length = 0;
-        Node *currentNode = this->first;
-        while (currentNode != nullptr) {
-            currentNode = currentNode->getNext();
-            length++;
+        if (this->first == nullptr) {
+            return;
         };
 
-        if ((length - 1) < index) {
+        if (index < 0) {
             throw std::runtime_error("Index out of bound");
         };
 
         if (index == 0) {
-            currentNode = this->first;
-            this->first = currentNode->getNext();
+            Node *tempNode = this->first;
+            this->first = tempNode->getNext();
 
-            delete currentNode;
+            delete tempNode;
 
             return;
         };
 
-        int position = 0;
-        currentNode = this->first;
-        while (position != (index - 1)) {
+        if (this->length() <= index) {
+            throw std::runtime_error("Index out of bound");
+        };
+
+        int currentIndex = 0;
+        Node *currentNode = this->first;
+        while (currentIndex < (index - 1)) {
             currentNode = currentNode->getNext();
-            position++;
+            currentIndex++;
         };
 
         Node *tempNode = currentNode->getNext();
@@ -187,9 +188,9 @@ class LinkedList {
 
 int main() {
     LinkedList *linkedList1 = new LinkedList();
-    linkedList1->add('x');
-    linkedList1->add('y');
-    linkedList1->add('z');
+    // linkedList1->add('x');
+    // linkedList1->add('y');
+    // linkedList1->add('z');
 
     std::cout << std::endl;
     std::cout << std::endl;
@@ -197,18 +198,15 @@ int main() {
     linkedList1->show();
 
     // linkedList1->pop();
-    // linkedList1->show();
-
-    linkedList1->insert('a', 2);
-    linkedList1->show();
-
-    // linkedList1->pop();
-    // linkedList1->show();
-
-    // linkedList1->remove(0);
     // linkedList1->show();
 
     // std::cout << linkedList1->get(0) << std::endl;
+
+    // linkedList1->insert('a', 2);
+    // linkedList1->show();
+
+    linkedList1->remove(0);
+    linkedList1->show();
 
     std::cout << std::endl;
     std::cout << std::endl;
