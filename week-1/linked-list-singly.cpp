@@ -145,6 +145,58 @@ class LinkedList {
         currentNode->setNext(newNode);
     };
 
+    void swap(int firstIndex, int secondIndex) {
+        if (this->getFirst() == nullptr) {
+            return;
+        };
+
+        if (firstIndex < 0 || secondIndex < 0) {
+            throw std::runtime_error("Index out of bound");
+        };
+
+        if (firstIndex == secondIndex) {
+            return;
+        };
+
+        if (this->length() <= firstIndex || this->length() <= secondIndex) {
+            throw std::runtime_error("Index out of bound");
+        };
+
+        int currentFirstIndex = 0;
+        Node<Type> *previousFirstNode = nullptr;
+        Node<Type> *currentFirstNode = this->getFirst();
+        while (currentFirstIndex < firstIndex) {
+            previousFirstNode = currentFirstNode;
+            currentFirstNode = currentFirstNode->getNext();
+            currentFirstIndex++;
+        };
+
+        int currentSecondIndex = 0;
+        Node<Type> *previousSecondNode = nullptr;
+        Node<Type> *currentSecondNode = this->getFirst();
+        while (currentSecondIndex < secondIndex) {
+            previousSecondNode = currentSecondNode;
+            currentSecondNode = currentSecondNode->getNext();
+            currentSecondIndex++;
+        };
+
+        if (previousFirstNode == nullptr) {
+            this->setFirst(currentSecondNode);
+        } else {
+            previousFirstNode->setNext(currentSecondNode);
+        };
+
+        if (previousSecondNode == nullptr) {
+            this->setFirst(currentFirstNode);
+        } else {
+            previousSecondNode->setNext(currentFirstNode);
+        };
+
+        Node<Type> *tempNode = currentFirstNode->getNext();
+        currentFirstNode->setNext(currentSecondNode->getNext());
+        currentSecondNode->setNext(tempNode);
+    };
+
     void remove(int index) {
         if (this->getFirst() == nullptr) {
             return;
@@ -205,6 +257,9 @@ int main() {
 
     // linkedList1->insert('a', 0);
     // linkedList1->show();
+
+    linkedList1->swap(0, 0);
+    linkedList1->show();
 
     // linkedList1->remove(0);
     // linkedList1->show();
