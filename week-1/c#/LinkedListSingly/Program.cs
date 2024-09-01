@@ -27,6 +27,19 @@
             set { this.first = value; }
         }
 
+        public int Length()
+        {
+            int count = 0;
+            Node<Type>? currentNode = this.First;
+            while (currentNode != null)
+            {
+                currentNode = currentNode.Next;
+                count++;
+            };
+
+            return count;
+        }
+
         public void Show()
         {
             Node<Type>? currentNode = this.First;
@@ -47,7 +60,8 @@
             {
                 this.First = newNode;
             }
-            else {
+            else
+            {
                 Node<Type> currentNode = this.First;
                 while (currentNode.Next != null)
                 {
@@ -58,20 +72,24 @@
             }
         }
 
-        public Type Get(int index) {
+        public Type Get(int index)
+        {
             int currentIndex = 0;
             Node<Type> currentNode = this.First;
-            while(currentIndex < index){
+            while (currentIndex < index)
+            {
                 currentNode = currentNode.Next;
                 currentIndex++;
             }
-            
+
             return currentNode.Value;
         }
 
-        public void Insert(Type value, int index){
+        public void Insert(Type value, int index)
+        {
             Node<Type> newNode = new Node<Type>(value);
-            if (index == 0) {
+            if (index == 0)
+            {
                 newNode.Next = this.First;
                 this.First = newNode;
 
@@ -80,7 +98,8 @@
 
             int currentIndex = 0;
             Node<Type> currentNode = this.First;
-            while (currentIndex < (index - 1)){
+            while (currentIndex < (index - 1))
+            {
                 currentNode = currentNode.Next;
                 currentIndex++;
             }
