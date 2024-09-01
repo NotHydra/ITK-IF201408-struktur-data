@@ -132,16 +132,25 @@
             linkedList1.Add('x');
             linkedList1.Add('y');
             linkedList1.Add('z');
-            linkedList1.Insert('a', 0);
+
             linkedList1.Show();
+            Console.WriteLine($"Length: {linkedList1.Length()}");
+            Console.WriteLine($"First: {linkedList1.First}");
+            Console.WriteLine($"Get 1: {linkedList1.Get(1)}");
+            Console.WriteLine();
+
+
 
             LinkedList<int> linkedList2 = new();
             linkedList2.Add(7);
             linkedList2.Add(8);
             linkedList2.Add(9);
-            linkedList2.Show();
 
-            Console.WriteLine(linkedList1.Get(2));
+            linkedList2.Show();
+            Console.WriteLine($"Length: {linkedList2.Length()}");
+            Console.WriteLine($"First: {linkedList2.First}");
+            Console.WriteLine($"Get 1: {linkedList2.Get(1)}");
+            Console.WriteLine();
         }
     };
 };
