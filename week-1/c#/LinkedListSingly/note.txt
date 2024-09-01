@@ -1,1 +1,1 @@
-cd ./week-1/LinkedListSingly; dotnet run
+cd ./week-1/c#/LinkedListSingly; dotnet run
