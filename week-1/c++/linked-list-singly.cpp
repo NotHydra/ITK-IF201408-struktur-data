@@ -65,7 +65,7 @@ class LinkedList {
         std::cout << "end" << std::endl;
     };
 
-    void add(char value) {
+    void add(Type value) {
         Node<Type> *newNode = new Node<Type>(value);
         if (this->getFirst() == nullptr) {
             this->setFirst(newNode);
@@ -117,7 +117,7 @@ class LinkedList {
         return currentNode->getValue();
     };
 
-    void insert(char value, int index) {
+    void insert(Type value, int index) {
         if (index < 0) {
             throw std::runtime_error("Index out of bound");
         };
