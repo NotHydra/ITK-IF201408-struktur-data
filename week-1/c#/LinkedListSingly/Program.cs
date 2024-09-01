@@ -72,6 +72,29 @@
             currentNode.Next = newNode;
         }
 
+        public void Pop()
+        {
+            if (this.First == null)
+            {
+                return;
+            };
+
+            if (this.First.Next == null)
+            {
+                this.First = null;
+
+                return;
+            };
+
+            Node<Type> currentNode = this.First;
+            while (currentNode.Next != null && currentNode.Next.Next != null)
+            {
+                currentNode = currentNode.Next;
+            };
+
+            currentNode.Next = null;
+        }
+
         public Type Get(int index)
         {
             if (this.First == null || this.Length() <= index)
@@ -137,6 +160,9 @@
             Console.WriteLine($"Length: {linkedList1.Length()}");
             Console.WriteLine($"First: {linkedList1.First}");
             Console.WriteLine($"Get 1: {linkedList1.Get(1)}");
+
+            linkedList1.Pop();
+            linkedList1.Show();
             Console.WriteLine();
 
 
@@ -150,6 +176,9 @@
             Console.WriteLine($"Length: {linkedList2.Length()}");
             Console.WriteLine($"First: {linkedList2.First}");
             Console.WriteLine($"Get 1: {linkedList2.Get(1)}");
+
+            linkedList2.Pop();
+            linkedList2.Show();
             Console.WriteLine();
         }
     };
