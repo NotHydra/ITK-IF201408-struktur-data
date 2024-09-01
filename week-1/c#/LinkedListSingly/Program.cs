@@ -48,7 +48,7 @@
                 Console.Write($"{currentNode.Value} -> ");
 
                 currentNode = currentNode.Next;
-            }
+            };
 
             Console.WriteLine("end");
         }
@@ -59,57 +59,70 @@
             if (this.First == null)
             {
                 this.First = newNode;
-            }
-            else
-            {
-                Node<Type> currentNode = this.First;
-                while (currentNode.Next != null)
-                {
-                    currentNode = currentNode.Next;
-                };
 
-                currentNode.Next = newNode;
-            }
+                return;
+            };
+
+            Node<Type> currentNode = this.First;
+            while (currentNode.Next != null)
+            {
+                currentNode = currentNode.Next;
+            };
+
+            currentNode.Next = newNode;
         }
 
         public Type Get(int index)
         {
+            if (this.First == null || this.Length() <= index)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
+            };
+
             int currentIndex = 0;
             Node<Type> currentNode = this.First;
-            while (currentIndex < index)
+            while ((currentNode.Next != null) && (currentIndex < index))
             {
                 currentNode = currentNode.Next;
                 currentIndex++;
-            }
+            };
 
             return currentNode.Value;
         }
 
         public void Insert(Type value, int index)
         {
-            Node<Type> newNode = new Node<Type>(value);
-            if (index == 0)
+            if (index < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
+            };
+
+            Node<Type> newNode = new(value);
+            if (this.First == null || index == 0)
             {
                 newNode.Next = this.First;
                 this.First = newNode;
 
                 return;
-            }
+            };
+
+            if (this.Length() <= index)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
+            };
 
             int currentIndex = 0;
             Node<Type> currentNode = this.First;
-            while (currentIndex < (index - 1))
+            while ((currentNode.Next != null) && (currentIndex < (index - 1)))
             {
                 currentNode = currentNode.Next;
                 currentIndex++;
-            }
+            };
 
             newNode.Next = currentNode.Next;
             currentNode.Next = newNode;
-
         }
-
-    }
+    };
 
     class Program
     {
@@ -130,5 +143,5 @@
 
             Console.WriteLine(linkedList1.Get(2));
         }
-    }
-}
+    };
+};
