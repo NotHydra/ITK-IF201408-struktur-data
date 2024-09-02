@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "week-1", "week-1", "{40FB685D-4DA4-4D2B-B0D8-C76D4CBC6086}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "week-1", "week-1", "{E810860B-D30F-49FA-B4F1-55A2AD2B1614}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "c#", "c#", "{420A877E-AD4E-4CC3-AF84-871503DE9D49}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "c#", "c#", "{7DEB826D-8BCD-46AF-83A1-006EB0A627CF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinkedListSingly", "week-1\c#\LinkedListSingly\LinkedListSingly.csproj", "{565B81A9-1812-46B3-8644-1721D5A0B66B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinkedListSingly", "week-1\c#\LinkedListSingly\LinkedListSingly.csproj", "{73C12827-9EF2-4A64-96E3-0C5F13F56D20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,17 +15,17 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{565B81A9-1812-46B3-8644-1721D5A0B66B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{565B81A9-1812-46B3-8644-1721D5A0B66B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{565B81A9-1812-46B3-8644-1721D5A0B66B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{565B81A9-1812-46B3-8644-1721D5A0B66B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73C12827-9EF2-4A64-96E3-0C5F13F56D20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73C12827-9EF2-4A64-96E3-0C5F13F56D20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73C12827-9EF2-4A64-96E3-0C5F13F56D20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73C12827-9EF2-4A64-96E3-0C5F13F56D20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{420A877E-AD4E-4CC3-AF84-871503DE9D49} = {40FB685D-4DA4-4D2B-B0D8-C76D4CBC6086}
-		{565B81A9-1812-46B3-8644-1721D5A0B66B} = {420A877E-AD4E-4CC3-AF84-871503DE9D49}
+		{7DEB826D-8BCD-46AF-83A1-006EB0A627CF} = {E810860B-D30F-49FA-B4F1-55A2AD2B1614}
+		{73C12827-9EF2-4A64-96E3-0C5F13F56D20} = {7DEB826D-8BCD-46AF-83A1-006EB0A627CF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {100ECB94-C2D3-4E2A-90E6-E1B8252E0A33}

@@ -87,7 +87,7 @@
             };
 
             Node<Type> currentNode = this.First;
-            while (currentNode.Next != null && currentNode.Next.Next != null)
+            while ((currentNode.Next != null) && (currentNode.Next.Next != null))
             {
                 currentNode = currentNode.Next;
             };
@@ -97,7 +97,7 @@
 
         public Type Get(int index)
         {
-            if (this.First == null || this.Length() <= index)
+            if ((this.First == null) || (index < 0) || (this.Length() <= index))
             {
                 throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
             };
@@ -115,23 +115,18 @@
 
         public void Insert(Type value, int index)
         {
-            if (index < 0)
+            if ((index < 0) || (this.Length() <= index))
             {
                 throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
             };
 
             Node<Type> newNode = new(value);
-            if (this.First == null || index == 0)
+            if ((this.First == null) || (index == 0))
             {
                 newNode.Next = this.First;
                 this.First = newNode;
 
                 return;
-            };
-
-            if (this.Length() <= index)
-            {
-                throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
             };
 
             int currentIndex = 0;
@@ -146,91 +141,88 @@
             currentNode.Next = newNode;
         }
 
-        public void Swap(int firstIndex, int secondIndex){
-            if (this.First == null)
+        public void Swap(int firstIndex, int secondIndex)
+        {
+            if (firstIndex == secondIndex)
             {
                 return;
-            }
+            };
 
-            if (firstIndex < 0 || secondIndex  < 0 ){
+            if ((this.First == null) || (firstIndex < 0) || (secondIndex < 0) || (this.Length() <= firstIndex) || (this.Length() <= secondIndex))
+            {
                 throw new ArgumentOutOfRangeException(nameof(firstIndex), "Index out of bound");
-            }
-
-            if (firstIndex == secondIndex){
-                return;
-            }
-
-            if (this.Length() <= firstIndex || this.Length() <= secondIndex) {
-                throw new ArgumentOutOfRangeException(nameof(firstIndex), "Index out of bound");
-            }
+            };
 
             int currentFirstIndex = 0;
             Node<Type>? previousFirstNode = null;
-            Node<Type> currentFirstNode = this.First;
-
-            while (currentFirstIndex < firstIndex) {
+            Node<Type>? currentFirstNode = this.First;
+            while ((currentFirstNode != null) && (currentFirstIndex < firstIndex))
+            {
                 previousFirstNode = currentFirstNode;
                 currentFirstNode = currentFirstNode.Next;
                 currentFirstIndex++;
-            }
+            };
 
             int currentSecondIndex = 0;
             Node<Type>? previousSecondNode = null;
-            Node<Type> currentSecondNode = this.First;
-
-            while (currentSecondIndex < secondIndex) {
+            Node<Type>? currentSecondNode = this.First;
+            while ((currentSecondNode != null) && (currentSecondIndex < secondIndex))
+            {
                 previousSecondNode = currentSecondNode;
                 currentSecondNode = currentSecondNode.Next;
                 currentSecondIndex++;
-            }
+            };
 
-            if (previousFirstNode == null){
+            if (previousFirstNode == null)
+            {
                 this.First = currentSecondNode;
-            } else {
+            }
+            else
+            {
                 previousFirstNode.Next = currentSecondNode;
-            }
+            };
 
-            if (previousSecondNode == null){
+            if (previousSecondNode == null)
+            {
                 this.First = currentFirstNode;
-            } else {
-                previousSecondNode.Next = currentFirstNode;
             }
+            else
+            {
+                previousSecondNode.Next = currentFirstNode;
+            };
 
-            Node<Type>? temp = currentFirstNode.Next;
-            currentFirstNode.Next = currentSecondNode.Next;
-            currentSecondNode.Next = temp;
+            if (currentFirstNode != null && currentSecondNode != null)
+            {
+                (currentSecondNode.Next, currentFirstNode.Next) = (currentFirstNode.Next, currentSecondNode.Next);
+            };
         }
 
-        public void Remove(int index){
-            if (this.First == null)
+        public void Remove(int index)
+        {
+            if ((this.First == null) || (index < 0) || (this.Length() <= index))
             {
-                return;
-            };
-
-            if (index < 0){
                 throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
             };
 
-            if (this.First == null || index == 0){
-                this.First = this.First?.Next;
+            if (index == 0)
+            {
+                this.First = this.First.Next;
 
                 return;
-            }
-
-            if (this.Length() <= index){
-                throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
             };
 
             int currentIndex = 0;
             Node<Type> currentNode = this.First;
-            while ((currentNode.Next != null) && (currentIndex < (index - 1))){
+            while ((currentNode.Next != null) && (currentIndex < (index - 1)))
+            {
                 currentNode = currentNode.Next;
                 currentIndex++;
             };
 
-            currentNode.Next = currentNode.Next?.Next;
-
-            return;
+            if (currentNode.Next != null)
+            {
+                currentNode.Next = currentNode.Next.Next;
+            };
         }
     };
 
@@ -246,35 +238,70 @@
             linkedList1.Show();
             Console.WriteLine($"Length: {linkedList1.Length()}");
             Console.WriteLine($"First: {linkedList1.First}");
+            Console.WriteLine($"Get 0: {linkedList1.Get(0)}");
             Console.WriteLine($"Get 1: {linkedList1.Get(1)}");
+            Console.WriteLine($"Get 2: {linkedList1.Get(2)}");
+            Console.WriteLine();
 
-            // linkedList1.Pop();
-            // linkedList1.Show();
-            // Console.WriteLine();
+            Console.Write("Insert: ");
+            linkedList1.Insert('a', 0);
+            linkedList1.Insert('b', 1);
+            linkedList1.Insert('c', 2);
+            linkedList1.Show();
+            Console.WriteLine();
 
+            Console.Write("Remove: ");
+            linkedList1.Remove(5);
+            linkedList1.Remove(4);
+            linkedList1.Remove(3);
+            linkedList1.Show();
+            Console.WriteLine();
 
+            Console.Write("Swap: ");
             linkedList1.Swap(0, 2);
             linkedList1.Show();
             Console.WriteLine();
 
-            // linkedList1.Remove(1);
-            // linkedList1.Show();
-            // Console.WriteLine();
+            Console.Write("Pop: ");
+            linkedList1.Pop();
+            linkedList1.Show();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
 
             LinkedList<int> linkedList2 = new();
             linkedList2.Add(7);
             linkedList2.Add(8);
             linkedList2.Add(9);
-            linkedList2.Add(10);
 
-            linkedList2.Swap(1, 3);
-            linkedList2.Show();
-            linkedList2.Swap(2, 3);
             linkedList2.Show();
             Console.WriteLine($"Length: {linkedList2.Length()}");
             Console.WriteLine($"First: {linkedList2.First}");
+            Console.WriteLine($"Get 0: {linkedList2.Get(0)}");
             Console.WriteLine($"Get 1: {linkedList2.Get(1)}");
+            Console.WriteLine($"Get 2: {linkedList2.Get(2)}");
+            Console.WriteLine();
 
+            Console.Write("Insert: ");
+            linkedList2.Insert(1, 0);
+            linkedList2.Insert(2, 1);
+            linkedList2.Insert(3, 2);
+            linkedList2.Show();
+            Console.WriteLine();
+
+            Console.Write("Remove: ");
+            linkedList2.Remove(5);
+            linkedList2.Remove(4);
+            linkedList2.Remove(3);
+            linkedList2.Show();
+            Console.WriteLine();
+
+            Console.Write("Swap: ");
+            linkedList2.Swap(0, 2);
+            linkedList2.Show();
+            Console.WriteLine();
+
+            Console.Write("Pop: ");
             linkedList2.Pop();
             linkedList2.Show();
             Console.WriteLine();
