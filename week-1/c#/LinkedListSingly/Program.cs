@@ -146,6 +146,61 @@
             currentNode.Next = newNode;
         }
 
+        public void Swap(int firstIndex, int secondIndex){
+            if (this.First == null)
+            {
+                return;
+            }
+
+            if (firstIndex < 0 || secondIndex  < 0 ){
+                throw new ArgumentOutOfRangeException(nameof(firstIndex), "Index out of bound");
+            }
+
+            if (firstIndex == secondIndex){
+                return;
+            }
+
+            if (this.Length() <= firstIndex || this.Length() <= secondIndex) {
+                throw new ArgumentOutOfRangeException(nameof(firstIndex), "Index out of bound");
+            }
+
+            int currentFirstIndex = 0;
+            Node<Type>? previousFirstNode = null;
+            Node<Type> currentFirstNode = this.First;
+
+            while (currentFirstIndex < firstIndex) {
+                previousFirstNode = currentFirstNode;
+                currentFirstNode = currentFirstNode.Next;
+                currentFirstIndex++;
+            }
+
+            int currentSecondIndex = 0;
+            Node<Type>? previousSecondNode = null;
+            Node<Type> currentSecondNode = this.First;
+
+            while (currentSecondIndex < secondIndex) {
+                previousSecondNode = currentSecondNode;
+                currentSecondNode = currentSecondNode.Next;
+                currentSecondIndex++;
+            }
+
+            if (previousFirstNode == null){
+                this.First = currentSecondNode;
+            } else {
+                previousFirstNode.Next = currentSecondNode;
+            }
+
+            if (previousSecondNode == null){
+                this.First = currentFirstNode;
+            } else {
+                previousSecondNode.Next = currentFirstNode;
+            }
+
+            Node<Type>? temp = currentFirstNode.Next;
+            currentFirstNode.Next = currentSecondNode.Next;
+            currentSecondNode.Next = temp;
+        }
+
         public void Remove(int index){
             if (this.First == null)
             {
@@ -177,8 +232,6 @@
 
             return;
         }
-
-
     };
 
     class Program
@@ -195,19 +248,28 @@
             Console.WriteLine($"First: {linkedList1.First}");
             Console.WriteLine($"Get 1: {linkedList1.Get(1)}");
 
-            linkedList1.Pop();
+            // linkedList1.Pop();
+            // linkedList1.Show();
+            // Console.WriteLine();
+
+
+            linkedList1.Swap(0, 2);
             linkedList1.Show();
             Console.WriteLine();
 
-            linkedList1.Remove(1);
-            linkedList1.Show();
-            Console.WriteLine();
+            // linkedList1.Remove(1);
+            // linkedList1.Show();
+            // Console.WriteLine();
 
             LinkedList<int> linkedList2 = new();
             linkedList2.Add(7);
             linkedList2.Add(8);
             linkedList2.Add(9);
+            linkedList2.Add(10);
 
+            linkedList2.Swap(1, 3);
+            linkedList2.Show();
+            linkedList2.Swap(2, 3);
             linkedList2.Show();
             Console.WriteLine($"Length: {linkedList2.Length()}");
             Console.WriteLine($"First: {linkedList2.First}");
