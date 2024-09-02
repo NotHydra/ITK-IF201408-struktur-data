@@ -145,6 +145,40 @@
             newNode.Next = currentNode.Next;
             currentNode.Next = newNode;
         }
+
+        public void Remove(int index){
+            if (this.First == null)
+            {
+                return;
+            };
+
+            if (index < 0){
+                throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
+            };
+
+            if (this.First == null || index == 0){
+                this.First = this.First?.Next;
+
+                return;
+            }
+
+            if (this.Length() <= index){
+                throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
+            };
+
+            int currentIndex = 0;
+            Node<Type> currentNode = this.First;
+            while ((currentNode.Next != null) && (currentIndex < (index - 1))){
+                currentNode = currentNode.Next;
+                currentIndex++;
+            };
+
+            currentNode.Next = currentNode.Next?.Next;
+
+            return;
+        }
+
+
     };
 
     class Program
@@ -165,7 +199,9 @@
             linkedList1.Show();
             Console.WriteLine();
 
-
+            linkedList1.Remove(1);
+            linkedList1.Show();
+            Console.WriteLine();
 
             LinkedList<int> linkedList2 = new();
             linkedList2.Add(7);
