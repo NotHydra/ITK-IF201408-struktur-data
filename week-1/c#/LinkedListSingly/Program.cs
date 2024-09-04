@@ -2,29 +2,29 @@
 {
     class Node<Type>(Type value)
     {
-        private readonly Type value = value;
-        private Node<Type>? next = null;
+        private readonly Type _value = value;
+        private Node<Type>? _next = null;
 
         public Type Value
         {
-            get { return this.value; }
+            get { return this._value; }
         }
 
         public Node<Type>? Next
         {
-            get { return this.next; }
-            set { this.next = value; }
+            get { return this._next; }
+            set { this._next = value; }
         }
     };
 
     class LinkedList<Type>
     {
-        private Node<Type>? first = null;
+        private Node<Type>? _first = null;
 
         public Node<Type>? First
         {
-            get { return this.first; }
-            set { this.first = value; }
+            get { return this._first; }
+            set { this._first = value; }
         }
 
         public int Length()
@@ -55,7 +55,7 @@
 
         public void Add(Type value)
         {
-            Node<Type> newNode = new(value);
+            Node<Type> newNode = new Node<Type>(value);
             if (this.First == null)
             {
                 this.First = newNode;
@@ -120,7 +120,7 @@
                 throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
             };
 
-            Node<Type> newNode = new(value);
+            Node<Type> newNode = new Node<Type>(value);
             if ((this.First == null) || (index == 0))
             {
                 newNode.Next = this.First;
@@ -230,7 +230,7 @@
     {
         static void Main(string[] args)
         {
-            LinkedList<char> linkedList1 = new();
+            LinkedList<char> linkedList1 = new LinkedList<char>();
             linkedList1.Add('x');
             linkedList1.Add('y');
             linkedList1.Add('z');
@@ -269,7 +269,7 @@
             Console.WriteLine();
             Console.WriteLine();
 
-            LinkedList<int> linkedList2 = new();
+            LinkedList<int> linkedList2 = new LinkedList<int>();
             linkedList2.Add(7);
             linkedList2.Add(8);
             linkedList2.Add(9);

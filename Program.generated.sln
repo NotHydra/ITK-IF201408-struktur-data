@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "week-1", "week-1", "{E810860B-D30F-49FA-B4F1-55A2AD2B1614}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "week-1", "week-1", "{73FA6939-5B83-44D3-87A6-AFDA5CCF7FB3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "c#", "c#", "{7DEB826D-8BCD-46AF-83A1-006EB0A627CF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "c#", "c#", "{9A30E146-8649-4A46-9523-76000D2688D6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinkedListSingly", "week-1\c#\LinkedListSingly\LinkedListSingly.csproj", "{73C12827-9EF2-4A64-96E3-0C5F13F56D20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinkedListDoubly", "week-1\c#\LinkedListDoubly\LinkedListDoubly.csproj", "{E8690200-A8CB-4C81-835A-2E96B5B597FC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinkedListSingly", "week-1\c#\LinkedListSingly\LinkedListSingly.csproj", "{95C58186-9E3E-4265-AA81-21FDF555F999}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,17 +17,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{73C12827-9EF2-4A64-96E3-0C5F13F56D20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{73C12827-9EF2-4A64-96E3-0C5F13F56D20}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{73C12827-9EF2-4A64-96E3-0C5F13F56D20}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{73C12827-9EF2-4A64-96E3-0C5F13F56D20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8690200-A8CB-4C81-835A-2E96B5B597FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8690200-A8CB-4C81-835A-2E96B5B597FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8690200-A8CB-4C81-835A-2E96B5B597FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8690200-A8CB-4C81-835A-2E96B5B597FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95C58186-9E3E-4265-AA81-21FDF555F999}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95C58186-9E3E-4265-AA81-21FDF555F999}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95C58186-9E3E-4265-AA81-21FDF555F999}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95C58186-9E3E-4265-AA81-21FDF555F999}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{7DEB826D-8BCD-46AF-83A1-006EB0A627CF} = {E810860B-D30F-49FA-B4F1-55A2AD2B1614}
-		{73C12827-9EF2-4A64-96E3-0C5F13F56D20} = {7DEB826D-8BCD-46AF-83A1-006EB0A627CF}
+		{9A30E146-8649-4A46-9523-76000D2688D6} = {73FA6939-5B83-44D3-87A6-AFDA5CCF7FB3}
+		{E8690200-A8CB-4C81-835A-2E96B5B597FC} = {9A30E146-8649-4A46-9523-76000D2688D6}
+		{95C58186-9E3E-4265-AA81-21FDF555F999} = {9A30E146-8649-4A46-9523-76000D2688D6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {100ECB94-C2D3-4E2A-90E6-E1B8252E0A33}
