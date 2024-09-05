@@ -42,15 +42,7 @@
 
         public void Show()
         {
-            Node<Type>? currentNode = this.First;
-            while (currentNode != null)
-            {
-                Console.Write($"{currentNode.Value} -> ");
-
-                currentNode = currentNode.Next;
-            };
-
-            Console.WriteLine("end");
+            Console.WriteLine(this);
         }
 
         public void Add(Type value)
@@ -224,6 +216,21 @@
                 currentNode.Next = currentNode.Next.Next;
             };
         }
+
+        public override string ToString()
+        {
+            string text = "";
+            Node<Type>? currentNode = this.First;
+            while (currentNode != null)
+            {
+                text += $"{currentNode.Value} -> ";
+                currentNode = currentNode.Next;
+            };
+
+            text += "null";
+
+            return text;
+        }
     };
 
     class Program
@@ -235,9 +242,16 @@
             linkedList1.Add('y');
             linkedList1.Add('z');
 
+            Console.Write("Show: ");
             linkedList1.Show();
+            Console.WriteLine();
+
             Console.WriteLine($"Length: {linkedList1.Length()}");
+            Console.WriteLine();
+
             Console.WriteLine($"First: {linkedList1.First}");
+            Console.WriteLine();
+
             Console.WriteLine($"Get 0: {linkedList1.Get(0)}");
             Console.WriteLine($"Get 1: {linkedList1.Get(1)}");
             Console.WriteLine($"Get 2: {linkedList1.Get(2)}");
@@ -266,17 +280,29 @@
             linkedList1.Pop();
             linkedList1.Show();
             Console.WriteLine();
+
+            Console.Write("ToString: ");
+            Console.WriteLine(linkedList1);
             Console.WriteLine();
             Console.WriteLine();
+            Console.WriteLine();
+
 
             LinkedList<int> linkedList2 = new LinkedList<int>();
             linkedList2.Add(7);
             linkedList2.Add(8);
             linkedList2.Add(9);
 
+            Console.Write("Show: ");
             linkedList2.Show();
+            Console.WriteLine();
+
             Console.WriteLine($"Length: {linkedList2.Length()}");
+            Console.WriteLine();
+
             Console.WriteLine($"First: {linkedList2.First}");
+            Console.WriteLine();
+
             Console.WriteLine($"Get 0: {linkedList2.Get(0)}");
             Console.WriteLine($"Get 1: {linkedList2.Get(1)}");
             Console.WriteLine($"Get 2: {linkedList2.Get(2)}");
@@ -304,6 +330,10 @@
             Console.Write("Pop: ");
             linkedList2.Pop();
             linkedList2.Show();
+            Console.WriteLine();
+
+            Console.Write("ToString: ");
+            Console.WriteLine(linkedList2);
             Console.WriteLine();
         }
     };
