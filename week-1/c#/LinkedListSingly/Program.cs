@@ -64,7 +64,7 @@
 
         public void Add(Type value)
         {
-            Node<Type> newNode = new Node<Type>(value);
+            Node<Type> newNode = new(value);
             if (this.First == null)
             {
                 this.First = newNode;
@@ -143,7 +143,7 @@
                 throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
             };
 
-            Node<Type> newNode = new Node<Type>(value);
+            Node<Type> newNode = new(value);
             if ((this.First == null) || (index == 0))
             {
                 newNode.Next = this.First;
@@ -289,7 +289,7 @@
     {
         public static void Main(string[] args)
         {
-            LinkedList<char> linkedList1 = new LinkedList<char>();
+            LinkedList<char> linkedList1 = new();
             linkedList1.Add('x');
             linkedList1.Add('y');
             linkedList1.Add('z');
@@ -345,7 +345,7 @@
             Console.WriteLine();
 
 
-            LinkedList<int> linkedList2 = new LinkedList<int>();
+            LinkedList<int> linkedList2 = new();
             linkedList2.Add(7);
             linkedList2.Add(8);
             linkedList2.Add(9);
