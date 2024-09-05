@@ -68,7 +68,7 @@
         {
             if (this.First == null)
             {
-                return;
+                throw new InvalidOperationException("Linked List is empty");
             };
 
             if (this.First.Next == null)
@@ -89,7 +89,12 @@
 
         public Type Get(int index)
         {
-            if ((this.First == null) || (index < 0) || (this.Length() <= index))
+            if (this.First == null)
+            {
+                throw new InvalidOperationException("Linked List is empty");
+            };
+
+            if ((index < 0) || (this.Length() <= index))
             {
                 throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
             };
@@ -140,7 +145,12 @@
                 return;
             };
 
-            if ((this.First == null) || (firstIndex < 0) || (secondIndex < 0) || (this.Length() <= firstIndex) || (this.Length() <= secondIndex))
+            if (this.First == null)
+            {
+                throw new InvalidOperationException("Linked List is empty");
+            };
+
+            if ((firstIndex < 0) || (secondIndex < 0) || (this.Length() <= firstIndex) || (this.Length() <= secondIndex))
             {
                 throw new ArgumentOutOfRangeException(nameof(firstIndex), "Index out of bound");
             };
@@ -191,7 +201,12 @@
 
         public void Remove(int index)
         {
-            if ((this.First == null) || (index < 0) || (this.Length() <= index))
+            if (this.First == null)
+            {
+                throw new InvalidOperationException("Linked List is empty");
+            };
+
+            if ((index < 0) || (this.Length() <= index))
             {
                 throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
             };
