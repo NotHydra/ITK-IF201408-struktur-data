@@ -176,9 +176,14 @@
                 throw new InvalidOperationException("Linked List is empty");
             };
 
-            if ((firstIndex < 0) || (secondIndex < 0) || (this.Length() <= firstIndex) || (this.Length() <= secondIndex))
+            if ((firstIndex < 0) || (this.Length() <= firstIndex))
             {
-                throw new ArgumentOutOfRangeException($"{nameof(firstIndex)} or {nameof(secondIndex)}", "Index out of bound");
+                throw new ArgumentOutOfRangeException(nameof(firstIndex), "Index out of bound");
+            };
+
+            if ((secondIndex < 0) || (this.Length() <= secondIndex))
+            {
+                throw new ArgumentOutOfRangeException(nameof(secondIndex), "Index out of bound");
             };
 
             int currentFirstIndex = 0;
@@ -219,12 +224,14 @@
                 previousSecondNode.Next = currentFirstNode;
             };
 
-            if (currentFirstNode != null && currentSecondNode != null)
+            if (currentFirstNode == null || currentSecondNode == null || currentFirstNode.Next == null || currentSecondNode.Next == null)
             {
-                Node<Type>? temp = currentFirstNode.Next;
-                currentFirstNode.Next = currentSecondNode.Next;
-                currentSecondNode.Next = temp;
+                throw new InvalidOperationException("Invalid Node");
             };
+
+            Node<Type> temp = currentFirstNode.Next;
+            currentFirstNode.Next = currentSecondNode.Next;
+            currentSecondNode.Next = temp;
         }
 
         public void Remove(int index)
@@ -254,10 +261,12 @@
                 currentIndex++;
             };
 
-            if (currentNode.Next != null)
+            if (currentNode.Next == null)
             {
-                currentNode.Next = currentNode.Next.Next;
+                throw new InvalidOperationException("Invalid Node");
             };
+
+            currentNode.Next = currentNode.Next.Next;
         }
 
         public override string ToString()
