@@ -81,7 +81,7 @@
             currentNode.Next = newNode;
         }
 
-        public void Pop()
+        public Type Pop()
         {
             if (this.First == null)
             {
@@ -90,9 +90,10 @@
 
             if (this.First.Next == null)
             {
+                Type value = this.First.Value;
                 this.First = null;
 
-                return;
+                return value;
             };
 
             Node<Type> currentNode = this.First;
@@ -101,7 +102,15 @@
                 currentNode = currentNode.Next;
             };
 
+            if (currentNode.Next == null)
+            {
+                throw new InvalidOperationException("Invalid Node");
+            };
+
+            Type popValue = currentNode.Next.Value;
             currentNode.Next = null;
+
+            return popValue;
         }
 
         public Type Get(int index)
@@ -169,7 +178,7 @@
 
             if ((firstIndex < 0) || (secondIndex < 0) || (this.Length() <= firstIndex) || (this.Length() <= secondIndex))
             {
-                throw new ArgumentOutOfRangeException(nameof(firstIndex), "Index out of bound");
+                throw new ArgumentOutOfRangeException($"{nameof(firstIndex)} or {nameof(secondIndex)}", "Index out of bound");
             };
 
             int currentFirstIndex = 0;
@@ -212,7 +221,9 @@
 
             if (currentFirstNode != null && currentSecondNode != null)
             {
-                (currentSecondNode.Next, currentFirstNode.Next) = (currentFirstNode.Next, currentSecondNode.Next);
+                Node<Type>? temp = currentFirstNode.Next;
+                currentFirstNode.Next = currentSecondNode.Next;
+                currentSecondNode.Next = temp;
             };
         }
 
@@ -292,6 +303,10 @@
             Console.WriteLine($"Get 2: {linkedList1.Get(2)}");
             Console.WriteLine();
 
+            Console.Write($"Pop: {linkedList1.Pop()} => ");
+            linkedList1.Show();
+            Console.WriteLine();
+
             Console.Write("Insert: ");
             linkedList1.Insert('a', 0);
             linkedList1.Insert('b', 1);
@@ -300,19 +315,14 @@
             Console.WriteLine();
 
             Console.Write("Remove: ");
-            linkedList1.Remove(5);
             linkedList1.Remove(4);
             linkedList1.Remove(3);
+            linkedList1.Remove(2);
             linkedList1.Show();
             Console.WriteLine();
 
             Console.Write("Swap: ");
-            linkedList1.Swap(0, 2);
-            linkedList1.Show();
-            Console.WriteLine();
-
-            Console.Write("Pop: ");
-            linkedList1.Pop();
+            linkedList1.Swap(0, 1);
             linkedList1.Show();
             Console.WriteLine();
 
@@ -349,6 +359,10 @@
             Console.WriteLine($"Get 2: {linkedList2.Get(2)}");
             Console.WriteLine();
 
+            Console.Write($"Pop: {linkedList2.Pop()} => ");
+            linkedList2.Show();
+            Console.WriteLine();
+
             Console.Write("Insert: ");
             linkedList2.Insert(1, 0);
             linkedList2.Insert(2, 1);
@@ -357,19 +371,14 @@
             Console.WriteLine();
 
             Console.Write("Remove: ");
-            linkedList2.Remove(5);
             linkedList2.Remove(4);
             linkedList2.Remove(3);
+            linkedList2.Remove(2);
             linkedList2.Show();
             Console.WriteLine();
 
             Console.Write("Swap: ");
-            linkedList2.Swap(0, 2);
-            linkedList2.Show();
-            Console.WriteLine();
-
-            Console.Write("Pop: ");
-            linkedList2.Pop();
+            linkedList2.Swap(0, 1);
             linkedList2.Show();
             Console.WriteLine();
 
