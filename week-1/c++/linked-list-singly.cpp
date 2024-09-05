@@ -48,7 +48,7 @@ class LinkedList {
         Node<Type> *currentNode = this->getFirst();
         while (currentNode != nullptr) {
             currentNode = currentNode->getNext();
-            count += 1;
+            count++;
         };
 
         return count;
@@ -83,7 +83,7 @@ class LinkedList {
 
     void pop() {
         if (this->getFirst() == nullptr) {
-            return;
+            throw std::runtime_error("Linked List is empty");
         };
 
         if (this->getFirst()->getNext() == nullptr) {
@@ -103,7 +103,11 @@ class LinkedList {
     }
 
     char get(int index) {
-        if (this->length() <= index) {
+        if (this->getFirst() == nullptr) {
+            throw std::runtime_error("Linked List is empty");
+        };
+
+        if ((index < 0) || (this->length() <= index)) {
             throw std::runtime_error("Index out of bound");
         };
 
@@ -118,20 +122,16 @@ class LinkedList {
     };
 
     void insert(Type value, int index) {
-        if (index < 0) {
+        if ((index < 0) || (this->length() <= index)) {
             throw std::runtime_error("Index out of bound");
         };
 
         Node<Type> *newNode = new Node<Type>(value);
-        if (index == 0) {
+        if ((this->getFirst() == nullptr) || (index == 0)) {
             newNode->setNext(this->getFirst());
             this->setFirst(newNode);
 
             return;
-        };
-
-        if (this->length() <= index) {
-            throw std::runtime_error("Index out of bound");
         };
 
         int currentIndex = 0;
@@ -146,19 +146,15 @@ class LinkedList {
     };
 
     void swap(int firstIndex, int secondIndex) {
-        if (this->getFirst() == nullptr) {
-            return;
-        };
-
-        if (firstIndex < 0 || secondIndex < 0) {
-            throw std::runtime_error("Index out of bound");
-        };
-
         if (firstIndex == secondIndex) {
             return;
         };
 
-        if (this->length() <= firstIndex || this->length() <= secondIndex) {
+        if (this->getFirst() == nullptr) {
+            throw std::runtime_error("Linked List is empty");
+        };
+
+        if ((firstIndex < 0) || (secondIndex < 0) || (this->length() <= firstIndex) || (this->length() <= secondIndex)) {
             throw std::runtime_error("Index out of bound");
         };
 
@@ -199,10 +195,10 @@ class LinkedList {
 
     void remove(int index) {
         if (this->getFirst() == nullptr) {
-            return;
+            throw std::runtime_error("Linked List is empty");
         };
 
-        if (index < 0) {
+        if ((index < 0) || (this->length() <= index)) {
             throw std::runtime_error("Index out of bound");
         };
 
@@ -213,10 +209,6 @@ class LinkedList {
             delete tempNode;
 
             return;
-        };
-
-        if (this->length() <= index) {
-            throw std::runtime_error("Index out of bound");
         };
 
         int currentIndex = 0;

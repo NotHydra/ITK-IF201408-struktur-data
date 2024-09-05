@@ -45,6 +45,23 @@
             Console.WriteLine(this);
         }
 
+        public void Debug()
+        {
+            Console.WriteLine("Debug: Start");
+
+            Node<Type>? currentNode = this.First;
+            while (currentNode != null)
+            {
+                string? nextText = (currentNode.Next != null && currentNode.Next.Value != null) ? currentNode.Next.Value.ToString() : "null";
+
+                Console.WriteLine($"Debug: {currentNode.Value} -> {nextText}");
+
+                currentNode = currentNode.Next;
+            };
+
+            Console.WriteLine("Debug: End");
+        }
+
         public void Add(Type value)
         {
             Node<Type> newNode = new Node<Type>(value);
@@ -250,7 +267,7 @@
 
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             LinkedList<char> linkedList1 = new LinkedList<char>();
             linkedList1.Add('x');
@@ -259,6 +276,9 @@
 
             Console.Write("Show: ");
             linkedList1.Show();
+            Console.WriteLine();
+
+            linkedList1.Debug();
             Console.WriteLine();
 
             Console.WriteLine($"Length: {linkedList1.Length()}");
@@ -299,6 +319,9 @@
             Console.Write("ToString: ");
             Console.WriteLine(linkedList1);
             Console.WriteLine();
+
+            linkedList1.Debug();
+            Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
 
@@ -310,6 +333,9 @@
 
             Console.Write("Show: ");
             linkedList2.Show();
+            Console.WriteLine();
+
+            linkedList2.Debug();
             Console.WriteLine();
 
             Console.WriteLine($"Length: {linkedList2.Length()}");
@@ -349,6 +375,9 @@
 
             Console.Write("ToString: ");
             Console.WriteLine(linkedList2);
+            Console.WriteLine();
+
+            linkedList2.Debug();
             Console.WriteLine();
         }
     };
