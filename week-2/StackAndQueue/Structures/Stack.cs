@@ -1,75 +1,127 @@
-using StackAndQueue.Classes;
+using StackAndQueue.Nodes;
 
-namespace StackAndQueue.Structures;
-
-public class Stack<Type>
+namespace StackAndQueue.Structures
 {
-        private Node<Type>? _head = null;
+    public class Stack<Type>
+    {
+        private Node<Type>? _first = null;
 
-        public void Show()
+
+        /// <summary>
+        /// Getter dan Setter untuk Node yang berada di paling atas Stack
+        /// </summary>
+        public Node<Type>? First
         {
-            Node<Type>? currentNode = this._head;
+            get { return this._first; }
+            set { this._first = value; }
+        }
 
+        /// <summary>
+        /// Mendapatkan dan mengembalikan nilai dari total Node yang ada di dalam Stack
+        /// </summary>
+        public int Length()
+        {
+            int count = 0;
+            Node<Type>? currentNode = this.First;
             while (currentNode != null)
             {
-                Console.Write($"{currentNode.Value} -> ");
-                
                 currentNode = currentNode.Next;
-            }
-            
-            Console.WriteLine("end");
+                count++;
+            };
+
+            return count;
         }
-        
+
         /// <summary>
-        /// "Menaruh" value baru di atas stack
+        /// Menampilkan seluruh Node yang ada di dalam Stack
+        /// </summary>
+        public void Show()
+        {
+            Console.WriteLine(this);
+        }
+
+        /// <summary>
+        /// Menampilkan seluruh Node yang ada di dalam Stack satu per satu beserta dengan Node lain yang terhubung dengan Node tersebut
+        /// </summary>
+        public void Debug()
+        {
+            Console.WriteLine("Debug: Start");
+
+            Node<Type>? currentNode = this.First;
+            while (currentNode != null)
+            {
+                string nextText = (currentNode.Next != null) ? currentNode.Next.Value!.ToString()! : "null";
+
+                Console.WriteLine($"Debug: {currentNode.Value} -> {nextText}");
+
+                currentNode = currentNode.Next;
+            };
+
+            Console.WriteLine("Debug: End");
+        }
+
+        /// <summary>
+        /// Mengecek apakah isi dari Stack dapat dilakukan Pop atau tidak
+        /// </summary>
+        public bool HasPop()
+        {
+            return this.First != null;
+        }
+
+        /// <summary>
+        /// Mendapatkan dan mengembalikan nilai dari Node yang berada di paling atas Stack tanpa mengeluarkan Node tersebut dari Stack
+        /// </summary>
+        /// <returns>
+        /// Nilai dari Node yang berada di paling atas Stack
+        /// </returns>
+        public Type? Peek()
+        {
+            if (this.First == null)
+            {
+                throw new InvalidOperationException("Stack is empty");
+            };
+
+            return this.First.Value;
+        }
+
+        /// <summary>
+        /// Menaruh Node baru dengan Value yang diberikan di paling atas Stack
         /// </summary>
         /// <param name="value">
-        /// Value yang ditumpuk
+        /// Value atau nilai yang akan dimasukkan ke dalam Node baru
         /// </param>
         public void Push(Type value)
         {
-            Node<Type> newNode = new Node<Type>(value);
-
-            if (this._head == null)
+            Node<Type> newNode = new(value);
+            if (this.First == null)
             {
-                this._head = newNode;
+                this.First = newNode;
+
                 return;
-            }
-            
-            newNode.Next = this._head;
-            this._head = newNode;
+            };
+
+            newNode.Next = this.First;
+            this.First = newNode;
         }
 
         /// <summary>
-        /// Mengeluarkan node paling atas dari tumpukan / stack
+        /// Mengeluarkan Node serta mengembalikan nilai dari Node yang berada di paling atas dari Stack
         /// </summary>
         /// <returns>
-        /// Nilai dari node yang dikeluarkan
+        /// Nilai dari Node yang dikeluarkan dari Stack
         /// </returns>
-        public Node<Type>? Pop()
+        public Type? Pop()
         {
-            if (this._head == null)
+            if (this.First == null)
             {
-                return null;
-            }
-            
-            Node<Type> topNode = this._head;
-            
-            this._head = this._head.Next;
+                throw new InvalidOperationException("Stack is empty");
+            };
 
-            return topNode;
-        }
+            Type popValue = this.First.Value;
 
-        public Node<Type>? Peek()
-        {
-            Node<Type>? topNode = this.Pop();
-            
-            if (topNode != null)
-            {
-                this.Push(topNode.Value);
-            }
-            
-            return topNode;
+            this.First = this.First.Next;
+
+            return popValue;
         }
 
         public void Swap()
@@ -77,8 +129,23 @@ public class Stack<Type>
             throw new NotImplementedException();
         }
 
-        public bool HasPop()
+        /// <summary>
+        /// Mengembalikan bentuk string dari seluruh Node yang ada di dalam Stack
+        /// </summary>
+        public override string ToString()
         {
-            return this._head != null;
+            string text = "top -> ";
+            Node<Type>? currentNode = this.First;
+            while (currentNode != null)
+            {
+                text += $"{currentNode.Value} -> ";
+                currentNode = currentNode.Next;
+            };
+
+            text += "bottom";
+
+            return text;
         }
+    }
 }
+
