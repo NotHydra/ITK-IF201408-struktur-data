@@ -52,7 +52,7 @@
             Node<Type>? currentNode = this.First;
             while (currentNode != null)
             {
-                string? nextText = (currentNode.Next != null && currentNode.Next.Value != null) ? currentNode.Next.Value.ToString() : "null";
+                string nextText = (currentNode.Next != null) ? currentNode.Next.Value!.ToString()! : "null";
 
                 Console.WriteLine($"Debug: {currentNode.Value} -> {nextText}");
 
@@ -103,12 +103,7 @@
                 currentNode = currentNode.Next;
             };
 
-            if (currentNode.Next == null)
-            {
-                throw new InvalidOperationException("Invalid Node");
-            };
-
-            popValue = currentNode.Next.Value;
+            popValue = currentNode.Next!.Value;
             currentNode.Next = null;
 
             return popValue;
@@ -128,9 +123,9 @@
 
             int currentIndex = 0;
             Node<Type> currentNode = this.First;
-            while ((currentNode.Next != null) && (currentIndex < index))
+            while (currentIndex < index)
             {
-                currentNode = currentNode.Next;
+                currentNode = currentNode.Next!;
                 currentIndex++;
             };
 
@@ -155,9 +150,9 @@
 
             int currentIndex = 0;
             Node<Type> currentNode = this.First;
-            while ((currentNode.Next != null) && (currentIndex < (index - 1)))
+            while (currentIndex < (index - 1))
             {
-                currentNode = currentNode.Next;
+                currentNode = currentNode.Next!;
                 currentIndex++;
             };
 
@@ -189,21 +184,21 @@
 
             int currentFirstIndex = 0;
             Node<Type>? previousFirstNode = null;
-            Node<Type>? currentFirstNode = this.First;
-            while ((currentFirstNode != null) && (currentFirstIndex < firstIndex))
+            Node<Type> currentFirstNode = this.First;
+            while (currentFirstIndex < firstIndex)
             {
                 previousFirstNode = currentFirstNode;
-                currentFirstNode = currentFirstNode.Next;
+                currentFirstNode = currentFirstNode.Next!;
                 currentFirstIndex++;
             };
 
             int currentSecondIndex = 0;
             Node<Type>? previousSecondNode = null;
-            Node<Type>? currentSecondNode = this.First;
-            while ((currentSecondNode != null) && (currentSecondIndex < secondIndex))
+            Node<Type> currentSecondNode = this.First;
+            while (currentSecondIndex < secondIndex)
             {
                 previousSecondNode = currentSecondNode;
-                currentSecondNode = currentSecondNode.Next;
+                currentSecondNode = currentSecondNode.Next!;
                 currentSecondIndex++;
             };
 
@@ -225,12 +220,7 @@
                 previousSecondNode.Next = currentFirstNode;
             };
 
-            if (currentFirstNode == null || currentSecondNode == null || currentFirstNode.Next == null)
-            {
-                throw new InvalidOperationException("Invalid Node");
-            };
-
-            Node<Type> temp = currentFirstNode.Next;
+            Node<Type> temp = currentFirstNode.Next!;
             currentFirstNode.Next = currentSecondNode.Next;
             currentSecondNode.Next = temp;
         }
@@ -256,18 +246,13 @@
 
             int currentIndex = 0;
             Node<Type> currentNode = this.First;
-            while ((currentNode.Next != null) && (currentIndex < (index - 1)))
+            while (currentIndex < (index - 1))
             {
-                currentNode = currentNode.Next;
+                currentNode = currentNode.Next!;
                 currentIndex++;
             };
 
-            if (currentNode.Next == null)
-            {
-                throw new InvalidOperationException("Invalid Node");
-            };
-
-            currentNode.Next = currentNode.Next.Next;
+            currentNode.Next = currentNode.Next!.Next;
         }
 
         public override string ToString()
