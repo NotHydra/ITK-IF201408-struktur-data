@@ -118,6 +118,44 @@
             return popValue;
         }
 
+        public Type Get(int index)
+        {
+            if (this.First == null || this.Last == null)
+            {
+                throw new InvalidCastException("Linked List is empty");
+            };
+
+            if (index < 0 || (this.Length() <= index))
+            {
+                throw new IndexOutOfRangeException("Index out of bound");
+            };
+
+            int currentIndex;
+            Node<Type> currentNode;
+            if (index < (this.Length() / 2))
+            {
+                currentNode = this.First;
+                currentIndex = 0;
+                while ((currentNode.Next != null) && (currentIndex < index))
+                {
+                    currentNode = currentNode.Next;
+                    currentIndex++;
+                };
+
+                return currentNode.Value;
+            };
+
+            currentNode = this.Last;
+            currentIndex = this.Length() - 1;
+            while ((currentNode.Previous != null) && (currentIndex > index))
+            {
+                currentNode = currentNode.Previous;
+                currentIndex--;
+            };
+
+            return currentNode.Value;
+        }
+
         public override string ToString()
         {
             string text = "null -> ";
@@ -155,6 +193,11 @@
 
             Console.WriteLine($"First: {linkedList1.First?.Value}");
             Console.WriteLine($"Last: {linkedList1.Last?.Value}");
+            Console.WriteLine();
+
+            Console.WriteLine($"Get 0: {linkedList1.Get(0)}");
+            Console.WriteLine($"Get 1: {linkedList1.Get(1)}");
+            Console.WriteLine($"Get 2: {linkedList1.Get(2)}");
             Console.WriteLine();
 
             Console.Write($"Pop: {linkedList1.Pop()} => ");
