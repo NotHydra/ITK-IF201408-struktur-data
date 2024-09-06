@@ -6,7 +6,6 @@ namespace StackAndQueue.Structures
     {
         private Node<Type>? _first = null;
 
-
         /// <summary>
         /// Getter dan Setter untuk Node yang berada di paling atas Stack
         /// </summary>
@@ -45,7 +44,7 @@ namespace StackAndQueue.Structures
         /// </summary>
         public void Debug()
         {
-            Console.WriteLine("Debug: Start");
+            Console.WriteLine("Debug: Top");
 
             Node<Type>? currentNode = this.First;
             while (currentNode != null)
@@ -57,7 +56,7 @@ namespace StackAndQueue.Structures
                 currentNode = currentNode.Next;
             };
 
-            Console.WriteLine("Debug: End");
+            Console.WriteLine("Debug: Bottom");
         }
 
         /// <summary>
@@ -124,9 +123,78 @@ namespace StackAndQueue.Structures
             return popValue;
         }
 
-        public void Swap()
+        /// <summary>
+        /// Menukar posisi Node yang berada di dalam Stack berdasarkan 2 index berbeda yang diberikan
+        /// </summary>
+        /// <param name="firstIndex">
+        /// Nilai index pertama dari Node yang akan ditukar
+        /// </param>
+        /// <param name="secondIndex">
+        /// Nilai index kedua dari Node yang akan ditukar
+        /// </param>
+        public void Swap(int firstIndex, int secondIndex)
         {
-            throw new NotImplementedException();
+            if (this.First == null)
+            {
+                throw new InvalidOperationException("Stack is empty");
+            };
+
+            if ((firstIndex < 0) || (this.Length() <= firstIndex))
+            {
+                throw new ArgumentOutOfRangeException(nameof(firstIndex), "Index out of bound");
+            };
+
+            if ((secondIndex < 0) || (this.Length() <= secondIndex))
+            {
+                throw new ArgumentOutOfRangeException(nameof(secondIndex), "Index out of bound");
+            };
+
+            if (firstIndex == secondIndex)
+            {
+                return;
+            };
+
+            int currentFirstIndex = 0;
+            Node<Type>? previousFirstNode = null;
+            Node<Type> currentFirstNode = this.First;
+            while (currentFirstIndex < firstIndex)
+            {
+                previousFirstNode = currentFirstNode;
+                currentFirstNode = currentFirstNode.Next!;
+                currentFirstIndex++;
+            };
+
+            int currentSecondIndex = 0;
+            Node<Type>? previousSecondNode = null;
+            Node<Type> currentSecondNode = this.First;
+            while (currentSecondIndex < secondIndex)
+            {
+                previousSecondNode = currentSecondNode;
+                currentSecondNode = currentSecondNode.Next!;
+                currentSecondIndex++;
+            };
+
+            if (previousFirstNode == null)
+            {
+                this.First = currentSecondNode;
+            }
+            else
+            {
+                previousFirstNode.Next = currentSecondNode;
+            };
+
+            if (previousSecondNode == null)
+            {
+                this.First = currentFirstNode;
+            }
+            else
+            {
+                previousSecondNode.Next = currentFirstNode;
+            };
+
+            Node<Type> temp = currentFirstNode.Next!;
+            currentFirstNode.Next = currentSecondNode.Next;
+            currentSecondNode.Next = temp;
         }
 
         /// <summary>
