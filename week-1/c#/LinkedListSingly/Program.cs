@@ -88,12 +88,13 @@
                 throw new InvalidOperationException("Linked List is empty");
             };
 
+            Type popValue;
             if (this.First.Next == null)
             {
-                Type value = this.First.Value;
+                popValue = this.First.Value;
                 this.First = null;
 
-                return value;
+                return popValue;
             };
 
             Node<Type> currentNode = this.First;
@@ -107,7 +108,7 @@
                 throw new InvalidOperationException("Invalid Node");
             };
 
-            Type popValue = currentNode.Next.Value;
+            popValue = currentNode.Next.Value;
             currentNode.Next = null;
 
             return popValue;
