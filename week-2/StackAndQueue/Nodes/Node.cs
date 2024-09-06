@@ -2,7 +2,7 @@ namespace StackAndQueue.Nodes
 {
     public class Node<Type>(Type value)
     {
-        private Type _value = value;
+        private readonly Type _value = value;
         private Node<Type>? _next = null;
 
         public Type Value
