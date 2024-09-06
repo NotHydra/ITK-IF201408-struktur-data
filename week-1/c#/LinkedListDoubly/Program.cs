@@ -214,6 +214,72 @@
             };
 
             newNode.Next = currentNode;
+            newNode.Previous = currentNode.Previous;
+            currentNode.Previous!.Next = newNode;
+            currentNode.Previous = newNode;
+        }
+
+        public void Remove(int index)
+        {
+            if (this.First == null || this.Last == null)
+            {
+                throw new InvalidOperationException("Linked List is empty");
+            };
+
+            if ((index < 0) || (this.Length() <= index))
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
+            };
+
+            if (index == 0)
+            {
+                if (this.First == this.Last)
+                {
+                    this.First = null;
+                    this.Last = null;
+
+                    return;
+                };
+
+                this.First = this.First.Next;
+                this.First!.Previous = null;
+
+                return;
+            };
+
+            if (index == (this.Length() - 1))
+            {
+                this.Last = this.Last.Previous;
+                this.Last!.Next = null;
+
+                return;
+            };
+
+            int currentIndex;
+            Node<Type> currentNode;
+            if (index < (this.Length() / 2))
+            {
+                currentIndex = 0;
+                currentNode = this.First!;
+                while (currentIndex < index)
+                {
+                    currentNode = currentNode.Next!;
+                    currentIndex++;
+                };
+            }
+            else
+            {
+                currentIndex = this.Length() - 1;
+                currentNode = this.Last!;
+                while (currentIndex > index)
+                {
+                    currentNode = currentNode.Previous!;
+                    currentIndex--;
+                };
+            };
+
+            currentNode.Previous!.Next = currentNode.Next;
+            currentNode.Next!.Previous = currentNode.Previous;
         }
 
         public override string ToString()
@@ -262,6 +328,24 @@
 
             Console.Write($"Pop: {linkedList1.Pop()} => ");
             linkedList1.Show();
+            Console.WriteLine();
+
+            Console.Write("Insert: ");
+            linkedList1.Insert(3, 2);
+            linkedList1.Insert(2, 1);
+            linkedList1.Insert(1, 0);
+            linkedList1.Show();
+            Console.WriteLine();
+
+            Console.Write("Remove: ");
+            linkedList1.Remove(4);
+            linkedList1.Remove(3);
+            linkedList1.Remove(2);
+            linkedList1.Show();
+            Console.WriteLine();
+
+            Console.Write("ToString: ");
+            Console.WriteLine(linkedList1);
             Console.WriteLine();
 
             linkedList1.Debug();
