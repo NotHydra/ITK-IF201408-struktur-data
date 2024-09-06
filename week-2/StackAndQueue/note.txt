@@ -1,0 +1,5 @@
+To-Do List:
+1. Stack implementation (Done)
+2. Queue implementation
+3. User Interface for Stack & Queue management with Command Line Interface in Terminal
+4. Optionally add LinkedListSingly & LinkedListDoubly to User Interface
