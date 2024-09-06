@@ -162,11 +162,6 @@
 
         public void Swap(int firstIndex, int secondIndex)
         {
-            if (firstIndex == secondIndex)
-            {
-                return;
-            };
-
             if (this.First == null)
             {
                 throw new InvalidOperationException("Linked List is empty");
@@ -180,6 +175,11 @@
             if ((secondIndex < 0) || (this.Length() <= secondIndex))
             {
                 throw new ArgumentOutOfRangeException(nameof(secondIndex), "Index out of bound");
+            };
+
+            if (firstIndex == secondIndex)
+            {
+                return;
             };
 
             int currentFirstIndex = 0;

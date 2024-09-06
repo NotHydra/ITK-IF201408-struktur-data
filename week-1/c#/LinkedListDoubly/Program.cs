@@ -1,4 +1,6 @@
-﻿namespace LinkedListDoubly
+﻿using System.Diagnostics.Contracts;
+
+namespace LinkedListDoubly
 {
     class Node<Type>(Type value)
     {
@@ -219,6 +221,121 @@
             currentNode.Previous = newNode;
         }
 
+        public void Swap(int firstIndex, int secondIndex)
+        {
+            if (this.First == null || this.Last == null)
+            {
+                throw new InvalidOperationException("Linked List is empty");
+            };
+
+            if ((firstIndex < 0) || (this.Length() <= firstIndex))
+            {
+                throw new ArgumentOutOfRangeException(nameof(firstIndex), "First index out of bound");
+            };
+
+            if ((secondIndex < 0) || (this.Length() <= secondIndex))
+            {
+                throw new ArgumentOutOfRangeException(nameof(secondIndex), "Second index out of bound");
+            };
+
+            if (firstIndex == secondIndex)
+            {
+                return;
+            };
+
+            int currentFirstIndex;
+            Node<Type> currentFirstNode;
+            if (firstIndex < (this.Length() / 2))
+            {
+                currentFirstNode = this.First;
+                currentFirstIndex = 0;
+                while (currentFirstIndex < firstIndex)
+                {
+                    currentFirstNode = currentFirstNode.Next!;
+                    currentFirstIndex++;
+                };
+            }
+            else
+            {
+                currentFirstNode = this.Last;
+                currentFirstIndex = this.Length() - 1;
+                while (currentFirstIndex > firstIndex)
+                {
+                    currentFirstNode = currentFirstNode.Previous!;
+                    currentFirstIndex--;
+                };
+            };
+
+            int currentSecondIndex;
+            Node<Type> currentSecondNode;
+            if (secondIndex < (this.Length() / 2))
+            {
+                currentSecondNode = this.First;
+                currentSecondIndex = 0;
+                while (currentSecondIndex < secondIndex)
+                {
+                    currentSecondNode = currentSecondNode.Next!;
+                    currentSecondIndex++;
+                };
+            }
+            else
+            {
+                currentSecondNode = this.Last;
+                currentSecondIndex = this.Length() - 1;
+                while (currentSecondIndex > secondIndex)
+                {
+                    currentSecondNode = currentSecondNode.Previous!;
+                    currentSecondIndex--;
+                };
+            };
+
+            if (currentFirstNode == this.First)
+            {
+                this.First = currentSecondNode;
+            }
+            else if (currentSecondNode == this.First)
+            {
+                this.First = currentFirstNode;
+            };
+
+            if (currentFirstNode == this.Last)
+            {
+                this.Last = currentSecondNode;
+            }
+            else if (currentSecondNode == this.Last)
+            {
+                this.Last = currentFirstNode;
+            };
+
+            Node<Type> temp = currentFirstNode.Next!;
+            currentFirstNode.Next = currentSecondNode.Next;
+            currentSecondNode.Next = temp;
+
+            if (currentFirstNode.Next != null)
+            {
+                currentFirstNode.Next.Previous = currentFirstNode;
+            };
+
+            if (currentSecondNode.Next != null)
+            {
+                currentSecondNode.Next.Previous = currentSecondNode;
+            };
+
+            temp = currentFirstNode.Previous!;
+            currentFirstNode.Previous = currentSecondNode.Previous;
+            currentSecondNode.Previous = temp;
+
+            if (currentFirstNode.Previous != null)
+            {
+                currentFirstNode.Previous.Next = currentFirstNode;
+            };
+
+            if (currentSecondNode.Previous != null)
+            {
+                currentSecondNode.Previous.Next = currentSecondNode;
+            };
+        }
+
         public void Remove(int index)
         {
             if (this.First == null || this.Last == null)
@@ -341,6 +458,11 @@
             linkedList1.Remove(4);
             linkedList1.Remove(3);
             linkedList1.Remove(2);
+            linkedList1.Show();
+            Console.WriteLine();
+
+            Console.Write("Swap: ");
+            linkedList1.Swap(0, 1);
             linkedList1.Show();
             Console.WriteLine();
 
