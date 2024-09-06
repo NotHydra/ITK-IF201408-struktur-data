@@ -139,7 +139,7 @@
 
         public void Insert(Type value, int index)
         {
-            if ((index < 0) || (this.Length() <= index))
+            if ((index < 0) || (this.Length() < index))
             {
                 throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
             };
@@ -225,7 +225,7 @@
                 previousSecondNode.Next = currentFirstNode;
             };
 
-            if (currentFirstNode == null || currentSecondNode == null || currentFirstNode.Next == null || currentSecondNode.Next == null)
+            if (currentFirstNode == null || currentSecondNode == null || currentFirstNode.Next == null)
             {
                 throw new InvalidOperationException("Invalid Node");
             };
@@ -318,9 +318,9 @@
             Console.WriteLine();
 
             Console.Write("Insert: ");
-            linkedList1.Insert('a', 0);
-            linkedList1.Insert('b', 1);
             linkedList1.Insert('c', 2);
+            linkedList1.Insert('b', 1);
+            linkedList1.Insert('a', 0);
             linkedList1.Show();
             Console.WriteLine();
 
@@ -374,9 +374,9 @@
             Console.WriteLine();
 
             Console.Write("Insert: ");
-            linkedList2.Insert(1, 0);
-            linkedList2.Insert(2, 1);
             linkedList2.Insert(3, 2);
+            linkedList2.Insert(2, 1);
+            linkedList2.Insert(1, 0);
             linkedList2.Show();
             Console.WriteLine();
 
