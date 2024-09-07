@@ -41,17 +41,9 @@
             stack1.Show();
             Console.WriteLine();
 
-            Console.WriteLine("Pop:");
+            Console.WriteLine("Clear:");
             stack1.Show();
-            Console.WriteLine($"HasPop: {stack1.HasPop()}");
-            Console.WriteLine($"Pop: {stack1.Pop()}");
-            stack1.Show();
-            Console.WriteLine();
-
-            Console.WriteLine("Pop:");
-            stack1.Show();
-            Console.WriteLine($"HasPop: {stack1.HasPop()}");
-            Console.WriteLine($"Pop: {stack1.Pop()}");
+            stack1.Clear();
             stack1.Show();
             Console.WriteLine();
 

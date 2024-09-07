@@ -124,6 +124,17 @@ namespace StackAndQueue.Structures
         }
 
         /// <summary>
+        /// Menghapus seluruh Node yang ada di dalam Stack
+        /// </summary>
+        public void Clear()
+        {
+            while (this.HasPop())
+            {
+                this.Pop();
+            };
+        }
+
+        /// <summary>
         /// Menukar posisi Node yang berada di dalam Stack berdasarkan 2 index berbeda yang diberikan
         /// </summary>
         /// <param name="firstIndex">
