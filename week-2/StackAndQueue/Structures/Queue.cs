@@ -31,7 +31,7 @@ namespace StackAndQueue.Structures
         public int Length()
         {
             int count = 0;
-            Node<Type>? currentNode = this.First;
+            DoubleLinkedNode<Type>? currentNode = this.First;
             while (currentNode != null)
             {
                 currentNode = currentNode.Next;
@@ -56,7 +56,7 @@ namespace StackAndQueue.Structures
         {
             Console.WriteLine("Debug: Top");
 
-            Node<Type>? currentNode = this.First;
+            DoubleLinkedNode<Type>? currentNode = this.First;
             while (currentNode != null)
             {
                 string nextText = (currentNode.Next != null) ? currentNode.Next.Value!.ToString()! : "null";
@@ -103,7 +103,7 @@ namespace StackAndQueue.Structures
         /// Mengeluarkan Node serta mengembalikan nilai dari Node yang berada di paling awal dari Queue
         /// </summary>
         /// <returns>
-        /// Nilai dari Node yang dikeluarkan dari Stack
+        /// Nilai dari Node yang dikeluarkan dari Queue
         /// </returns>
         public Type Pop()
         {
@@ -118,9 +118,128 @@ namespace StackAndQueue.Structures
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Menukar posisi Node yang berada di dalam Queue berdasarkan 2 index berbeda yang diberikan
+        /// </summary>
+        /// <param name="firstIndex">
+        /// Nilai index pertama dari Node yang akan ditukar
+        /// </param>
+        /// <param name="secondIndex">
+        /// Nilai index kedua dari Node yang akan ditukar
+        /// </param>
         public void Swap(int firstIndex, int secondIndex)
         {
-            throw new NotImplementedException();
+            if (this.First == null || this.Last == null)
+            {
+                throw new InvalidOperationException("Linked List is empty");
+            };
+
+            if ((firstIndex < 0) || (this.Length() <= firstIndex))
+            {
+                throw new ArgumentOutOfRangeException(nameof(firstIndex), "First index out of bound");
+            };
+
+            if ((secondIndex < 0) || (this.Length() <= secondIndex))
+            {
+                throw new ArgumentOutOfRangeException(nameof(secondIndex), "Second index out of bound");
+            };
+
+            if (firstIndex == secondIndex)
+            {
+                return;
+            };
+
+            int currentFirstIndex;
+            DoubleLinkedNode<Type> currentFirstNode;
+            if (firstIndex < (this.Length() / 2))
+            {
+                currentFirstNode = this.First;
+                currentFirstIndex = 0;
+                while (currentFirstIndex < firstIndex)
+                {
+                    currentFirstNode = currentFirstNode.Next!;
+                    currentFirstIndex++;
+                };
+            }
+            else
+            {
+                currentFirstNode = this.Last;
+                currentFirstIndex = this.Length() - 1;
+                while (currentFirstIndex > firstIndex)
+                {
+                    currentFirstNode = currentFirstNode.Previous!;
+                    currentFirstIndex--;
+                };
+            };
+
+            int currentSecondIndex;
+            DoubleLinkedNode<Type> currentSecondNode;
+            if (secondIndex < (this.Length() / 2))
+            {
+                currentSecondNode = this.First;
+                currentSecondIndex = 0;
+                while (currentSecondIndex < secondIndex)
+                {
+                    currentSecondNode = currentSecondNode.Next!;
+                    currentSecondIndex++;
+                };
+            }
+            else
+            {
+                currentSecondNode = this.Last;
+                currentSecondIndex = this.Length() - 1;
+                while (currentSecondIndex > secondIndex)
+                {
+                    currentSecondNode = currentSecondNode.Previous!;
+                    currentSecondIndex--;
+                };
+            };
+
+            if (currentFirstNode == this.First)
+            {
+                this.First = currentSecondNode;
+            }
+            else if (currentSecondNode == this.First)
+            {
+                this.First = currentFirstNode;
+            };
+
+            if (currentFirstNode == this.Last)
+            {
+                this.Last = currentSecondNode;
+            }
+            else if (currentSecondNode == this.Last)
+            {
+                this.Last = currentFirstNode;
+            };
+
+            DoubleLinkedNode<Type> temp = currentFirstNode.Next!;
+            currentFirstNode.Next = currentSecondNode.Next;
+            currentSecondNode.Next = temp;
+
+            if (currentFirstNode.Next != null)
+            {
+                currentFirstNode.Next.Previous = currentFirstNode;
+            };
+
+            if (currentSecondNode.Next != null)
+            {
+                currentSecondNode.Next.Previous = currentSecondNode;
+            };
+
+            temp = currentFirstNode.Previous!;
+            currentFirstNode.Previous = currentSecondNode.Previous;
+            currentSecondNode.Previous = temp;
+
+            if (currentFirstNode.Previous != null)
+            {
+                currentFirstNode.Previous.Next = currentFirstNode;
+            };
+
+            if (currentSecondNode.Previous != null)
+            {
+                currentSecondNode.Previous.Next = currentSecondNode;
+            };
         }
 
         /// <summary>
@@ -129,7 +248,7 @@ namespace StackAndQueue.Structures
         public override string ToString()
         {
             string text = "first -> ";
-            Node<Type>? currentNode = this.First;
+            DoubleLinkedNode<Type>? currentNode = this.First;
             while (currentNode != null)
             {
                 text += $"{currentNode.Value} -> ";
