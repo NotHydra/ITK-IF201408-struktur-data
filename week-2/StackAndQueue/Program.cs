@@ -1,10 +1,105 @@
 ﻿namespace StackAndQueue
 {
+    public class CommandLineInterface()
+    {
+        private static readonly int borderLength = 40;
+        private static readonly string[] menus = ["List", "Add", "Use", "Exit"];
+
+        private static bool isRunning = true;
+        private static int currentMenu = 0;
+
+        public static void Start()
+        {
+            ConsoleKey key;
+            while (isRunning)
+            {
+                Console.Clear();
+                Border();
+                Title("Command Line Interface");
+                Border();
+
+                for (int index = 0; index < menus.Length; index++)
+                {
+                    if (index == currentMenu)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.WriteLine($"> {menus[index]}");
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"  {menus[index]}");
+                    };
+                };
+
+                Border();
+
+                key = Console.ReadKey(true).Key;
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow:
+                        currentMenu = (currentMenu == 0) ? (menus.Length - 1) : (currentMenu - 1);
+                        break;
+
+                    case ConsoleKey.DownArrow:
+                        currentMenu = (currentMenu == menus.Length - 1) ? 0 : (currentMenu + 1);
+                        break;
+
+                    case ConsoleKey.Enter:
+                        Console.Clear();
+                        HandleMenu();
+                        break;
+
+                    case ConsoleKey.Escape:
+                        isRunning = false;
+                        break;
+
+                };
+            };
+        }
+
+        private static void Border()
+        {
+            Console.WriteLine(String.Concat(Enumerable.Repeat("=", borderLength)));
+        }
+
+        private static void Title(string text)
+        {
+            int length = (borderLength - text.Length) / 2;
+
+            Console.Write(String.Concat(Enumerable.Repeat("-", ((text.Length % 2) == 0) ? length : (length + 1))));
+            Console.Write(text);
+            Console.WriteLine(String.Concat(Enumerable.Repeat("-", length)));
+        }
+
+        private static void HandleMenu()
+        {
+            switch (currentMenu)
+            {
+                // case 0:
+                //     HandleMenuList();
+                //     break;
+
+                // case 1:
+                //     HandleMenuAdd();
+                //     break;
+
+                // case 2:
+                //     HandleMenuUse();
+                //     break;
+
+                case 3:
+                    isRunning = false;
+                    break;
+            };
+        }
+    }
+
     public class Program
     {
         public static void Main(string[] args)
         {
-            Program.TestStack();
+            CommandLineInterface.Start();
         }
 
         public static void TestStack()
