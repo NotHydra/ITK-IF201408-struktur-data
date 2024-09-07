@@ -186,8 +186,9 @@
 
         private static void HandleAddOption()
         {
+            bool isRunning = true;
             int currentAddDataStructureOption = 0;
-            while (true)
+            while (isRunning)
             {
                 Console.Clear();
                 Border();
@@ -227,8 +228,104 @@
                     {
                         break;
                     };
+
+                    int currentAddDataTypeOption = 0;
+                    while (true)
+                    {
+                        Console.Clear();
+                        Border();
+                        Title("Add Menu");
+                        Border();
+                        Console.WriteLine("Choose a data type:");
+                        Border();
+
+                        for (int i = 0; i < menuAddDataTypeOptions.Length; i++)
+                        {
+                            if (i == currentAddDataTypeOption)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Cyan;
+                                Console.WriteLine($"> {menuAddDataTypeOptions[i]}");
+                                Console.ResetColor();
+                            }
+                            else
+                            {
+                                Console.WriteLine($"  {menuAddDataTypeOptions[i]}");
+                            };
+                        };
+
+                        Border();
+
+                        pressedKey = Console.ReadKey(true).Key;
+                        if (pressedKey == ConsoleKey.UpArrow)
+                        {
+                            currentAddDataTypeOption = (currentAddDataTypeOption == 0) ? (menuAddDataTypeOptions.Length - 1) : (currentAddDataTypeOption - 1);
+                        }
+                        else if (pressedKey == ConsoleKey.DownArrow)
+                        {
+                            currentAddDataTypeOption = (currentAddDataTypeOption == menuAddDataTypeOptions.Length - 1) ? 0 : (currentAddDataTypeOption + 1);
+                        }
+                        else if (pressedKey == ConsoleKey.Enter)
+                        {
+                            if (currentAddDataTypeOption == 2)
+                            {
+                                break;
+                            };
+
+                            if (currentAddDataStructureOption == 0)
+                            {
+                                if (currentAddDataTypeOption == 0)
+                                {
+                                    Structures.LinkedListSingly<int> linkedListSingly = new();
+                                    containers.Add(linkedListSingly);
+                                }
+                                else if (currentAddDataTypeOption == 1)
+                                {
+                                    Structures.LinkedListSingly<char> linkedListSingly = new();
+                                    containers.Add(linkedListSingly);
+                                };
+                            }
+                            else if (currentAddDataStructureOption == 1)
+                            {
+                                if (currentAddDataTypeOption == 0)
+                                {
+                                    Structures.LinkedListDoubly<int> linkedListDoubly = new();
+                                    containers.Add(linkedListDoubly);
+                                }
+                                else if (currentAddDataTypeOption == 1)
+                                {
+                                    Structures.LinkedListDoubly<char> linkedListDoubly = new();
+                                    containers.Add(linkedListDoubly);
+                                };
+                            }
+                            else if (currentAddDataStructureOption == 2)
+                            {
+                                if (currentAddDataTypeOption == 0)
+                                {
+                                    Structures.Stack<int> stack = new();
+                                    containers.Add(stack);
+                                }
+                                else if (currentAddDataTypeOption == 1)
+                                {
+                                    Structures.Stack<char> stack = new();
+                                    containers.Add(stack);
+                                };
+                            };
+
+                            isRunning = false;
+                            break;
+                        }
+                        else if (pressedKey == ConsoleKey.Escape)
+                        {
+                            break;
+                        };
+                    };
                 }
                 else if (pressedKey == ConsoleKey.Escape)
+                {
+                    break;
+                };
+
+                if (!isRunning)
                 {
                     break;
                 };
