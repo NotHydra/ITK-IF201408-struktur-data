@@ -4,6 +4,8 @@
     {
         private static readonly int borderLength = 60;
         private static readonly string[] menus = ["List", "Add", "Use", "Exit"];
+        private static readonly string[] menuAddDataStructures = ["LinkedListSingly", "LinkedListDoubly", "Stack", "Back"];
+        private static readonly string[] menuAddDataTypes = ["int", "char", "Back"];
         private static readonly List<object> containers = [];
 
         private static bool isRunning = true;
@@ -125,9 +127,9 @@
                     HandleMenuList();
                     break;
 
-                // case 1:
-                //     HandleMenuAdd();
-                //     break;
+                case 1:
+                    HandleMenuAdd();
+                    break;
 
                 // case 2:
                 //     HandleMenuUse();
@@ -185,6 +187,54 @@
 
                 key = Console.ReadKey(true).Key;
                 if (key == ConsoleKey.Enter || key == ConsoleKey.Escape)
+                {
+                    break;
+                };
+            };
+        }
+
+        private static void HandleMenuAdd()
+        {
+            int currentDataStructure = 0;
+            while (true)
+            {
+                Console.Clear();
+                Border();
+                Title("Add Menu");
+                Border();
+                Console.WriteLine("Choose a data structure:");
+                Border();
+
+                for (int index = 0; index < menuAddDataStructures.Length; index++)
+                {
+                    if (index == currentDataStructure)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.WriteLine($"> {menuAddDataStructures[index]}");
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.WriteLine($"  {menuAddDataStructures[index]}");
+                    };
+                };
+
+                Border();
+
+                key = Console.ReadKey(true).Key;
+                if (key == ConsoleKey.UpArrow)
+                {
+                    currentDataStructure = (currentDataStructure == 0) ? (menuAddDataStructures.Length - 1) : (currentDataStructure - 1);
+                }
+                else if (key == ConsoleKey.DownArrow)
+                {
+                    currentDataStructure = (currentDataStructure == menuAddDataStructures.Length - 1) ? 0 : (currentDataStructure + 1);
+                }
+                else if (key == ConsoleKey.Enter)
+                {
+                    // HandleMenuAddChoose();
+                }
+                else if (key == ConsoleKey.Escape)
                 {
                     break;
                 };
