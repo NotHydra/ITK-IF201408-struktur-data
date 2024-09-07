@@ -2,15 +2,18 @@
 {
     public class CommandLineInterface()
     {
-        private static readonly int borderLength = 40;
+        private static readonly int borderLength = 60;
         private static readonly string[] menus = ["List", "Add", "Use", "Exit"];
+        private static readonly List<object> containers = [];
 
         private static bool isRunning = true;
         private static int currentMenu = 0;
+        private static ConsoleKey key;
 
         public static void Start()
         {
-            ConsoleKey key;
+            FillContainer();
+
             while (isRunning)
             {
                 Console.Clear();
@@ -54,12 +57,50 @@
                     case ConsoleKey.Escape:
                         isRunning = false;
                         break;
-
                 };
             };
 
             Title("Thank You For Using Our Program");
             Border();
+        }
+
+        private static void FillContainer()
+        {
+            Structures.LinkedListSingly<int> linkedListSingly1 = new();
+            linkedListSingly1.Add(1);
+            linkedListSingly1.Add(2);
+            linkedListSingly1.Add(3);
+            containers.Add(linkedListSingly1);
+
+            Structures.LinkedListSingly<char> linkedListSingly2 = new();
+            linkedListSingly2.Add('x');
+            linkedListSingly2.Add('y');
+            linkedListSingly2.Add('z');
+            containers.Add(linkedListSingly2);
+
+            Structures.LinkedListDoubly<int> linkedListDoubly1 = new();
+            linkedListDoubly1.Add(7);
+            linkedListDoubly1.Add(8);
+            linkedListDoubly1.Add(9);
+            containers.Add(linkedListDoubly1);
+
+            Structures.LinkedListDoubly<char> linkedListDoubly2 = new();
+            linkedListDoubly2.Add('a');
+            linkedListDoubly2.Add('b');
+            linkedListDoubly2.Add('c');
+            containers.Add(linkedListDoubly2);
+
+            Structures.Stack<int> stack1 = new();
+            stack1.Push(7);
+            stack1.Push(8);
+            stack1.Push(9);
+            containers.Add(stack1);
+
+            Structures.Stack<char> stack2 = new();
+            stack2.Push('a');
+            stack2.Push('b');
+            stack2.Push('c');
+            containers.Add(stack2);
         }
 
         private static void Border()
@@ -97,6 +138,58 @@
                     break;
             };
         }
+
+        private static void HandleMenuList()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Border();
+                Title("List Menu");
+                Border();
+
+                for (int index = 0; index < containers.Count; index++)
+                {
+                    if (containers[index] is Structures.LinkedListSingly<int>)
+                    {
+                        Console.WriteLine($"{index + 1}. {containers[index]} ( LinkedListSingly<int> )");
+                    }
+                    else if (containers[index] is Structures.LinkedListSingly<char>)
+                    {
+                        Console.WriteLine($"{index + 1}. {containers[index]} ( LinkedListSingly<char> )");
+                    }
+                    else if (containers[index] is Structures.LinkedListDoubly<int>)
+                    {
+                        Console.WriteLine($"{index + 1}. {containers[index]} ( LinkedListDoubly<int> )");
+                    }
+                    else if (containers[index] is Structures.LinkedListDoubly<char>)
+                    {
+                        Console.WriteLine($"{index + 1}. {containers[index]} ( LinkedListDoubly<char> )");
+                    }
+                    else if (containers[index] is Structures.Stack<int>)
+                    {
+                        Console.WriteLine($"{index + 1}. {containers[index]} ( Stack<int> )");
+                    }
+                    else if (containers[index] is Structures.Stack<char>)
+                    {
+                        Console.WriteLine($"{index + 1}. {containers[index]} ( Stack<char> )");
+                    };
+                };
+
+                Border();
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("> Back");
+                Console.ResetColor();
+                Border();
+
+                key = Console.ReadKey(true).Key;
+                if (key == ConsoleKey.Enter || key == ConsoleKey.Escape)
+                {
+                    break;
+                };
+            };
+        }
     }
 
     public class Program
@@ -105,7 +198,6 @@
         {
             CommandLineInterface.Start();
         }
-
 
         public static void TestLinkedListSingly()
         {
