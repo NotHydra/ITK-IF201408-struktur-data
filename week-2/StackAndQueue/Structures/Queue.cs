@@ -25,19 +25,48 @@ namespace StackAndQueue.Structures
             set { this._last = value; }
         }
 
+        /// <summary>
+        /// Mendapatkan dan mengembalikan nilai dari total Node yang ada di dalam Queue
+        /// </summary>
         public int Length()
         {
-            throw new NotImplementedException();
+            int count = 0;
+            Node<Type>? currentNode = this.First;
+            while (currentNode != null)
+            {
+                currentNode = currentNode.Next;
+                count++;
+            };
+
+            return count;
         }
 
+        /// <summary>
+        /// Menampilkan seluruh Node yang ada di dalam Queue
+        /// </summary>
         public void Show()
         {
-            throw new NotImplementedException();
+            Console.WriteLine(this);
         }
 
+        /// <summary>
+        /// Menampilkan seluruh Node yang ada di dalam Queue satu per satu beserta dengan Node lain yang terhubung dengan Node tersebut
+        /// </summary>
         public void Debug()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Debug: Top");
+
+            Node<Type>? currentNode = this.First;
+            while (currentNode != null)
+            {
+                string nextText = (currentNode.Next != null) ? currentNode.Next.Value!.ToString()! : "null";
+
+                Console.WriteLine($"Debug: {currentNode.Value} -> {nextText}");
+
+                currentNode = currentNode.Next;
+            };
+
+            Console.WriteLine("Debug: Bottom");
         }
 
         public bool HasPop()
@@ -60,14 +89,32 @@ namespace StackAndQueue.Structures
             throw new NotImplementedException();
         }
 
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Swap(int firstIndex, int secondIndex)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Mengembalikan bentuk string dari seluruh Node yang ada di dalam Queue  
+        /// </summary>
         public override string ToString()
         {
-            throw new NotImplementedException();
+            string text = "first -> ";
+            Node<Type>? currentNode = this.First;
+            while (currentNode != null)
+            {
+                text += $"{currentNode.Value} -> ";
+                currentNode = currentNode.Next;
+            };
+
+            text += "last";
+
+            return text;
         }
     }
 }
