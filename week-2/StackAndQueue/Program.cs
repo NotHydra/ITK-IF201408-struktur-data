@@ -3,20 +3,19 @@
     public class CommandLineInterface()
     {
         private static readonly int borderLength = 60;
-        private static readonly string[] menus = ["List", "Add", "Use", "Exit"];
-        private static readonly string[] menuAddDataStructures = ["LinkedListSingly", "LinkedListDoubly", "Stack", "Back"];
-        private static readonly string[] menuAddDataTypes = ["int", "char", "Back"];
+        private static readonly string[] menuOptions = ["List", "Add", "Use", "Exit"];
+        private static readonly string[] menuAddDataStructureOptions = ["LinkedListSingly", "LinkedListDoubly", "Stack", "Back"];
+        private static readonly string[] menuAddDataTypeOptions = ["int", "char", "Back"];
         private static readonly List<object> containers = [];
 
-        private static bool isRunning = true;
-        private static int currentMenu = 0;
-        private static ConsoleKey key;
+        private static ConsoleKey pressedKey;
 
         public static void Start()
         {
             FillContainer();
 
-            while (isRunning)
+            int currentMenuOption = 0;
+            while (true)
             {
                 Console.Clear();
                 Border();
@@ -25,40 +24,53 @@
                 Console.WriteLine("Choose a menu:");
                 Border();
 
-                for (int index = 0; index < menus.Length; index++)
+                for (int i = 0; i < menuOptions.Length; i++)
                 {
-                    if (index == currentMenu)
+                    if (i == currentMenuOption)
                     {
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.WriteLine($"> {menus[index]}");
+                        Console.WriteLine($"> {menuOptions[i]}");
                         Console.ResetColor();
                     }
                     else
                     {
-                        Console.WriteLine($"  {menus[index]}");
+                        Console.WriteLine($"  {menuOptions[i]}");
                     };
                 };
 
                 Border();
 
-                key = Console.ReadKey(true).Key;
-                switch (key)
+                pressedKey = Console.ReadKey(true).Key;
+                if (pressedKey == ConsoleKey.UpArrow)
                 {
-                    case ConsoleKey.UpArrow:
-                        currentMenu = (currentMenu == 0) ? (menus.Length - 1) : (currentMenu - 1);
+                    currentMenuOption = (currentMenuOption == 0) ? (menuOptions.Length - 1) : (currentMenuOption - 1);
+                }
+                else if (pressedKey == ConsoleKey.DownArrow)
+                {
+                    currentMenuOption = (currentMenuOption == menuOptions.Length - 1) ? 0 : (currentMenuOption + 1);
+                }
+                else if (pressedKey == ConsoleKey.Enter)
+                {
+                    if (currentMenuOption == 0)
+                    {
+                        HandleListOption();
+                    }
+                    else if (currentMenuOption == 1)
+                    {
+                        HandleAddOption();
+                    }
+                    else if (currentMenuOption == 2)
+                    {
+                        // HandleMenuUse();
+                    }
+                    else if (currentMenuOption == 3)
+                    {
                         break;
-
-                    case ConsoleKey.DownArrow:
-                        currentMenu = (currentMenu == menus.Length - 1) ? 0 : (currentMenu + 1);
-                        break;
-
-                    case ConsoleKey.Enter:
-                        HandleMenu();
-                        break;
-
-                    case ConsoleKey.Escape:
-                        isRunning = false;
-                        break;
+                    };
+                }
+                else if (pressedKey == ConsoleKey.Escape)
+                {
+                    break;
                 };
             };
 
@@ -119,29 +131,7 @@
             Console.WriteLine(String.Concat(Enumerable.Repeat("-", length)));
         }
 
-        private static void HandleMenu()
-        {
-            switch (currentMenu)
-            {
-                case 0:
-                    HandleMenuList();
-                    break;
-
-                case 1:
-                    HandleMenuAdd();
-                    break;
-
-                // case 2:
-                //     HandleMenuUse();
-                //     break;
-
-                case 3:
-                    isRunning = false;
-                    break;
-            };
-        }
-
-        private static void HandleMenuList()
+        private static void HandleListOption()
         {
             while (true)
             {
@@ -150,31 +140,32 @@
                 Title("List Menu");
                 Border();
 
-                for (int index = 0; index < containers.Count; index++)
+                for (int i = 0; i < containers.Count; i++)
                 {
-                    if (containers[index] is Structures.LinkedListSingly<int>)
+                    Console.Write($"{i + 1}. {containers[i]} ");
+                    if (containers[i] is Structures.LinkedListSingly<int>)
                     {
-                        Console.WriteLine($"{index + 1}. {containers[index]} ( LinkedListSingly<int> )");
+                        Console.WriteLine("( LinkedListSingly<int> )");
                     }
-                    else if (containers[index] is Structures.LinkedListSingly<char>)
+                    else if (containers[i] is Structures.LinkedListSingly<char>)
                     {
-                        Console.WriteLine($"{index + 1}. {containers[index]} ( LinkedListSingly<char> )");
+                        Console.WriteLine("( LinkedListSingly<char> )");
                     }
-                    else if (containers[index] is Structures.LinkedListDoubly<int>)
+                    else if (containers[i] is Structures.LinkedListDoubly<int>)
                     {
-                        Console.WriteLine($"{index + 1}. {containers[index]} ( LinkedListDoubly<int> )");
+                        Console.WriteLine("( LinkedListDoubly<int> )");
                     }
-                    else if (containers[index] is Structures.LinkedListDoubly<char>)
+                    else if (containers[i] is Structures.LinkedListDoubly<char>)
                     {
-                        Console.WriteLine($"{index + 1}. {containers[index]} ( LinkedListDoubly<char> )");
+                        Console.WriteLine("( LinkedListDoubly<char> )");
                     }
-                    else if (containers[index] is Structures.Stack<int>)
+                    else if (containers[i] is Structures.Stack<int>)
                     {
-                        Console.WriteLine($"{index + 1}. {containers[index]} ( Stack<int> )");
+                        Console.WriteLine("( Stack<int> )");
                     }
-                    else if (containers[index] is Structures.Stack<char>)
+                    else if (containers[i] is Structures.Stack<char>)
                     {
-                        Console.WriteLine($"{index + 1}. {containers[index]} ( Stack<char> )");
+                        Console.WriteLine("( Stack<char> )");
                     };
                 };
 
@@ -185,17 +176,17 @@
                 Console.ResetColor();
                 Border();
 
-                key = Console.ReadKey(true).Key;
-                if (key == ConsoleKey.Enter || key == ConsoleKey.Escape)
+                pressedKey = Console.ReadKey(true).Key;
+                if (pressedKey == ConsoleKey.Enter || pressedKey == ConsoleKey.Escape)
                 {
                     break;
                 };
             };
         }
 
-        private static void HandleMenuAdd()
+        private static void HandleAddOption()
         {
-            int currentDataStructure = 0;
+            int currentAddDataStructureOption = 0;
             while (true)
             {
                 Console.Clear();
@@ -205,36 +196,39 @@
                 Console.WriteLine("Choose a data structure:");
                 Border();
 
-                for (int index = 0; index < menuAddDataStructures.Length; index++)
+                for (int i = 0; i < menuAddDataStructureOptions.Length; i++)
                 {
-                    if (index == currentDataStructure)
+                    if (i == currentAddDataStructureOption)
                     {
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.WriteLine($"> {menuAddDataStructures[index]}");
+                        Console.WriteLine($"> {menuAddDataStructureOptions[i]}");
                         Console.ResetColor();
                     }
                     else
                     {
-                        Console.WriteLine($"  {menuAddDataStructures[index]}");
+                        Console.WriteLine($"  {menuAddDataStructureOptions[i]}");
                     };
                 };
 
                 Border();
 
-                key = Console.ReadKey(true).Key;
-                if (key == ConsoleKey.UpArrow)
+                pressedKey = Console.ReadKey(true).Key;
+                if (pressedKey == ConsoleKey.UpArrow)
                 {
-                    currentDataStructure = (currentDataStructure == 0) ? (menuAddDataStructures.Length - 1) : (currentDataStructure - 1);
+                    currentAddDataStructureOption = (currentAddDataStructureOption == 0) ? (menuAddDataStructureOptions.Length - 1) : (currentAddDataStructureOption - 1);
                 }
-                else if (key == ConsoleKey.DownArrow)
+                else if (pressedKey == ConsoleKey.DownArrow)
                 {
-                    currentDataStructure = (currentDataStructure == menuAddDataStructures.Length - 1) ? 0 : (currentDataStructure + 1);
+                    currentAddDataStructureOption = (currentAddDataStructureOption == menuAddDataStructureOptions.Length - 1) ? 0 : (currentAddDataStructureOption + 1);
                 }
-                else if (key == ConsoleKey.Enter)
+                else if (pressedKey == ConsoleKey.Enter)
                 {
-                    // HandleMenuAddChoose();
+                    if (currentAddDataStructureOption == 3)
+                    {
+                        break;
+                    };
                 }
-                else if (key == ConsoleKey.Escape)
+                else if (pressedKey == ConsoleKey.Escape)
                 {
                     break;
                 };
