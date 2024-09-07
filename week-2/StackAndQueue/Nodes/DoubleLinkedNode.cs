@@ -1,13 +1,26 @@
 namespace StackAndQueue.Nodes
 {
-    public class DoubleLinkedNode<Type>(Type value) : Node<Type>(value)
+    public class DoubleLinkedNode<Type>(Type value)
     {
-        private Node<Type>? _prev = null;
+        private readonly Type _value = value;
+        private DoubleLinkedNode<Type>? _next = null;
+        private DoubleLinkedNode<Type>? _previous = null;
 
-        public Node<Type>? Prev
+        public Type Value
         {
-            get { return this._prev; }
-            set { this._prev = value; }
+            get { return this._value; }
+        }
+
+        public DoubleLinkedNode<Type>? Next
+        {
+            get { return this._next; }
+            set { this._next = value; }
+        }
+
+        public DoubleLinkedNode<Type>? Previous
+        {
+            get { return this._previous; }
+            set { this._previous = value; }
         }
     }
 }
