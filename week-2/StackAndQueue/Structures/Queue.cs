@@ -69,26 +69,50 @@ namespace StackAndQueue.Structures
             Console.WriteLine("Debug: Bottom");
         }
 
+        /// <summary>
+        /// Mengecek apakah isi dari Queue dapat dilakukan Pop atau tidak
+        /// </summary>
         public bool HasPop()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Mendapatkan dan mengembalikan nilai dari Node yang berada di paling awal Queue tanpa mengeluarkan Node tersebut dari Queue
+        /// </summary>
+        /// <returns>
+        /// Nilai dari Node yang berada di paling awal Queue
+        /// </returns>
         public Type? Peek()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Menaruh Node baru dengan Value yang diberikan di paling awal Queue
+        /// </summary>
+        /// <param name="value">
+        /// Value atau nilai yang akan dimasukkan ke dalam Node baru
+        /// </param>
         public void Push(Type value)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Mengeluarkan Node serta mengembalikan nilai dari Node yang berada di paling awal dari Queue
+        /// </summary>
+        /// <returns>
+        /// Nilai dari Node yang dikeluarkan dari Stack
+        /// </returns>
         public Type Pop()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Menghapus seluruh Node yang ada di dalam Queue
+        /// </summary>
         public void Clear()
         {
             throw new NotImplementedException();

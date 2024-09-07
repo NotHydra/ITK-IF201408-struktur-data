@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Contracts;
-
-namespace LinkedListDoubly
+﻿namespace LinkedListDoubly
 {
     class Node<Type>(Type value)
     {
