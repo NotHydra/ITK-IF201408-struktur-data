@@ -163,7 +163,7 @@
 
         private static string StructureWithTypeToAlias(Type structure, Type type)
         {
-            return structure.Name.Split('`')[0] + "<" + TypeToAlias(type) + ">";
+            return StructureToAlias(structure) + "<" + TypeToAlias(type) + ">";
         }
 
         private static void Border()
@@ -180,6 +180,13 @@
             Console.WriteLine(String.Concat(Enumerable.Repeat("-", length)));
         }
 
+        private static void WriteLineColored(string text, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(text);
+            Console.ResetColor();
+        }
+
         private static void HandleListOption()
         {
             while (true)
@@ -193,16 +200,12 @@
                 {
                     Console.Write($"{i + 1}. {containers[i]} ");
 
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"( {StructureWithTypeToAlias(containers[i].GetType(), containers[i].GetType().GetGenericArguments()[0])} )");
-                    Console.ResetColor();
+                    WriteLineColored($"( {StructureWithTypeToAlias(containers[i].GetType(), containers[i].GetType().GetGenericArguments()[0])} )", ConsoleColor.Green);
                 };
 
                 Border();
 
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("> Back (press any key to continue)");
-                Console.ResetColor();
+                WriteLineColored("> Back (press any key to continue)", ConsoleColor.Cyan);
                 Border();
 
                 Console.ReadKey(true);
@@ -307,9 +310,7 @@
                             Console.WriteLine($"{StructureWithTypeToAlias(menuAddDataStructureOptions[currentAddDataStructureOption], menuAddDataTypeOptions[currentAddDataTypeOption])} added");
                             Border();
 
-                            Console.ForegroundColor = ConsoleColor.Cyan;
-                            Console.WriteLine("> Back (press any key to continue)");
-                            Console.ResetColor();
+                            WriteLineColored("> Back (press any key to continue)", ConsoleColor.Cyan);
                             Border();
 
                             Console.ReadKey(true);
