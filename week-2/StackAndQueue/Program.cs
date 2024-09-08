@@ -242,6 +242,8 @@
                 Border();
                 Title("List Menu");
                 Border();
+                Console.WriteLine("Result:");
+                Border();
 
                 for (int containerIndex = 0; containerIndex < containers.Count; containerIndex++)
                 {
@@ -352,6 +354,9 @@
                         }
                         else if (pressedKey == ConsoleKey.Enter || pressedKey == ConsoleKey.RightArrow)
                         {
+                            Console.WriteLine("Result:");
+                            Border();
+
                             containers.Add(Activator.CreateInstance(structures[structureOption].MakeGenericType(types[typeOption]))!);
 
                             Console.WriteLine($"{StructureWithTypeToAlias(structures[structureOption], types[typeOption])} added");
@@ -476,13 +481,43 @@
                         }
                         else if (pressedKey == ConsoleKey.Enter || pressedKey == ConsoleKey.RightArrow)
                         {
-                            if (actions[actionOption].GetParameters().Length == 0)
+                            Console.WriteLine("Result:");
+                            Border();
+
+                            if (actions[actionOption].Name == "Clear")
                             {
-                                actions[actionOption].Invoke(containers[containerOption], null);
+                                try
+                                {
+                                    actions[actionOption].Invoke(containers[containerOption], null);
+
+                                    Console.WriteLine("Success");
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e.InnerException!.Message);
+                                };
                             }
-                            else
+                            else if ((actions[actionOption].GetParameters().Length == 0) && (actions[actionOption].ReturnType == typeof(void)))
                             {
-                                throw new NotImplementedException();
+                                try
+                                {
+                                    actions[actionOption].Invoke(containers[containerOption], null);
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e.InnerException!.Message);
+                                };
+                            }
+                            else if ((actions[actionOption].GetParameters().Length == 0) && (actions[actionOption].ReturnType != typeof(void)))
+                            {
+                                try
+                                {
+                                    Console.WriteLine(actions[actionOption].Invoke(containers[containerOption], null));
+                                }
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine(e.InnerException!.Message);
+                                };
                             };
 
                             Border();
