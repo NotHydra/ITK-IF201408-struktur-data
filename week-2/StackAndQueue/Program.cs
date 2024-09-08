@@ -2,14 +2,16 @@
 {
     public class CommandLineInterface()
     {
-        private static readonly int borderLength = 60;
+        private static readonly int borderLength = 80;
 
         private static readonly string[] menus = ["List", "Add", "Use"];
 
         private static readonly Type[] structures = [
             // typeof(Structures.LinkedListSingly<>),
             // typeof(Structures.LinkedListDoubly<>),
-            typeof(Structures.Stack<>)
+            typeof(Structures.Stack<>),
+            typeof(Structures.Queue<>)
+
         ];
         private static readonly Type[] types = [
             typeof(int),
@@ -248,6 +250,7 @@
 
         private static void SubTitle(string text)
         {
+            text = " " + text + " ";
             int length = (borderLength - text.Length) / 2;
 
             Console.Write(String.Concat(Enumerable.Repeat("-", ((text.Length % 2) == 0) ? length : (length + 1))));

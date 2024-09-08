@@ -54,19 +54,20 @@ namespace StackAndQueue.Structures
         /// </summary>
         public void Debug()
         {
-            Console.WriteLine("Debug: Top");
+            Console.WriteLine("Debug: First");
 
             DoubleLinkedNode<Type>? currentNode = this.First;
             while (currentNode != null)
             {
+                string previousText = (currentNode.Previous != null) ? currentNode.Previous.Value!.ToString()! : "null";
                 string nextText = (currentNode.Next != null) ? currentNode.Next.Value!.ToString()! : "null";
 
-                Console.WriteLine($"Debug: {currentNode.Value} -> {nextText}");
+                Console.WriteLine($"Debug: {previousText} <- {currentNode.Value} -> {nextText}");
 
                 currentNode = currentNode.Next;
             };
 
-            Console.WriteLine("Debug: Bottom");
+            Console.WriteLine("Debug: Last");
         }
 
         /// <summary>
