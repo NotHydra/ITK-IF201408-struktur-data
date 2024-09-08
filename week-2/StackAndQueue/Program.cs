@@ -1,4 +1,6 @@
-﻿namespace StackAndQueue
+﻿using System.Reflection.Metadata;
+
+namespace StackAndQueue
 {
     public class CommandLineInterface()
     {
@@ -61,7 +63,7 @@
                     }
                     else if (currentMenuOption == 2)
                     {
-                        // HandleMenuUse();
+                        HandleUseOption();
                     }
                     else if (currentMenuOption == 3)
                     {
@@ -376,6 +378,95 @@
                 };
             };
         }
+
+        private static void HandleUseOption()
+        {
+            int currentUseContainerOption = 0;
+            while (true)
+            {
+                Console.Clear();
+                Border();
+                Title("Use Menu");
+                Border();
+                Console.WriteLine("Choose a container:");
+                Border();
+
+                for (int i = 0; i < containers.Count; i++)
+                {
+                    if (i == currentUseContainerOption)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.Write($"> ");
+                    }
+                    else
+                    {
+                        Console.Write($"  ");
+                    };
+
+                    Console.Write($"{containers[i]} ");
+                    if (containers[i] is Structures.LinkedListSingly<int>)
+                    {
+                        Console.WriteLine("( LinkedListSingly<int> )");
+                    }
+                    else if (containers[i] is Structures.LinkedListSingly<char>)
+                    {
+                        Console.WriteLine("( LinkedListSingly<char> )");
+                    }
+                    else if (containers[i] is Structures.LinkedListSingly<string>)
+                    {
+                        Console.WriteLine("( LinkedListSingly<string> )");
+                    }
+                    else if (containers[i] is Structures.LinkedListDoubly<int>)
+                    {
+                        Console.WriteLine("( LinkedListDoubly<int> )");
+                    }
+                    else if (containers[i] is Structures.LinkedListDoubly<char>)
+                    {
+                        Console.WriteLine("( LinkedListDoubly<char> )");
+                    }
+                    else if (containers[i] is Structures.LinkedListDoubly<string>)
+                    {
+                        Console.WriteLine("( LinkedListDoubly<string> )");
+                    }
+                    else if (containers[i] is Structures.Stack<int>)
+                    {
+                        Console.WriteLine("( Stack<int> )");
+                    }
+                    else if (containers[i] is Structures.Stack<char>)
+                    {
+                        Console.WriteLine("( Stack<char> )");
+                    }
+                    else if (containers[i] is Structures.Stack<string>)
+                    {
+                        Console.WriteLine("( Stack<string> )");
+                    };
+
+                    if (i == currentUseContainerOption)
+                    {
+                        Console.ResetColor();
+                    };
+                };
+
+                Border();
+
+                pressedKey = Console.ReadKey(true).Key;
+                if (pressedKey == ConsoleKey.UpArrow)
+                {
+                    currentUseContainerOption = (currentUseContainerOption == 0) ? (containers.Count - 1) : (currentUseContainerOption - 1);
+                }
+                else if (pressedKey == ConsoleKey.DownArrow)
+                {
+                    currentUseContainerOption = (currentUseContainerOption == (containers.Count - 1)) ? 0 : (currentUseContainerOption + 1);
+                }
+                else if (pressedKey == ConsoleKey.Enter)
+                {
+                }
+                else if (pressedKey == ConsoleKey.Escape)
+                {
+                    break;
+                };
+            }
+        }
     }
 
     public class Program
@@ -383,6 +474,9 @@
         public static void Main(string[] args)
         {
             CommandLineInterface.Start();
+            // TestLinkedListSingly();
+            // TestLinkedListDoubly();
+            // TestStack();
         }
 
         public static void TestLinkedListSingly()
