@@ -150,6 +150,11 @@ namespace StackAndQueue.Structures
                 throw new InvalidOperationException("Stack is empty");
             };
 
+            if (this.Length() == 1)
+            {
+                throw new InvalidOperationException("Stack has only one element");
+            };
+
             if ((firstIndex < 0) || (this.Length() <= firstIndex))
             {
                 throw new ArgumentOutOfRangeException(nameof(firstIndex), "Index out of bound");
