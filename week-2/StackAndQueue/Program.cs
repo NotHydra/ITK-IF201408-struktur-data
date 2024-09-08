@@ -4,11 +4,23 @@
     {
         private static readonly int borderLength = 60;
         private static readonly string[] menuOptions = ["List", "Add", "Use"];
-        private static readonly string[] menuAddDataStructureOptions = ["LinkedListSingly", "LinkedListDoubly", "Stack"];
-        private static readonly string[] menuAddDataTypeOptions = ["int", "char", "string"];
+
+        private static readonly Type[] menuAddDataStructureOptions = [
+            typeof(Structures.LinkedListSingly<>),
+            typeof(Structures.LinkedListDoubly<>),
+            typeof(Structures.Stack<>)
+        ];
+
+        private static readonly Type[] menuAddDataTypeOptions = [
+            typeof(int),
+            typeof(char),
+            typeof(string)
+        ];
+
         private static readonly string[] menuUseLinkedListSinglyOptions = ["Show", "Debug", "Length", "Add", "Pop", "Get", "Insert", "Swap", "Remove"];
         private static readonly string[] menuUseLinkedListDoublyOptions = ["Show", "Debug", "Length", "Add", "Pop", "Get", "Insert", "Swap", "Remove"];
         private static readonly string[] menuUseStackOptions = ["Show", "Debug", "Length", "HasPop", "Peek", "Push", "Pop", "Clear", "Swap"];
+
         private static readonly List<object> containers = [];
 
         private static ConsoleKey pressedKey;
@@ -124,6 +136,36 @@
             containers.Add(stack2);
         }
 
+        private static string TypeToAlias(Type type)
+        {
+            if (type == typeof(int))
+            {
+                return "int";
+            }
+
+            if (type == typeof(char))
+            {
+                return "char";
+            }
+
+            if (type == typeof(string))
+            {
+                return "string";
+            }
+
+            return "object";
+        }
+
+        private static string StructureToAlias(Type structure)
+        {
+            return structure.Name.Split('`')[0];
+        }
+
+        private static string StructureWithTypeToAlias(Type structure, Type type)
+        {
+            return structure.Name.Split('`')[0] + "<" + TypeToAlias(type) + ">";
+        }
+
         private static void Border()
         {
             Console.WriteLine(String.Concat(Enumerable.Repeat("=", borderLength)));
@@ -150,42 +192,10 @@
                 for (int i = 0; i < containers.Count; i++)
                 {
                     Console.Write($"{i + 1}. {containers[i]} ");
-                    if (containers[i] is Structures.LinkedListSingly<int>)
-                    {
-                        Console.WriteLine("( LinkedListSingly<int> )");
-                    }
-                    else if (containers[i] is Structures.LinkedListSingly<char>)
-                    {
-                        Console.WriteLine("( LinkedListSingly<char> )");
-                    }
-                    else if (containers[i] is Structures.LinkedListSingly<string>)
-                    {
-                        Console.WriteLine("( LinkedListSingly<string> )");
-                    }
-                    else if (containers[i] is Structures.LinkedListDoubly<int>)
-                    {
-                        Console.WriteLine("( LinkedListDoubly<int> )");
-                    }
-                    else if (containers[i] is Structures.LinkedListDoubly<char>)
-                    {
-                        Console.WriteLine("( LinkedListDoubly<char> )");
-                    }
-                    else if (containers[i] is Structures.LinkedListDoubly<string>)
-                    {
-                        Console.WriteLine("( LinkedListDoubly<string> )");
-                    }
-                    else if (containers[i] is Structures.Stack<int>)
-                    {
-                        Console.WriteLine("( Stack<int> )");
-                    }
-                    else if (containers[i] is Structures.Stack<char>)
-                    {
-                        Console.WriteLine("( Stack<char> )");
-                    }
-                    else if (containers[i] is Structures.Stack<string>)
-                    {
-                        Console.WriteLine("( Stack<string> )");
-                    };
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"( {StructureWithTypeToAlias(containers[i].GetType(), containers[i].GetType().GetGenericArguments()[0])} )");
+                    Console.ResetColor();
                 };
 
                 Border();
@@ -227,7 +237,7 @@
                         Console.Write("  ");
                     };
 
-                    Console.WriteLine(menuAddDataStructureOptions[i]);
+                    Console.WriteLine(StructureToAlias(menuAddDataStructureOptions[i]));
 
                     if (i == currentAddDataStructureOption)
                     {
@@ -272,7 +282,7 @@
                                 Console.Write("  ");
                             };
 
-                            Console.WriteLine(menuAddDataTypeOptions[i]);
+                            Console.WriteLine(TypeToAlias(menuAddDataTypeOptions[i]));
 
                             if (i == currentAddDataTypeOption)
                             {
@@ -293,74 +303,8 @@
                         }
                         else if (pressedKey == ConsoleKey.Enter || pressedKey == ConsoleKey.RightArrow)
                         {
-                            if (currentAddDataStructureOption == 0)
-                            {
-                                Console.Write("LinkedListSingly");
-                                if (currentAddDataTypeOption == 0)
-                                {
-                                    Console.Write("<int>");
-                                    Structures.LinkedListSingly<int> linkedListSingly = new();
-                                    containers.Add(linkedListSingly);
-                                }
-                                else if (currentAddDataTypeOption == 1)
-                                {
-                                    Console.Write("<char>");
-                                    Structures.LinkedListSingly<char> linkedListSingly = new();
-                                    containers.Add(linkedListSingly);
-                                }
-                                else if (currentAddDataTypeOption == 2)
-                                {
-                                    Console.Write("<string>");
-                                    Structures.LinkedListSingly<string> linkedListSingly = new();
-                                    containers.Add(linkedListSingly);
-                                };
-                            }
-                            else if (currentAddDataStructureOption == 1)
-                            {
-                                Console.Write("LinkedListDoubly");
-                                if (currentAddDataTypeOption == 0)
-                                {
-                                    Console.Write("<int>");
-                                    Structures.LinkedListDoubly<int> linkedListDoubly = new();
-                                    containers.Add(linkedListDoubly);
-                                }
-                                else if (currentAddDataTypeOption == 1)
-                                {
-                                    Console.Write("<char>");
-                                    Structures.LinkedListDoubly<char> linkedListDoubly = new();
-                                    containers.Add(linkedListDoubly);
-                                }
-                                else if (currentAddDataTypeOption == 2)
-                                {
-                                    Console.Write("<string>");
-                                    Structures.LinkedListDoubly<string> linkedListDoubly = new();
-                                    containers.Add(linkedListDoubly);
-                                };
-                            }
-                            else if (currentAddDataStructureOption == 2)
-                            {
-                                Console.Write("Stack");
-                                if (currentAddDataTypeOption == 0)
-                                {
-                                    Console.Write("<int>");
-                                    Structures.Stack<int> stack = new();
-                                    containers.Add(stack);
-                                }
-                                else if (currentAddDataTypeOption == 1)
-                                {
-                                    Console.Write("<char>");
-                                    Structures.Stack<char> stack = new();
-                                    containers.Add(stack);
-                                }
-                                else if (currentAddDataTypeOption == 2)
-                                {
-                                    Console.Write("<string>");
-                                    Structures.Stack<string> stack = new();
-                                    containers.Add(stack);
-                                };
-                            };
-
-                            Console.WriteLine(" Added");
+                            containers.Add(Activator.CreateInstance(menuAddDataStructureOptions[currentAddDataStructureOption].MakeGenericType(menuAddDataTypeOptions[currentAddDataTypeOption]))!);
+                            Console.WriteLine($"{StructureWithTypeToAlias(menuAddDataStructureOptions[currentAddDataStructureOption], menuAddDataTypeOptions[currentAddDataTypeOption])} added");
                             Border();
 
                             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -529,6 +473,18 @@
                         else if (pressedKey == ConsoleKey.DownArrow)
                         {
                             currentUseSelectedContainerOption = (currentUseSelectedContainerOption == (menuUseDataStructureOptions.Length - 1)) ? 0 : (currentUseSelectedContainerOption + 1);
+                        }
+                        else if (pressedKey == ConsoleKey.Enter || pressedKey == ConsoleKey.RightArrow)
+                        {
+                            // if ((containers[currentUseContainerOption] is Structures.LinkedListSingly<int>) || (containers[currentUseContainerOption] is Structures.LinkedListSingly<char>) || (containers[currentUseContainerOption] is Structures.LinkedListSingly<string>))
+                            // {
+                            //     if (menuUseDataStructureOptions[currentUseSelectedContainerOption] == "Show")
+                            //     {
+                            //         ((Structures.LinkedListSingly<object>)containers[currentUseContainerOption]).Show();
+                            //     }
+                            // }
+
+                            Console.WriteLine($"{containers[currentUseContainerOption]} - {menuUseDataStructureOptions[currentUseSelectedContainerOption]}");
                         }
                         else if (pressedKey == ConsoleKey.Escape || pressedKey == ConsoleKey.LeftArrow)
                         {
