@@ -24,7 +24,7 @@
                 Border();
                 Title("Data Structure Manager");
                 Border();
-                Title("Move = Up/Down | Select = Enter | Exit = Esc");
+                Title("Move = Up/Down | Select = Enter/Right | Exit = Esc/Left");
                 Border();
                 Console.WriteLine("Choose a menu:");
                 Border();
@@ -60,7 +60,7 @@
                 {
                     currentMenuOption = (currentMenuOption == (menuOptions.Length - 1)) ? 0 : (currentMenuOption + 1);
                 }
-                else if (pressedKey == ConsoleKey.Enter)
+                else if (pressedKey == ConsoleKey.Enter || pressedKey == ConsoleKey.RightArrow)
                 {
                     if (currentMenuOption == 0)
                     {
@@ -75,7 +75,7 @@
                         HandleUseOption();
                     };
                 }
-                else if (pressedKey == ConsoleKey.Escape)
+                else if (pressedKey == ConsoleKey.Escape || pressedKey == ConsoleKey.LeftArrow)
                 {
                     break;
                 };
@@ -210,7 +210,7 @@
                 Border();
                 Title("Add Menu");
                 Border();
-                Title("Move = Up/Down | Select = Enter | Back = Esc");
+                Title("Move = Up/Down | Select = Enter/Right | Back = Esc/Left");
                 Border();
                 Console.WriteLine("Choose a data structure:");
                 Border();
@@ -246,7 +246,7 @@
                 {
                     currentAddDataStructureOption = (currentAddDataStructureOption == (menuAddDataStructureOptions.Length - 1)) ? 0 : (currentAddDataStructureOption + 1);
                 }
-                else if (pressedKey == ConsoleKey.Enter)
+                else if (pressedKey == ConsoleKey.Enter || pressedKey == ConsoleKey.RightArrow)
                 {
                     int currentAddDataTypeOption = 0;
                     while (true)
@@ -255,7 +255,7 @@
                         Border();
                         Title("Add Menu");
                         Border();
-                        Title("Move = Up/Down | Select = Enter | Back = Esc");
+                        Title("Move = Up/Down | Select = Enter/Right | Back = Esc/Left");
                         Border();
                         Console.WriteLine("Choose a data type:");
                         Border();
@@ -291,7 +291,7 @@
                         {
                             currentAddDataTypeOption = (currentAddDataTypeOption == (menuAddDataTypeOptions.Length - 1)) ? 0 : (currentAddDataTypeOption + 1);
                         }
-                        else if (pressedKey == ConsoleKey.Enter)
+                        else if (pressedKey == ConsoleKey.Enter || pressedKey == ConsoleKey.RightArrow)
                         {
                             if (currentAddDataStructureOption == 0)
                             {
@@ -372,13 +372,13 @@
                             isRunning = false;
                             break;
                         }
-                        else if (pressedKey == ConsoleKey.Escape)
+                        else if (pressedKey == ConsoleKey.Escape || pressedKey == ConsoleKey.LeftArrow)
                         {
                             break;
                         };
                     };
                 }
-                else if (pressedKey == ConsoleKey.Escape)
+                else if (pressedKey == ConsoleKey.Escape || pressedKey == ConsoleKey.LeftArrow)
                 {
                     break;
                 };
@@ -399,7 +399,7 @@
                 Border();
                 Title("Use Menu");
                 Border();
-                Title("Move = Up/Down | Select = Enter | Back = Esc");
+                Title("Move = Up/Down | Select = Enter/Right | Back = Esc/Left");
                 Border();
                 Console.WriteLine("Choose a container:");
                 Border();
@@ -471,7 +471,7 @@
                 {
                     currentUseContainerOption = (currentUseContainerOption == (containers.Count - 1)) ? 0 : (currentUseContainerOption + 1);
                 }
-                else if (pressedKey == ConsoleKey.Enter)
+                else if (pressedKey == ConsoleKey.Enter || pressedKey == ConsoleKey.RightArrow)
                 {
                     int currentUseSelectedContainerOption = 0;
                     string[] menuUseDataStructureOptions = menuUseLinkedListSinglyOptions;
@@ -481,7 +481,7 @@
                         Border();
                         Title("Use Menu");
                         Border();
-                        Title("Move = Up/Down | Select = Enter | Back = Esc");
+                        Title("Move = Up/Down | Select = Enter/Right | Back = Esc/Left");
                         Border();
                         Console.WriteLine("Choose an action:");
                         Border();
@@ -530,17 +530,17 @@
                         {
                             currentUseSelectedContainerOption = (currentUseSelectedContainerOption == (menuUseDataStructureOptions.Length - 1)) ? 0 : (currentUseSelectedContainerOption + 1);
                         }
-                        else if (pressedKey == ConsoleKey.Escape)
+                        else if (pressedKey == ConsoleKey.Escape || pressedKey == ConsoleKey.LeftArrow)
                         {
                             break;
                         };
-                    }
+                    };
                 }
-                else if (pressedKey == ConsoleKey.Escape)
+                else if (pressedKey == ConsoleKey.Escape || pressedKey == ConsoleKey.LeftArrow)
                 {
                     break;
                 };
-            }
+            };
         }
     }
 
