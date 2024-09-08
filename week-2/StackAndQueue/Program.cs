@@ -23,6 +23,8 @@ namespace StackAndQueue
                 Border();
                 Title("Data Structure Manager");
                 Border();
+                Title("Move = Up/Down | Select = Enter | Exit = Esc");
+                Border();
                 Console.WriteLine("Choose a menu:");
                 Border();
 
@@ -207,6 +209,8 @@ namespace StackAndQueue
                 Border();
                 Title("Add Menu");
                 Border();
+                Title("Move = Up/Down | Select = Enter | Back = Esc");
+                Border();
                 Console.WriteLine("Choose a data structure:");
                 Border();
 
@@ -249,6 +253,8 @@ namespace StackAndQueue
                         Console.Clear();
                         Border();
                         Title("Add Menu");
+                        Border();
+                        Title("Move = Up/Down | Select = Enter | Back = Esc");
                         Border();
                         Console.WriteLine("Choose a data type:");
                         Border();
@@ -392,6 +398,8 @@ namespace StackAndQueue
                 Border();
                 Title("Use Menu");
                 Border();
+                Title("Move = Up/Down | Select = Enter | Back = Esc");
+                Border();
                 Console.WriteLine("Choose a container:");
                 Border();
 
@@ -464,6 +472,7 @@ namespace StackAndQueue
                 }
                 else if (pressedKey == ConsoleKey.Enter)
                 {
+
                 }
                 else if (pressedKey == ConsoleKey.Escape)
                 {
