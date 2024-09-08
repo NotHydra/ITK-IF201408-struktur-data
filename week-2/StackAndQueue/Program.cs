@@ -4,14 +4,14 @@
     {
         private static readonly int borderLength = 60;
 
-        private static readonly string[] menuOptions = ["List", "Add", "Use"];
+        private static readonly string[] menus = ["List", "Add", "Use"];
 
-        private static readonly Type[] menuAddDataStructureOptions = [
+        private static readonly Type[] structures = [
             typeof(Structures.LinkedListSingly<>),
             typeof(Structures.LinkedListDoubly<>),
             typeof(Structures.Stack<>)
         ];
-        private static readonly Type[] menuAddDataTypeOptions = [
+        private static readonly Type[] types = [
             typeof(int),
             typeof(char),
             typeof(string)
@@ -25,7 +25,7 @@
         {
             FillContainer();
 
-            int currentMenuOption = 0;
+            int menuOption = 0;
             while (true)
             {
                 Console.Clear();
@@ -37,9 +37,9 @@
                 Console.WriteLine("Choose a menu:");
                 Border();
 
-                for (int i = 0; i < menuOptions.Length; i++)
+                for (int menuIndex = 0; menuIndex < menus.Length; menuIndex++)
                 {
-                    if (i == currentMenuOption)
+                    if (menuIndex == menuOption)
                     {
                         Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.Write("> ");
@@ -49,9 +49,9 @@
                         Console.Write("  ");
                     };
 
-                    Console.WriteLine(menuOptions[i]);
+                    Console.WriteLine(menus[menuIndex]);
 
-                    if (i == currentMenuOption)
+                    if (menuIndex == menuOption)
                     {
                         Console.ResetColor();
                     };
@@ -62,23 +62,23 @@
                 pressedKey = Console.ReadKey(true).Key;
                 if (pressedKey == ConsoleKey.UpArrow)
                 {
-                    currentMenuOption = (currentMenuOption == 0) ? (menuOptions.Length - 1) : (currentMenuOption - 1);
+                    menuOption = (menuOption == 0) ? (menus.Length - 1) : (menuOption - 1);
                 }
                 else if (pressedKey == ConsoleKey.DownArrow)
                 {
-                    currentMenuOption = (currentMenuOption == (menuOptions.Length - 1)) ? 0 : (currentMenuOption + 1);
+                    menuOption = (menuOption == (menus.Length - 1)) ? 0 : (menuOption + 1);
                 }
                 else if (pressedKey == ConsoleKey.Enter || pressedKey == ConsoleKey.RightArrow)
                 {
-                    if (currentMenuOption == 0)
+                    if (menuOption == 0)
                     {
                         HandleListOption();
                     }
-                    else if (currentMenuOption == 1)
+                    else if (menuOption == 1)
                     {
                         HandleAddOption();
                     }
-                    else if (currentMenuOption == 2)
+                    else if (menuOption == 2)
                     {
                         HandleUseOption();
                     };
@@ -243,10 +243,10 @@
                 Title("List Menu");
                 Border();
 
-                for (int i = 0; i < containers.Count; i++)
+                for (int containerIndex = 0; containerIndex < containers.Count; containerIndex++)
                 {
-                    Console.Write($"{i + 1}. {containers[i]} ");
-                    WriteLineColored($"( {StructureWithTypeToAlias(containers[i].GetType(), containers[i].GetType().GetGenericArguments()[0])} )", ConsoleColor.Green);
+                    Console.Write($"{containerIndex + 1}. {containers[containerIndex]} ");
+                    WriteLineColored($"( {StructureWithTypeToAlias(containers[containerIndex].GetType(), containers[containerIndex].GetType().GetGenericArguments()[0])} )", ConsoleColor.Green);
                 };
 
                 Border();
@@ -262,7 +262,7 @@
         private static void HandleAddOption()
         {
             bool isRunning = true;
-            int currentAddDataStructureOption = 0;
+            int structureOption = 0;
             while (isRunning)
             {
                 Console.Clear();
@@ -274,9 +274,9 @@
                 Console.WriteLine("Choose a data structure:");
                 Border();
 
-                for (int i = 0; i < menuAddDataStructureOptions.Length; i++)
+                for (int i = 0; i < structures.Length; i++)
                 {
-                    if (i == currentAddDataStructureOption)
+                    if (i == structureOption)
                     {
                         Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.Write("> ");
@@ -286,9 +286,9 @@
                         Console.Write("  ");
                     };
 
-                    Console.WriteLine(StructureToAlias(menuAddDataStructureOptions[i]));
+                    Console.WriteLine(StructureToAlias(structures[i]));
 
-                    if (i == currentAddDataStructureOption)
+                    if (i == structureOption)
                     {
                         Console.ResetColor();
                     };
@@ -299,15 +299,15 @@
                 pressedKey = Console.ReadKey(true).Key;
                 if (pressedKey == ConsoleKey.UpArrow)
                 {
-                    currentAddDataStructureOption = (currentAddDataStructureOption == 0) ? (menuAddDataStructureOptions.Length - 1) : (currentAddDataStructureOption - 1);
+                    structureOption = (structureOption == 0) ? (structures.Length - 1) : (structureOption - 1);
                 }
                 else if (pressedKey == ConsoleKey.DownArrow)
                 {
-                    currentAddDataStructureOption = (currentAddDataStructureOption == (menuAddDataStructureOptions.Length - 1)) ? 0 : (currentAddDataStructureOption + 1);
+                    structureOption = (structureOption == (structures.Length - 1)) ? 0 : (structureOption + 1);
                 }
                 else if (pressedKey == ConsoleKey.Enter || pressedKey == ConsoleKey.RightArrow)
                 {
-                    int currentAddDataTypeOption = 0;
+                    int typeOption = 0;
                     while (true)
                     {
                         Console.Clear();
@@ -319,9 +319,9 @@
                         Console.WriteLine("Choose a data type:");
                         Border();
 
-                        for (int i = 0; i < menuAddDataTypeOptions.Length; i++)
+                        for (int i = 0; i < types.Length; i++)
                         {
-                            if (i == currentAddDataTypeOption)
+                            if (i == typeOption)
                             {
                                 Console.ForegroundColor = ConsoleColor.Cyan;
                                 Console.Write("> ");
@@ -331,9 +331,9 @@
                                 Console.Write("  ");
                             };
 
-                            Console.WriteLine(TypeToAlias(menuAddDataTypeOptions[i]));
+                            Console.WriteLine(TypeToAlias(types[i]));
 
-                            if (i == currentAddDataTypeOption)
+                            if (i == typeOption)
                             {
                                 Console.ResetColor();
                             };
@@ -344,17 +344,17 @@
                         pressedKey = Console.ReadKey(true).Key;
                         if (pressedKey == ConsoleKey.UpArrow)
                         {
-                            currentAddDataTypeOption = (currentAddDataTypeOption == 0) ? (menuAddDataTypeOptions.Length - 1) : (currentAddDataTypeOption - 1);
+                            typeOption = (typeOption == 0) ? (types.Length - 1) : (typeOption - 1);
                         }
                         else if (pressedKey == ConsoleKey.DownArrow)
                         {
-                            currentAddDataTypeOption = (currentAddDataTypeOption == (menuAddDataTypeOptions.Length - 1)) ? 0 : (currentAddDataTypeOption + 1);
+                            typeOption = (typeOption == (types.Length - 1)) ? 0 : (typeOption + 1);
                         }
                         else if (pressedKey == ConsoleKey.Enter || pressedKey == ConsoleKey.RightArrow)
                         {
-                            containers.Add(Activator.CreateInstance(menuAddDataStructureOptions[currentAddDataStructureOption].MakeGenericType(menuAddDataTypeOptions[currentAddDataTypeOption]))!);
+                            containers.Add(Activator.CreateInstance(structures[structureOption].MakeGenericType(types[typeOption]))!);
 
-                            Console.WriteLine($"{StructureWithTypeToAlias(menuAddDataStructureOptions[currentAddDataStructureOption], menuAddDataTypeOptions[currentAddDataTypeOption])} added");
+                            Console.WriteLine($"{StructureWithTypeToAlias(structures[structureOption], types[typeOption])} added");
                             Border();
 
                             WriteLineColored("> Back (press any key to continue)", ConsoleColor.Cyan);
@@ -384,7 +384,7 @@
 
         private static void HandleUseOption()
         {
-            int currentUseContainerOption = 0;
+            int containerOption = 0;
             while (true)
             {
                 Console.Clear();
@@ -396,9 +396,9 @@
                 Console.WriteLine("Choose a container:");
                 Border();
 
-                for (int i = 0; i < containers.Count; i++)
+                for (int containerIndex = 0; containerIndex < containers.Count; containerIndex++)
                 {
-                    if (i == currentUseContainerOption)
+                    if (containerIndex == containerOption)
                     {
                         Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.Write("> ");
@@ -408,10 +408,10 @@
                         Console.Write("  ");
                     };
 
-                    Console.Write($"{containers[i]} ");
-                    WriteLineColored($"( {StructureWithTypeToAlias(containers[i].GetType(), containers[i].GetType().GetGenericArguments()[0])} )", ConsoleColor.Green);
+                    Console.Write($"{containers[containerIndex]} ");
+                    WriteLineColored($"( {StructureWithTypeToAlias(containers[containerIndex].GetType(), containers[containerIndex].GetType().GetGenericArguments()[0])} )", ConsoleColor.Green);
 
-                    if (i == currentUseContainerOption)
+                    if (containerIndex == containerOption)
                     {
                         Console.ResetColor();
                     };
@@ -422,16 +422,16 @@
                 pressedKey = Console.ReadKey(true).Key;
                 if (pressedKey == ConsoleKey.UpArrow)
                 {
-                    currentUseContainerOption = (currentUseContainerOption == 0) ? (containers.Count - 1) : (currentUseContainerOption - 1);
+                    containerOption = (containerOption == 0) ? (containers.Count - 1) : (containerOption - 1);
                 }
                 else if (pressedKey == ConsoleKey.DownArrow)
                 {
-                    currentUseContainerOption = (currentUseContainerOption == (containers.Count - 1)) ? 0 : (currentUseContainerOption + 1);
+                    containerOption = (containerOption == (containers.Count - 1)) ? 0 : (containerOption + 1);
                 }
                 else if (pressedKey == ConsoleKey.Enter || pressedKey == ConsoleKey.RightArrow)
                 {
-                    int currentUseActionOption = 0;
-                    List<System.Reflection.MethodInfo> actions = GetMethodsFiltered(containers[currentUseContainerOption].GetType());
+                    int actionOption = 0;
+                    List<System.Reflection.MethodInfo> actions = GetMethodsFiltered(containers[containerOption].GetType());
                     while (true)
                     {
                         Console.Clear();
@@ -443,9 +443,9 @@
                         Console.WriteLine("Choose an action:");
                         Border();
 
-                        for (int i = 0; i < actions.Count; i++)
+                        for (int actionIndex = 0; actionIndex < actions.Count; actionIndex++)
                         {
-                            if (i == currentUseActionOption)
+                            if (actionIndex == actionOption)
                             {
                                 Console.ForegroundColor = ConsoleColor.Cyan;
                                 Console.Write("> ");
@@ -455,9 +455,9 @@
                                 Console.Write("  ");
                             };
 
-                            Console.WriteLine(actions[i].Name);
+                            Console.WriteLine(actions[actionIndex].Name);
 
-                            if (i == currentUseActionOption)
+                            if (actionIndex == actionOption)
                             {
                                 Console.ResetColor();
                             };
@@ -468,17 +468,17 @@
                         pressedKey = Console.ReadKey(true).Key;
                         if (pressedKey == ConsoleKey.UpArrow)
                         {
-                            currentUseActionOption = (currentUseActionOption == 0) ? (actions.Count - 1) : (currentUseActionOption - 1);
+                            actionOption = (actionOption == 0) ? (actions.Count - 1) : (actionOption - 1);
                         }
                         else if (pressedKey == ConsoleKey.DownArrow)
                         {
-                            currentUseActionOption = (currentUseActionOption == (actions.Count - 1)) ? 0 : (currentUseActionOption + 1);
+                            actionOption = (actionOption == (actions.Count - 1)) ? 0 : (actionOption + 1);
                         }
                         else if (pressedKey == ConsoleKey.Enter || pressedKey == ConsoleKey.RightArrow)
                         {
-                            if (actions[currentUseActionOption].GetParameters().Length == 0)
+                            if (actions[actionOption].GetParameters().Length == 0)
                             {
-                                actions[currentUseActionOption].Invoke(containers[currentUseContainerOption], null);
+                                actions[actionOption].Invoke(containers[containerOption], null);
                             }
                             else
                             {
