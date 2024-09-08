@@ -94,7 +94,7 @@ namespace StackAndQueue.Structures
         }
 
         /// <summary>
-        /// Menaruh Node baru dengan Value yang diberikan di paling awal Queue
+        /// Menaruh Node baru dengan Value yang diberikan di paling akhir Queue
         /// </summary>
         /// <param name="value">
         /// Value atau nilai yang akan dimasukkan ke dalam Node baru
