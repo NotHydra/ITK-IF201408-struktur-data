@@ -74,7 +74,13 @@ namespace StackAndQueue.Structures
         /// </summary>
         public bool HasPop()
         {
-            throw new NotImplementedException();
+            if (this._first != null)
+            {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
 
         /// <summary>
@@ -115,7 +121,8 @@ namespace StackAndQueue.Structures
         /// </summary>
         public void Clear()
         {
-            throw new NotImplementedException();
+            this._first = null;
+            this._last = null;
         }
 
         /// <summary>
