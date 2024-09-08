@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata;
-
-namespace StackAndQueue
+﻿namespace StackAndQueue
 {
     public class CommandLineInterface()
     {
@@ -8,6 +6,9 @@ namespace StackAndQueue
         private static readonly string[] menuOptions = ["List", "Add", "Use"];
         private static readonly string[] menuAddDataStructureOptions = ["LinkedListSingly", "LinkedListDoubly", "Stack"];
         private static readonly string[] menuAddDataTypeOptions = ["int", "char", "string"];
+        private static readonly string[] menuUseLinkedListSinglyOptions = ["Show", "Debug", "Length", "Add", "Pop", "Get", "Insert", "Swap", "Remove"];
+        private static readonly string[] menuUseLinkedListDoublyOptions = ["Show", "Debug", "Length", "Add", "Pop", "Get", "Insert", "Swap", "Remove"];
+        private static readonly string[] menuUseStackOptions = ["Show", "Debug", "Length", "HasPop", "Peek", "Push", "Pop", "Clear", "Swap"];
         private static readonly List<object> containers = [];
 
         private static ConsoleKey pressedKey;
@@ -472,7 +473,68 @@ namespace StackAndQueue
                 }
                 else if (pressedKey == ConsoleKey.Enter)
                 {
+                    int currentUseSelectedContainerOption = 0;
+                    string[] menuUseDataStructureOptions = menuUseLinkedListSinglyOptions;
+                    while (true)
+                    {
+                        Console.Clear();
+                        Border();
+                        Title("Use Menu");
+                        Border();
+                        Title("Move = Up/Down | Select = Enter | Back = Esc");
+                        Border();
+                        Console.WriteLine("Choose an action:");
+                        Border();
 
+                        if ((containers[currentUseContainerOption] is Structures.LinkedListSingly<int>) || (containers[currentUseContainerOption] is Structures.LinkedListSingly<char>) || (containers[currentUseContainerOption] is Structures.LinkedListSingly<string>))
+                        {
+                            menuUseDataStructureOptions = menuUseLinkedListSinglyOptions;
+                        }
+                        else if ((containers[currentUseContainerOption] is Structures.LinkedListDoubly<int>) || (containers[currentUseContainerOption] is Structures.LinkedListDoubly<char>) || (containers[currentUseContainerOption] is Structures.LinkedListDoubly<string>))
+                        {
+                            menuUseDataStructureOptions = menuUseLinkedListDoublyOptions;
+                        }
+                        else if ((containers[currentUseContainerOption] is Structures.Stack<int>) || (containers[currentUseContainerOption] is Structures.Stack<char>) || (containers[currentUseContainerOption] is Structures.Stack<string>))
+                        {
+                            menuUseDataStructureOptions = menuUseStackOptions;
+                        };
+
+                        for (int i = 0; i < menuUseDataStructureOptions.Length; i++)
+                        {
+                            if (i == currentUseSelectedContainerOption)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Cyan;
+                                Console.Write("> ");
+                            }
+                            else
+                            {
+                                Console.Write("  ");
+                            };
+
+                            Console.WriteLine(menuUseDataStructureOptions[i]);
+
+                            if (i == currentUseSelectedContainerOption)
+                            {
+                                Console.ResetColor();
+                            };
+                        };
+
+                        Border();
+
+                        pressedKey = Console.ReadKey(true).Key;
+                        if (pressedKey == ConsoleKey.UpArrow)
+                        {
+                            currentUseSelectedContainerOption = (currentUseSelectedContainerOption == 0) ? (menuUseDataStructureOptions.Length - 1) : (currentUseSelectedContainerOption - 1);
+                        }
+                        else if (pressedKey == ConsoleKey.DownArrow)
+                        {
+                            currentUseSelectedContainerOption = (currentUseSelectedContainerOption == (menuUseDataStructureOptions.Length - 1)) ? 0 : (currentUseSelectedContainerOption + 1);
+                        }
+                        else if (pressedKey == ConsoleKey.Escape)
+                        {
+                            break;
+                        };
+                    }
                 }
                 else if (pressedKey == ConsoleKey.Escape)
                 {
