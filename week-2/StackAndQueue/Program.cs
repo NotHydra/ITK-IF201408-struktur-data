@@ -184,15 +184,12 @@
                 Border();
 
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine("> Back");
+                Console.WriteLine("> Back (press any key to continue)");
                 Console.ResetColor();
                 Border();
 
-                pressedKey = Console.ReadKey(true).Key;
-                if (pressedKey == ConsoleKey.Enter || pressedKey == ConsoleKey.Escape)
-                {
-                    break;
-                };
+                Console.ReadKey(true);
+                break;
             };
         }
 
@@ -285,59 +282,80 @@
 
                             if (currentAddDataStructureOption == 0)
                             {
+                                Console.Write("LinkedListSingly");
                                 if (currentAddDataTypeOption == 0)
                                 {
+                                    Console.Write("<int>");
                                     Structures.LinkedListSingly<int> linkedListSingly = new();
                                     containers.Add(linkedListSingly);
                                 }
                                 else if (currentAddDataTypeOption == 1)
                                 {
+                                    Console.Write("<char>");
                                     Structures.LinkedListSingly<char> linkedListSingly = new();
                                     containers.Add(linkedListSingly);
                                 }
                                 else if (currentAddDataTypeOption == 2)
                                 {
+                                    Console.Write("<string>");
                                     Structures.LinkedListSingly<string> linkedListSingly = new();
                                     containers.Add(linkedListSingly);
                                 };
                             }
                             else if (currentAddDataStructureOption == 1)
                             {
+                                Console.Write("LinkedListDoubly");
                                 if (currentAddDataTypeOption == 0)
                                 {
+                                    Console.Write("<int>");
                                     Structures.LinkedListDoubly<int> linkedListDoubly = new();
                                     containers.Add(linkedListDoubly);
                                 }
                                 else if (currentAddDataTypeOption == 1)
                                 {
+                                    Console.Write("<char>");
                                     Structures.LinkedListDoubly<char> linkedListDoubly = new();
                                     containers.Add(linkedListDoubly);
                                 }
                                 else if (currentAddDataTypeOption == 2)
                                 {
+                                    Console.Write("<string>");
                                     Structures.LinkedListDoubly<string> linkedListDoubly = new();
                                     containers.Add(linkedListDoubly);
                                 };
                             }
                             else if (currentAddDataStructureOption == 2)
                             {
+                                Console.Write("Stack");
                                 if (currentAddDataTypeOption == 0)
                                 {
+                                    Console.Write("<int>");
                                     Structures.Stack<int> stack = new();
                                     containers.Add(stack);
                                 }
                                 else if (currentAddDataTypeOption == 1)
                                 {
+                                    Console.Write("<char>");
                                     Structures.Stack<char> stack = new();
                                     containers.Add(stack);
                                 }
                                 else if (currentAddDataTypeOption == 2)
                                 {
+                                    Console.Write("<string>");
                                     Structures.Stack<string> stack = new();
                                     containers.Add(stack);
                                 };
                             };
 
+                            Console.WriteLine(" Added");
+                            Border();
+
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.WriteLine("> Back (press any key to continue)");
+                            Console.ResetColor();
+                            Border();
+
+                            Console.ReadKey(true);
                             isRunning = false;
                             break;
                         }
