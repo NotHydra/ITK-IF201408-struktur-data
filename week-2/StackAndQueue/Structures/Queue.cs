@@ -85,10 +85,11 @@ namespace StackAndQueue.Structures
         /// </returns>
         public Type? Peek()
         {
-            if(First == null){
-                throw new InvalidOperationException("Linked List is empty"); 
+            if (First == null)
+            {
+                throw new InvalidOperationException("Linked List is empty");
             }
-            
+
             return First.Value;
         }
 
@@ -136,7 +137,7 @@ namespace StackAndQueue.Structures
         {
             if (this.First == null || this.Last == null)
             {
-                throw new InvalidOperationException("Linked List is empty");
+                throw new InvalidOperationException("Queue is empty");
             };
 
             if ((firstIndex < 0) || (this.Length() <= firstIndex))
