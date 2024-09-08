@@ -7,8 +7,8 @@
         private static readonly string[] menus = ["List", "Add", "Use"];
 
         private static readonly Type[] structures = [
-            typeof(Structures.LinkedListSingly<>),
-            typeof(Structures.LinkedListDoubly<>),
+            // typeof(Structures.LinkedListSingly<>),
+            // typeof(Structures.LinkedListDoubly<>),
             typeof(Structures.Stack<>)
         ];
         private static readonly Type[] types = [
@@ -32,7 +32,7 @@
                 Border();
                 Title("Data Structure Manager");
                 Border();
-                Title("Move = Up/Down | Select = Enter/Right | Exit = Esc/Left");
+                SubTitle("Move = Up/Down | Select = Enter/Right | Exit = Esc/Left");
                 Border();
                 Console.WriteLine("Choose a menu:");
                 Border();
@@ -89,35 +89,47 @@
                 };
             };
 
-            Title("Thank You For Using Our Program");
+            SubTitle("Thank You For Using Our Program");
             Border();
         }
 
         private static void FillContainer()
         {
-            Structures.LinkedListSingly<int> linkedListSingly1 = new();
-            linkedListSingly1.Add(1);
-            linkedListSingly1.Add(2);
-            linkedListSingly1.Add(3);
-            containers.Add(linkedListSingly1);
+            // Structures.LinkedListSingly<int> linkedListSingly1 = new();
+            // linkedListSingly1.Add(1);
+            // linkedListSingly1.Add(2);
+            // linkedListSingly1.Add(3);
+            // containers.Add(linkedListSingly1);
 
-            Structures.LinkedListSingly<char> linkedListSingly2 = new();
-            linkedListSingly2.Add('x');
-            linkedListSingly2.Add('y');
-            linkedListSingly2.Add('z');
-            containers.Add(linkedListSingly2);
+            // Structures.LinkedListSingly<char> linkedListSingly2 = new();
+            // linkedListSingly2.Add('x');
+            // linkedListSingly2.Add('y');
+            // linkedListSingly2.Add('z');
+            // containers.Add(linkedListSingly2);
 
-            Structures.LinkedListDoubly<int> linkedListDoubly1 = new();
-            linkedListDoubly1.Add(7);
-            linkedListDoubly1.Add(8);
-            linkedListDoubly1.Add(9);
-            containers.Add(linkedListDoubly1);
+            // Structures.LinkedListDoubly<string> linkedListSingly3 = new();
+            // linkedListSingly3.Add("one");
+            // linkedListSingly3.Add("two");
+            // linkedListSingly3.Add("three");
+            // containers.Add(linkedListSingly3);
 
-            Structures.LinkedListDoubly<char> linkedListDoubly2 = new();
-            linkedListDoubly2.Add('a');
-            linkedListDoubly2.Add('b');
-            linkedListDoubly2.Add('c');
-            containers.Add(linkedListDoubly2);
+            // Structures.LinkedListDoubly<int> linkedListDoubly1 = new();
+            // linkedListDoubly1.Add(7);
+            // linkedListDoubly1.Add(8);
+            // linkedListDoubly1.Add(9);
+            // containers.Add(linkedListDoubly1);
+
+            // Structures.LinkedListDoubly<char> linkedListDoubly2 = new();
+            // linkedListDoubly2.Add('a');
+            // linkedListDoubly2.Add('b');
+            // linkedListDoubly2.Add('c');
+            // containers.Add(linkedListDoubly2);
+
+            // Structures.LinkedListDoubly<string> linkedListDoubly3 = new();
+            // linkedListDoubly3.Add("seven");
+            // linkedListDoubly3.Add("eight");
+            // linkedListDoubly3.Add("nine");
+            // containers.Add(linkedListDoubly3);
 
             Structures.Stack<int> stack1 = new();
             stack1.Push(7);
@@ -130,6 +142,12 @@
             stack2.Push('b');
             stack2.Push('c');
             containers.Add(stack2);
+
+            Structures.Stack<string> stack3 = new();
+            stack3.Push("seven");
+            stack3.Push("eight");
+            stack3.Push("nine");
+            containers.Add(stack3);
         }
 
         private static string TypeToAlias(Type type)
@@ -220,6 +238,16 @@
 
         private static void Title(string text)
         {
+            text = " " + text + " ";
+            int length = (borderLength - text.Length) / 2;
+
+            Console.Write(String.Concat(Enumerable.Repeat("<", ((text.Length % 2) == 0) ? length : (length + 1))));
+            Console.Write(text);
+            Console.WriteLine(String.Concat(Enumerable.Repeat(">", length)));
+        }
+
+        private static void SubTitle(string text)
+        {
             int length = (borderLength - text.Length) / 2;
 
             Console.Write(String.Concat(Enumerable.Repeat("-", ((text.Length % 2) == 0) ? length : (length + 1))));
@@ -242,7 +270,7 @@
                 Border();
                 Title("List Menu");
                 Border();
-                Console.WriteLine("Result:");
+                SubTitle("Result");
                 Border();
 
                 for (int containerIndex = 0; containerIndex < containers.Count; containerIndex++)
@@ -271,7 +299,7 @@
                 Border();
                 Title("Add Menu");
                 Border();
-                Title("Move = Up/Down | Select = Enter/Right | Back = Esc/Left");
+                SubTitle("Move = Up/Down | Select = Enter/Right | Back = Esc/Left");
                 Border();
                 Console.WriteLine("Choose a data structure:");
                 Border();
@@ -316,7 +344,7 @@
                         Border();
                         Title("Add Menu");
                         Border();
-                        Title("Move = Up/Down | Select = Enter/Right | Back = Esc/Left");
+                        SubTitle("Move = Up/Down | Select = Enter/Right | Back = Esc/Left");
                         Border();
                         Console.WriteLine("Choose a data type:");
                         Border();
@@ -354,7 +382,7 @@
                         }
                         else if (pressedKey == ConsoleKey.Enter || pressedKey == ConsoleKey.RightArrow)
                         {
-                            Console.WriteLine("Result:");
+                            SubTitle("Result");
                             Border();
 
                             containers.Add(Activator.CreateInstance(structures[structureOption].MakeGenericType(types[typeOption]))!);
@@ -396,7 +424,7 @@
                 Border();
                 Title("Use Menu");
                 Border();
-                Title("Move = Up/Down | Select = Enter/Right | Back = Esc/Left");
+                SubTitle("Move = Up/Down | Select = Enter/Right | Back = Esc/Left");
                 Border();
                 Console.WriteLine("Choose a container:");
                 Border();
@@ -443,7 +471,7 @@
                         Border();
                         Title("Use Menu");
                         Border();
-                        Title("Move = Up/Down | Select = Enter/Right | Back = Esc/Left");
+                        SubTitle("Move = Up/Down | Select = Enter/Right | Back = Esc/Left");
                         Border();
                         Console.WriteLine("Choose an action:");
                         Border();
@@ -481,42 +509,93 @@
                         }
                         else if (pressedKey == ConsoleKey.Enter || pressedKey == ConsoleKey.RightArrow)
                         {
-                            Console.WriteLine("Result:");
-                            Border();
-
                             if (actions[actionOption].Name == "Clear")
                             {
+                                SubTitle("Result");
+                                Border();
+
                                 try
                                 {
                                     actions[actionOption].Invoke(containers[containerOption], null);
 
-                                    Console.WriteLine("Success");
+                                    WriteLineColored("Success", ConsoleColor.Green);
                                 }
                                 catch (Exception e)
                                 {
-                                    Console.WriteLine(e.InnerException!.Message);
+                                    WriteLineColored(e.InnerException!.Message, ConsoleColor.Red);
                                 };
                             }
                             else if ((actions[actionOption].GetParameters().Length == 0) && (actions[actionOption].ReturnType == typeof(void)))
                             {
+                                SubTitle("Result");
+                                Border();
+
                                 try
                                 {
                                     actions[actionOption].Invoke(containers[containerOption], null);
                                 }
                                 catch (Exception e)
                                 {
-                                    Console.WriteLine(e.InnerException!.Message);
+                                    WriteLineColored(e.InnerException!.Message, ConsoleColor.Red);
                                 };
                             }
                             else if ((actions[actionOption].GetParameters().Length == 0) && (actions[actionOption].ReturnType != typeof(void)))
                             {
+                                SubTitle("Result");
+                                Border();
+
                                 try
                                 {
                                     Console.WriteLine(actions[actionOption].Invoke(containers[containerOption], null));
                                 }
                                 catch (Exception e)
                                 {
-                                    Console.WriteLine(e.InnerException!.Message);
+                                    WriteLineColored(e.InnerException!.Message, ConsoleColor.Red);
+                                };
+                            }
+                            else if (actions[actionOption].GetParameters().Length > 0)
+                            {
+                                SubTitle("Input");
+                                Border();
+
+
+                                bool inputSuccess = true;
+                                List<object> arguments = [];
+                                foreach (System.Reflection.ParameterInfo parameter in actions[actionOption].GetParameters())
+                                {
+                                    Console.WriteLine($"{parameter.Name} ({TypeToAlias(parameter.ParameterType)}): ");
+                                    Border();
+
+                                    try
+                                    {
+                                        arguments.Add(Convert.ChangeType(Console.ReadLine(), parameter.ParameterType)!);
+                                        Border();
+                                    }
+                                    catch (Exception)
+                                    {
+                                        Border();
+                                        WriteLineColored("Invalid input", ConsoleColor.Red);
+
+                                        inputSuccess = false;
+                                        break;
+                                    };
+                                };
+
+                                if (inputSuccess)
+                                {
+                                    SubTitle("Result");
+                                    Border();
+
+                                    try
+                                    {
+                                        actions[actionOption].Invoke(containers[containerOption], [.. arguments]);
+
+                                        WriteLineColored("Success", ConsoleColor.Green);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        WriteLineColored(e.InnerException!.Message, ConsoleColor.Red);
+                                    };
                                 };
                             };
 
