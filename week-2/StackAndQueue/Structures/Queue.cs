@@ -74,13 +74,7 @@ namespace StackAndQueue.Structures
         /// </summary>
         public bool HasPop()
         {
-            if (this._first != null)
-            {
-                return true;
-            }
-            else {
-                return false;
-            }
+            return this.First != null;
         }
 
         /// <summary>
