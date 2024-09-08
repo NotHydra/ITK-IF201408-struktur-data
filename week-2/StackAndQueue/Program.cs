@@ -5,9 +5,9 @@ namespace StackAndQueue
     public class CommandLineInterface()
     {
         private static readonly int borderLength = 60;
-        private static readonly string[] menuOptions = ["List", "Add", "Use", "Exit"];
-        private static readonly string[] menuAddDataStructureOptions = ["LinkedListSingly", "LinkedListDoubly", "Stack", "Back"];
-        private static readonly string[] menuAddDataTypeOptions = ["int", "char", "string", "Back"];
+        private static readonly string[] menuOptions = ["List", "Add", "Use"];
+        private static readonly string[] menuAddDataStructureOptions = ["LinkedListSingly", "LinkedListDoubly", "Stack"];
+        private static readonly string[] menuAddDataTypeOptions = ["int", "char", "string"];
         private static readonly List<object> containers = [];
 
         private static ConsoleKey pressedKey;
@@ -31,12 +31,18 @@ namespace StackAndQueue
                     if (i == currentMenuOption)
                     {
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.WriteLine($"> {menuOptions[i]}");
-                        Console.ResetColor();
+                        Console.Write("> ");
                     }
                     else
                     {
-                        Console.WriteLine($"  {menuOptions[i]}");
+                        Console.Write("  ");
+                    };
+
+                    Console.WriteLine(menuOptions[i]);
+
+                    if (i == currentMenuOption)
+                    {
+                        Console.ResetColor();
                     };
                 };
 
@@ -49,7 +55,7 @@ namespace StackAndQueue
                 }
                 else if (pressedKey == ConsoleKey.DownArrow)
                 {
-                    currentMenuOption = (currentMenuOption == menuOptions.Length - 1) ? 0 : (currentMenuOption + 1);
+                    currentMenuOption = (currentMenuOption == (menuOptions.Length - 1)) ? 0 : (currentMenuOption + 1);
                 }
                 else if (pressedKey == ConsoleKey.Enter)
                 {
@@ -64,10 +70,6 @@ namespace StackAndQueue
                     else if (currentMenuOption == 2)
                     {
                         HandleUseOption();
-                    }
-                    else if (currentMenuOption == 3)
-                    {
-                        break;
                     };
                 }
                 else if (pressedKey == ConsoleKey.Escape)
@@ -213,12 +215,18 @@ namespace StackAndQueue
                     if (i == currentAddDataStructureOption)
                     {
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.WriteLine($"> {menuAddDataStructureOptions[i]}");
-                        Console.ResetColor();
+                        Console.Write("> ");
                     }
                     else
                     {
-                        Console.WriteLine($"  {menuAddDataStructureOptions[i]}");
+                        Console.Write("  ");
+                    };
+
+                    Console.WriteLine(menuAddDataStructureOptions[i]);
+
+                    if (i == currentAddDataStructureOption)
+                    {
+                        Console.ResetColor();
                     };
                 };
 
@@ -231,15 +239,10 @@ namespace StackAndQueue
                 }
                 else if (pressedKey == ConsoleKey.DownArrow)
                 {
-                    currentAddDataStructureOption = (currentAddDataStructureOption == menuAddDataStructureOptions.Length - 1) ? 0 : (currentAddDataStructureOption + 1);
+                    currentAddDataStructureOption = (currentAddDataStructureOption == (menuAddDataStructureOptions.Length - 1)) ? 0 : (currentAddDataStructureOption + 1);
                 }
                 else if (pressedKey == ConsoleKey.Enter)
                 {
-                    if (currentAddDataStructureOption == (menuAddDataStructureOptions.Length - 1))
-                    {
-                        break;
-                    };
-
                     int currentAddDataTypeOption = 0;
                     while (true)
                     {
@@ -255,12 +258,18 @@ namespace StackAndQueue
                             if (i == currentAddDataTypeOption)
                             {
                                 Console.ForegroundColor = ConsoleColor.Cyan;
-                                Console.WriteLine($"> {menuAddDataTypeOptions[i]}");
-                                Console.ResetColor();
+                                Console.Write("> ");
                             }
                             else
                             {
-                                Console.WriteLine($"  {menuAddDataTypeOptions[i]}");
+                                Console.Write("  ");
+                            };
+
+                            Console.WriteLine(menuAddDataTypeOptions[i]);
+
+                            if (i == currentAddDataTypeOption)
+                            {
+                                Console.ResetColor();
                             };
                         };
 
@@ -277,11 +286,6 @@ namespace StackAndQueue
                         }
                         else if (pressedKey == ConsoleKey.Enter)
                         {
-                            if (currentAddDataTypeOption == (menuAddDataTypeOptions.Length - 1))
-                            {
-                                break;
-                            };
-
                             if (currentAddDataStructureOption == 0)
                             {
                                 Console.Write("LinkedListSingly");
@@ -396,11 +400,11 @@ namespace StackAndQueue
                     if (i == currentUseContainerOption)
                     {
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.Write($"> ");
+                        Console.Write("> ");
                     }
                     else
                     {
-                        Console.Write($"  ");
+                        Console.Write("  ");
                     };
 
                     Console.Write($"{containers[i]} ");
