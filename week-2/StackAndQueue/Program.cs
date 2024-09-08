@@ -5,7 +5,7 @@
         private static readonly int borderLength = 60;
         private static readonly string[] menuOptions = ["List", "Add", "Use", "Exit"];
         private static readonly string[] menuAddDataStructureOptions = ["LinkedListSingly", "LinkedListDoubly", "Stack", "Back"];
-        private static readonly string[] menuAddDataTypeOptions = ["int", "char", "Back"];
+        private static readonly string[] menuAddDataTypeOptions = ["int", "char", "string", "Back"];
         private static readonly List<object> containers = [];
 
         private static ConsoleKey pressedKey;
@@ -151,6 +151,10 @@
                     {
                         Console.WriteLine("( LinkedListSingly<char> )");
                     }
+                    else if (containers[i] is Structures.LinkedListSingly<string>)
+                    {
+                        Console.WriteLine("( LinkedListSingly<string> )");
+                    }
                     else if (containers[i] is Structures.LinkedListDoubly<int>)
                     {
                         Console.WriteLine("( LinkedListDoubly<int> )");
@@ -159,6 +163,10 @@
                     {
                         Console.WriteLine("( LinkedListDoubly<char> )");
                     }
+                    else if (containers[i] is Structures.LinkedListDoubly<string>)
+                    {
+                        Console.WriteLine("( LinkedListDoubly<string> )");
+                    }
                     else if (containers[i] is Structures.Stack<int>)
                     {
                         Console.WriteLine("( Stack<int> )");
@@ -166,6 +174,10 @@
                     else if (containers[i] is Structures.Stack<char>)
                     {
                         Console.WriteLine("( Stack<char> )");
+                    }
+                    else if (containers[i] is Structures.Stack<string>)
+                    {
+                        Console.WriteLine("( Stack<string> )");
                     };
                 };
 
@@ -224,7 +236,7 @@
                 }
                 else if (pressedKey == ConsoleKey.Enter)
                 {
-                    if (currentAddDataStructureOption == 3)
+                    if (currentAddDataStructureOption == (menuAddDataStructureOptions.Length - 1))
                     {
                         break;
                     };
@@ -262,11 +274,11 @@
                         }
                         else if (pressedKey == ConsoleKey.DownArrow)
                         {
-                            currentAddDataTypeOption = (currentAddDataTypeOption == menuAddDataTypeOptions.Length - 1) ? 0 : (currentAddDataTypeOption + 1);
+                            currentAddDataTypeOption = (currentAddDataTypeOption == (menuAddDataTypeOptions.Length - 1)) ? 0 : (currentAddDataTypeOption + 1);
                         }
                         else if (pressedKey == ConsoleKey.Enter)
                         {
-                            if (currentAddDataTypeOption == 2)
+                            if (currentAddDataTypeOption == (menuAddDataTypeOptions.Length - 1))
                             {
                                 break;
                             };
@@ -282,6 +294,11 @@
                                 {
                                     Structures.LinkedListSingly<char> linkedListSingly = new();
                                     containers.Add(linkedListSingly);
+                                }
+                                else if (currentAddDataTypeOption == 2)
+                                {
+                                    Structures.LinkedListSingly<string> linkedListSingly = new();
+                                    containers.Add(linkedListSingly);
                                 };
                             }
                             else if (currentAddDataStructureOption == 1)
@@ -295,6 +312,11 @@
                                 {
                                     Structures.LinkedListDoubly<char> linkedListDoubly = new();
                                     containers.Add(linkedListDoubly);
+                                }
+                                else if (currentAddDataTypeOption == 2)
+                                {
+                                    Structures.LinkedListDoubly<string> linkedListDoubly = new();
+                                    containers.Add(linkedListDoubly);
                                 };
                             }
                             else if (currentAddDataStructureOption == 2)
@@ -307,6 +329,11 @@
                                 else if (currentAddDataTypeOption == 1)
                                 {
                                     Structures.Stack<char> stack = new();
+                                    containers.Add(stack);
+                                }
+                                else if (currentAddDataTypeOption == 2)
+                                {
+                                    Structures.Stack<string> stack = new();
                                     containers.Add(stack);
                                 };
                             };

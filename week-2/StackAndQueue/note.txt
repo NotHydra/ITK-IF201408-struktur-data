@@ -2,10 +2,10 @@ To-Do List:
 1. Stack implementation (Done)
 2. Queue implementation
 3. User Interface for Stack & Queue management with Command Line Interface in Terminal
-    1. List
-    2. Create
+    1. List (Done)
+    2. Create (Done)
     3. Use (Dependent on structure)
 
 
-4. Optionally add LinkedListSingly & LinkedListDoubly to User Interface
+4. Optionally add LinkedListSingly & LinkedListDoubly to User Interface (Done)
 5. Laporan T-T
