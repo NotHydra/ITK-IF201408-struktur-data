@@ -85,7 +85,10 @@ namespace StackAndQueue.Structures
         /// </returns>
         public Type? Peek()
         {
-            throw new NotImplementedException();
+            if(First == null){
+                throw new InvalidOperationException("Linked List is empty"); 
+            }
+            return First.Value;
         }
 
         /// <summary>
