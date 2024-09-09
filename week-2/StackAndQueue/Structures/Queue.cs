@@ -132,8 +132,8 @@ namespace StackAndQueue.Structures
         /// </summary>
         public void Clear()
         {
-            this._first = null;
-            this._last = null;
+            this.First = null;
+            this.Last = null;
         }
 
         /// <summary>
