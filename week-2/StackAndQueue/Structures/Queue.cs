@@ -467,11 +467,11 @@ namespace StackAndQueue.Structures
         /// </summary>
         public override string ToString()
         {
-            string text = "first -> ";
+            string text = "first <- ";
             DoubleLinkedNode<Type>? currentNode = this.First;
             while (currentNode != null)
             {
-                text += $"{currentNode.Value} -> ";
+                text += $"{currentNode.Value} <- ";
                 currentNode = currentNode.Next;
             };
 
