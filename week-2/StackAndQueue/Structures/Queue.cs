@@ -124,7 +124,24 @@ namespace StackAndQueue.Structures
         /// </returns>
         public Type Pop()
         {
-            throw new NotImplementedException();
+            if (this.First == null || this.Last == null)
+            {
+                throw new InvalidOperationException("Queue is empty");
+            };
+
+            Type popValue = this.First.Value;
+            if (this.First == this.Last)
+            {
+                this.First = null;
+                this.Last = null;
+
+                return popValue;
+            };
+
+            this.First = this.First.Next;
+            this.First!.Previous = null;
+
+            return popValue;
         }
 
         /// <summary>
