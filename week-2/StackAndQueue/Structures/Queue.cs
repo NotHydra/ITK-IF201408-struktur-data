@@ -126,13 +126,129 @@ namespace StackAndQueue.Structures
         }
 
         /// <summary>
+        /// Mendapatkan nilai dari Node yang berada di dalam Queue berdasarkan index yang diberikan
+        /// </summary>
+        /// <param name="index">
+        /// Urutan index dari Node yang akan dicari
+        /// </param>
+        public Type Get(int index)
+        {
+            if (this.First == null || this.Last == null)
+            {
+                throw new InvalidCastException("Queue is empty");
+            };
+
+            if (index < 0 || (this.Length() <= index))
+            {
+                throw new IndexOutOfRangeException("Index out of bound");
+            };
+
+            int currentIndex;
+            DoubleLinkedNode<Type> currentNode;
+            if (index < (this.Length() / 2))
+            {
+                currentNode = this.First;
+                currentIndex = 0;
+                while (currentIndex < index)
+                {
+                    currentNode = currentNode.Next!;
+                    currentIndex++;
+                };
+
+                return currentNode.Value;
+            };
+
+            currentNode = this.Last;
+            currentIndex = this.Length() - 1;
+            while (currentIndex > index)
+            {
+                currentNode = currentNode.Previous!;
+                currentIndex--;
+            };
+
+            return currentNode.Value;
+        }
+
+        /// <summary>
+        /// Menambahkan Node baru dengan Value yang diberikan ke dalam Queue berdasarkan index yang diberikan
+        /// </summary>
+        /// <param name="value">
+        /// Value atau nilai yang akan dimasukkan ke dalam Node baru
+        /// </param>
+        /// <param name="index">
+        /// Urutan index dari Node yang akan ditambahkan
+        /// </param>
+        public void Insert(Type value, int index)
+        {
+            if ((index < 0) || (this.Length() < index))
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
+            };
+
+            DoubleLinkedNode<Type> newNode = new(value);
+            if (index == 0)
+            {
+                if (this.First == null || this.Last == null)
+                {
+                    this.First = newNode;
+                    this.Last = newNode;
+
+                    return;
+                };
+
+                newNode.Next = this.First;
+                this.First.Previous = newNode;
+                this.First = newNode;
+
+                return;
+            };
+
+            if (index == this.Length())
+            {
+                this.Last!.Next = newNode;
+                newNode.Previous = this.Last;
+                this.Last = newNode;
+
+                return;
+            };
+
+            int currentIndex;
+            DoubleLinkedNode<Type> currentNode;
+            if (index < (this.Length() / 2))
+            {
+                currentIndex = 0;
+                currentNode = this.First!;
+                while (currentIndex < index)
+                {
+                    currentNode = currentNode.Next!;
+                    currentIndex++;
+                };
+            }
+            else
+            {
+                currentIndex = this.Length() - 1;
+                currentNode = this.Last!;
+                while (currentIndex > index)
+                {
+                    currentNode = currentNode.Previous!;
+                    currentIndex--;
+                };
+            };
+
+            newNode.Next = currentNode;
+            newNode.Previous = currentNode.Previous;
+            currentNode.Previous!.Next = newNode;
+            currentNode.Previous = newNode;
+        }
+
+        /// <summary>
         /// Menukar posisi Node yang berada di dalam Queue berdasarkan 2 index berbeda yang diberikan
         /// </summary>
         /// <param name="firstIndex">
-        /// Nilai index pertama dari Node yang akan ditukar
+        /// Urutan index pertama dari Node yang akan ditukar
         /// </param>
         /// <param name="secondIndex">
-        /// Nilai index kedua dari Node yang akan ditukar
+        /// Urutan index kedua dari Node yang akan ditukar
         /// </param>
         public void Swap(int firstIndex, int secondIndex)
         {
@@ -247,6 +363,75 @@ namespace StackAndQueue.Structures
             {
                 currentSecondNode.Previous.Next = currentSecondNode;
             };
+        }
+
+        /// <summary>
+        /// Menghapus Node yang berada di dalam Queue berdasarkan index yang diberikan
+        /// </summary>
+        /// <param name="index">
+        /// Urutan index dari Node yang akan dihapus
+        /// </param>
+        public void Remove(int index)
+        {
+            if (this.First == null || this.Last == null)
+            {
+                throw new InvalidOperationException("Queue is empty");
+            };
+
+            if ((index < 0) || (this.Length() <= index))
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
+            };
+
+            if (index == 0)
+            {
+                if (this.First == this.Last)
+                {
+                    this.First = null;
+                    this.Last = null;
+
+                    return;
+                };
+
+                this.First = this.First.Next;
+                this.First!.Previous = null;
+
+                return;
+            };
+
+            if (index == (this.Length() - 1))
+            {
+                this.Last = this.Last.Previous;
+                this.Last!.Next = null;
+
+                return;
+            };
+
+            int currentIndex;
+            DoubleLinkedNode<Type> currentNode;
+            if (index < (this.Length() / 2))
+            {
+                currentIndex = 0;
+                currentNode = this.First!;
+                while (currentIndex < index)
+                {
+                    currentNode = currentNode.Next!;
+                    currentIndex++;
+                };
+            }
+            else
+            {
+                currentIndex = this.Length() - 1;
+                currentNode = this.Last!;
+                while (currentIndex > index)
+                {
+                    currentNode = currentNode.Previous!;
+                    currentIndex--;
+                };
+            };
+
+            currentNode.Previous!.Next = currentNode.Next;
+            currentNode.Next!.Previous = currentNode.Previous;
         }
 
         /// <summary>

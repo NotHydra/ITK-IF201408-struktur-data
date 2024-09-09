@@ -135,13 +135,80 @@ namespace StackAndQueue.Structures
         }
 
         /// <summary>
+        /// Mendapatkan nilai dari Node yang berada di dalam Stack berdasarkan index yang diberikan
+        /// </summary>
+        /// <param name="index">
+        /// Urutan index dari Node yang akan dicari
+        /// </param>
+        public Type Get(int index)
+        {
+            if (this.First == null)
+            {
+                throw new InvalidOperationException("Stack is empty");
+            };
+
+            if ((index < 0) || (this.Length() <= index))
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
+            };
+
+            int currentIndex = 0;
+            Node<Type> currentNode = this.First;
+            while (currentIndex < index)
+            {
+                currentNode = currentNode.Next!;
+                currentIndex++;
+            };
+
+            return currentNode.Value;
+        }
+
+        /// <summary>
+        ///  Menambahkan Node baru dengan Value yang diberikan di dalam Stack dengan urutan berdasarkan index yang diberikan
+        /// </summary>
+        /// <param name="value">
+        /// Value atau nilai yang akan dimasukkan ke dalam Node baru
+        /// </param>
+        /// <param name="index">
+        /// Urutan index dari Node yang akan ditambahkan
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public void Insert(Type value, int index)
+        {
+            if ((index < 0) || (this.Length() < index))
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
+            };
+
+            Node<Type> newNode = new(value);
+            if ((this.First == null) || (index == 0))
+            {
+                newNode.Next = this.First;
+                this.First = newNode;
+
+                return;
+            };
+
+            int currentIndex = 0;
+            Node<Type> currentNode = this.First;
+            while (currentIndex < (index - 1))
+            {
+                currentNode = currentNode.Next!;
+                currentIndex++;
+            };
+
+            newNode.Next = currentNode.Next;
+            currentNode.Next = newNode;
+        }
+
+        /// <summary>
         /// Menukar posisi Node yang berada di dalam Stack berdasarkan 2 index berbeda yang diberikan
         /// </summary>
         /// <param name="firstIndex">
-        /// Nilai index pertama dari Node yang akan ditukar
+        /// Urutan index pertama dari Node yang akan ditukar
         /// </param>
         /// <param name="secondIndex">
-        /// Nilai index kedua dari Node yang akan ditukar
+        /// Urutan index kedua dari Node yang akan ditukar
         /// </param>
         public void Swap(int firstIndex, int secondIndex)
         {
@@ -211,6 +278,42 @@ namespace StackAndQueue.Structures
             Node<Type> temp = currentFirstNode.Next!;
             currentFirstNode.Next = currentSecondNode.Next;
             currentSecondNode.Next = temp;
+        }
+
+        /// <summary>
+        /// Menghapus Node yang berada di dalam Stack berdasarkan index yang diberikan
+        /// </summary>
+        /// <param name="index">
+        /// Urutan index dari Node yang akan dihapus
+        /// </param>
+        public void Remove(int index)
+        {
+            if (this.First == null)
+            {
+                throw new InvalidOperationException("Stack is empty");
+            };
+
+            if ((index < 0) || (this.Length() <= index))
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
+            };
+
+            if (index == 0)
+            {
+                this.First = this.First.Next;
+
+                return;
+            };
+
+            int currentIndex = 0;
+            Node<Type> currentNode = this.First;
+            while (currentIndex < (index - 1))
+            {
+                currentNode = currentNode.Next!;
+                currentIndex++;
+            };
+
+            currentNode.Next = currentNode.Next!.Next;
         }
 
         /// <summary>
