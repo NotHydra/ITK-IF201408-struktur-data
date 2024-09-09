@@ -5,7 +5,6 @@ namespace StackAndQueue.Structures
     public class Stack<Type>
     {
         private Node<Type>? _first = null;
-
         /// <summary>
         /// Getter dan Setter untuk Node yang berada di paling atas Stack
         /// </summary>
@@ -21,6 +20,8 @@ namespace StackAndQueue.Structures
         public int Length()
         {
             int count = 0;
+
+            // => (Line 26-31) Melakukan perulangan serta increment pada variable count hingga mendapatkan node paling bawah
             Node<Type>? currentNode = this.First;
             while (currentNode != null)
             {
@@ -36,6 +37,7 @@ namespace StackAndQueue.Structures
         /// </summary>
         public void Show()
         {
+            // => (Line 42) Menampilkan versi string dari objek dengan menggunakan ToString()
             Console.WriteLine(this);
         }
 
@@ -46,6 +48,7 @@ namespace StackAndQueue.Structures
         {
             Console.WriteLine("Debug: Top");
 
+            // => (Line 53-61) Melakukan perulangan untuk menampilkan setiap node beserta hubungannya dengan node lain di dalam stack
             Node<Type>? currentNode = this.First;
             while (currentNode != null)
             {
@@ -128,6 +131,7 @@ namespace StackAndQueue.Structures
         /// </summary>
         public void Clear()
         {
+            // => (Line 136-139) Melakukan perulangan untuk mengeluarkan setiap node yang ada di dalam stack hingga HasPop() bernilai false
             while (this.HasPop())
             {
                 this.Pop();
@@ -152,6 +156,8 @@ namespace StackAndQueue.Structures
                 throw new ArgumentOutOfRangeException(nameof(index), "Index out of bound");
             };
 
+
+            // => (Line 162-168) Melakukan perulangan hingga node yang dicari berdasarkan index yang diberikan
             int currentIndex = 0;
             Node<Type> currentNode = this.First;
             while (currentIndex < index)
@@ -189,6 +195,7 @@ namespace StackAndQueue.Structures
                 return;
             };
 
+            // => (Line 200-206) Melakukan perulangan hingga 1 node sebelum node yang dicari berdasarkan index yang diberikan
             int currentIndex = 0;
             Node<Type> currentNode = this.First;
             while (currentIndex < (index - 1))
@@ -237,6 +244,7 @@ namespace StackAndQueue.Structures
                 return;
             };
 
+            // => (Line 249-257) Melakukan perulangan hingga node yang dicari berdasarkan index yang diberikan
             int currentFirstIndex = 0;
             Node<Type>? previousFirstNode = null;
             Node<Type> currentFirstNode = this.First;
@@ -247,6 +255,7 @@ namespace StackAndQueue.Structures
                 currentFirstIndex++;
             };
 
+            // => (Line 260-268) Melakukan perulangan hingga node yang dicari berdasarkan index yang diberikan
             int currentSecondIndex = 0;
             Node<Type>? previousSecondNode = null;
             Node<Type> currentSecondNode = this.First;
@@ -305,6 +314,7 @@ namespace StackAndQueue.Structures
                 return;
             };
 
+            // => (Line 319-325) Melakukan perulangan hingga 1 node sebelum node yang dicari berdasarkan index yang diberikan
             int currentIndex = 0;
             Node<Type> currentNode = this.First;
             while (currentIndex < (index - 1))
@@ -322,6 +332,8 @@ namespace StackAndQueue.Structures
         public override string ToString()
         {
             string text = "top -> ";
+
+            // => (Line 338-343) Melakukan perulangan untuk menambahkan bentuk string dari setaip node yang ada di dalam stack
             Node<Type>? currentNode = this.First;
             while (currentNode != null)
             {
