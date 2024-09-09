@@ -88,7 +88,7 @@ namespace StackAndQueue.Structures
         {
             if (First == null)
             {
-                throw new InvalidOperationException("Linked List is empty");
+                throw new InvalidOperationException("Queue is empty");
             }
 
             return First.Value;
@@ -102,7 +102,18 @@ namespace StackAndQueue.Structures
         /// </param>
         public void Push(Type value)
         {
-            throw new NotImplementedException();
+            DoubleLinkedNode<Type> newNode = new(value);
+            if (this.First == null || this.Last == null)
+            {
+                this.First = newNode;
+                this.Last = newNode;
+
+                return;
+            };
+
+            this.Last.Next = newNode;
+            newNode.Previous = this.Last;
+            this.Last = newNode;
         }
 
         /// <summary>
