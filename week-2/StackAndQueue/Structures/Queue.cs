@@ -71,9 +71,9 @@ namespace StackAndQueue.Structures
         }
 
         /// <summary>
-        /// Mengecek apakah isi dari Queue dapat dilakukan Pop atau tidak
+        /// Mengecek apakah isi dari Queue dapat dilakukan Dequeue atau tidak
         /// </summary>
-        public bool HasPop()
+        public bool HasDequeue()
         {
             return this.First != null;
         }
@@ -100,7 +100,7 @@ namespace StackAndQueue.Structures
         /// <param name="value">
         /// Value atau nilai yang akan dimasukkan ke dalam Node baru
         /// </param>
-        public void Push(Type value)
+        public void Enqueue(Type value)
         {
             DoubleLinkedNode<Type> newNode = new(value);
             if (this.First == null || this.Last == null)
@@ -122,26 +122,26 @@ namespace StackAndQueue.Structures
         /// <returns>
         /// Nilai dari Node yang dikeluarkan dari Queue
         /// </returns>
-        public Type Pop()
+        public Type Dequeue()
         {
             if (this.First == null || this.Last == null)
             {
                 throw new InvalidOperationException("Queue is empty");
             };
 
-            Type popValue = this.First.Value;
+            Type dequeueValue = this.First.Value;
             if (this.First == this.Last)
             {
                 this.First = null;
                 this.Last = null;
 
-                return popValue;
+                return dequeueValue;
             };
 
             this.First = this.First.Next;
             this.First!.Previous = null;
 
-            return popValue;
+            return dequeueValue;
         }
 
         /// <summary>

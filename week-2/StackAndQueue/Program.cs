@@ -113,6 +113,24 @@
             stack3.Push("eight");
             stack3.Push("nine");
             containers.Add(stack3);
+
+            Structures.Queue<int> queue1 = new();
+            queue1.Enqueue(1);
+            queue1.Enqueue(2);
+            queue1.Enqueue(3);
+            containers.Add(queue1);
+
+            Structures.Queue<char> queue2 = new();
+            queue2.Enqueue('x');
+            queue2.Enqueue('y');
+            queue2.Enqueue('z');
+            containers.Add(queue2);
+
+            Structures.Queue<string> queue3 = new();
+            queue3.Enqueue("one");
+            queue3.Enqueue("two");
+            queue3.Enqueue("three");
+            containers.Add(queue3);
         }
 
         private static string TypeToAlias(Type type)
