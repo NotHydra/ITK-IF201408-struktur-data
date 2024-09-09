@@ -7,8 +7,6 @@
         private static readonly string[] menus = ["List", "Add", "Use"];
 
         private static readonly Type[] structures = [
-            // typeof(Structures.LinkedListSingly<>),
-            // typeof(Structures.LinkedListDoubly<>),
             typeof(Structures.Stack<>),
             typeof(Structures.Queue<>)
 
@@ -20,6 +18,7 @@
         ];
 
         private static readonly List<object> containers = [];
+        private static readonly string[] blackListedMethods = ["get_First", "set_First", "get_Last", "set_Last", "ToString", "GetType", "Equals", "GetHashCode"];
 
         private static ConsoleKey pressedKey;
 
@@ -97,42 +96,6 @@
 
         private static void FillContainer()
         {
-            // Structures.LinkedListSingly<int> linkedListSingly1 = new();
-            // linkedListSingly1.Add(1);
-            // linkedListSingly1.Add(2);
-            // linkedListSingly1.Add(3);
-            // containers.Add(linkedListSingly1);
-
-            // Structures.LinkedListSingly<char> linkedListSingly2 = new();
-            // linkedListSingly2.Add('x');
-            // linkedListSingly2.Add('y');
-            // linkedListSingly2.Add('z');
-            // containers.Add(linkedListSingly2);
-
-            // Structures.LinkedListDoubly<string> linkedListSingly3 = new();
-            // linkedListSingly3.Add("one");
-            // linkedListSingly3.Add("two");
-            // linkedListSingly3.Add("three");
-            // containers.Add(linkedListSingly3);
-
-            // Structures.LinkedListDoubly<int> linkedListDoubly1 = new();
-            // linkedListDoubly1.Add(7);
-            // linkedListDoubly1.Add(8);
-            // linkedListDoubly1.Add(9);
-            // containers.Add(linkedListDoubly1);
-
-            // Structures.LinkedListDoubly<char> linkedListDoubly2 = new();
-            // linkedListDoubly2.Add('a');
-            // linkedListDoubly2.Add('b');
-            // linkedListDoubly2.Add('c');
-            // containers.Add(linkedListDoubly2);
-
-            // Structures.LinkedListDoubly<string> linkedListDoubly3 = new();
-            // linkedListDoubly3.Add("seven");
-            // linkedListDoubly3.Add("eight");
-            // linkedListDoubly3.Add("nine");
-            // containers.Add(linkedListDoubly3);
-
             Structures.Stack<int> stack1 = new();
             stack1.Push(7);
             stack1.Push(8);
@@ -187,42 +150,7 @@
             List<System.Reflection.MethodInfo> filteredMethods = [];
             foreach (System.Reflection.MethodInfo method in type.GetMethods(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance))
             {
-                if (method.Name == "get_First")
-                {
-                    continue;
-                };
-
-                if (method.Name == "set_First")
-                {
-                    continue;
-                };
-
-                if (method.Name == "get_Last")
-                {
-                    continue;
-                };
-
-                if (method.Name == "set_Last")
-                {
-                    continue;
-                };
-
-                if (method.Name == "ToString")
-                {
-                    continue;
-                };
-
-                if (method.Name == "GetType")
-                {
-                    continue;
-                };
-
-                if (method.Name == "Equals")
-                {
-                    continue;
-                };
-
-                if (method.Name == "GetHashCode")
+                if (blackListedMethods.Contains(method.Name))
                 {
                     continue;
                 };
@@ -528,28 +456,21 @@
                                     WriteLineColored(e.InnerException!.Message, ConsoleColor.Red);
                                 };
                             }
-                            else if ((actions[actionOption].GetParameters().Length == 0) && (actions[actionOption].ReturnType == typeof(void)))
+                            else if (actions[actionOption].GetParameters().Length == 0)
                             {
                                 SubTitle("Result");
                                 Border();
 
                                 try
                                 {
-                                    actions[actionOption].Invoke(containers[containerOption], null);
-                                }
-                                catch (Exception e)
-                                {
-                                    WriteLineColored(e.InnerException!.Message, ConsoleColor.Red);
-                                };
-                            }
-                            else if ((actions[actionOption].GetParameters().Length == 0) && (actions[actionOption].ReturnType != typeof(void)))
-                            {
-                                SubTitle("Result");
-                                Border();
-
-                                try
-                                {
-                                    Console.WriteLine(actions[actionOption].Invoke(containers[containerOption], null));
+                                    if (actions[actionOption].ReturnType == typeof(void))
+                                    {
+                                        actions[actionOption].Invoke(containers[containerOption], null);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine(actions[actionOption].Invoke(containers[containerOption], null));
+                                    };
                                 }
                                 catch (Exception e)
                                 {
@@ -560,7 +481,6 @@
                             {
                                 SubTitle("Input");
                                 Border();
-
 
                                 bool inputSuccess = true;
                                 List<object> arguments = [];
@@ -591,9 +511,16 @@
 
                                     try
                                     {
-                                        actions[actionOption].Invoke(containers[containerOption], [.. arguments]);
+                                        if (actions[actionOption].ReturnType == typeof(void))
+                                        {
+                                            actions[actionOption].Invoke(containers[containerOption], [.. arguments]);
+                                            WriteLineColored("Success", ConsoleColor.Green);
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine(actions[actionOption].Invoke(containers[containerOption], [.. arguments]));
+                                        }
 
-                                        WriteLineColored("Success", ConsoleColor.Green);
                                     }
                                     catch (Exception e)
                                     {
@@ -633,8 +560,6 @@
         {
             CommandLineInterface.Start();
 
-            // Test.LinkedListSingly();
-            // Test.LinkedListDoubly();
             // Test.Stack();
         }
     }
