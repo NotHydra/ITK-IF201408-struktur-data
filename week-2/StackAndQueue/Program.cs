@@ -419,7 +419,26 @@
                                 Console.Write("  ");
                             };
 
-                            Console.WriteLine(actions[actionIndex].Name);
+                            if (actions[actionIndex].GetParameters().Length > 0)
+                            {
+                                string parameterText = "";
+                                for (int parameterIndex = 0; parameterIndex < actions[actionIndex].GetParameters().Length; parameterIndex++)
+                                {
+                                    parameterText += $"{actions[actionIndex].GetParameters()[parameterIndex].Name}: {TypeToAlias(actions[actionIndex].GetParameters()[parameterIndex].ParameterType)}";
+
+                                    if (parameterIndex < (actions[actionIndex].GetParameters().Length - 1))
+                                    {
+                                        parameterText += ", ";
+                                    };
+                                };
+
+                                Console.WriteLine($"{actions[actionIndex].Name} ({parameterText})");
+                            }
+                            else
+                            {
+                                Console.WriteLine(actions[actionIndex].Name);
+                            }
+
 
                             if (actionIndex == actionOption)
                             {
