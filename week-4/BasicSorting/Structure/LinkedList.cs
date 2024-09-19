@@ -237,6 +237,40 @@ namespace BasicSorting.Structure
             return this.ToString();
         }
 
+        public string InsertionSort()
+        {
+            Node<Type>? sorted = null;
+            Node<Type>? currentNode = this.First;
+
+            while (currentNode != null)
+            {
+                Node<Type>? nextNode = currentNode.Next;
+
+                if ((sorted == null) || (((int)(object)sorted.Value!) >= ((int)(object)currentNode.Value!)))
+                {
+                    currentNode.Next = sorted;
+                    sorted = currentNode;
+                }
+                else
+                {
+                    Node<Type> tempNode = sorted;
+                    while ((tempNode.Next != null) && (((int)(object)tempNode.Next!.Value!) < ((int)(object)currentNode.Value!)))
+                    {
+                        tempNode = tempNode.Next;
+                    };
+
+                    currentNode.Next = tempNode.Next;
+                    tempNode.Next = currentNode;
+                };
+
+                currentNode = nextNode;
+            };
+
+            this.First = sorted;
+
+            return this.ToString();
+        }
+
         public override string ToString()
         {
             string text = "null -> ";
