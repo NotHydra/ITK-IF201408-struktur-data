@@ -41,19 +41,6 @@ namespace BasicSorting.Structure
             set { this._last = value; }
         }
 
-        private int Length()
-        {
-            int count = 0;
-            Node<Type>? currentNode = this.First;
-            while (currentNode != null)
-            {
-                currentNode = currentNode.Next;
-                count++;
-            };
-
-            return count;
-        }
-
         public void Show()
         {
             Console.WriteLine(this);
@@ -204,6 +191,48 @@ namespace BasicSorting.Structure
                     currentNode = currentNode.Next;
                 };
             } while (swapped);
+
+            return this.ToString();
+        }
+
+        public string SelectionSort()
+        {
+            if (typeof(Type) != typeof(int))
+            {
+                throw new ArgumentException("Type must be int");
+            };
+
+            if (this.First == null || this.Last == null)
+            {
+                throw new InvalidOperationException("Linked List is empty");
+            };
+
+
+            Node<Type>? currentNode = this.First;
+            while (currentNode != null)
+            {
+                Node<Type>? minimumNode = currentNode;
+
+                Node<Type>? comparisonNode = currentNode.Next;
+                while (comparisonNode != null)
+                {
+                    if (((int)(object)comparisonNode.Value!) < ((int)(object)minimumNode.Value!))
+                    {
+                        minimumNode = comparisonNode;
+                    };
+
+                    comparisonNode = comparisonNode.Next;
+                };
+
+
+                Node<Type>? temp = currentNode.Next;
+                if (minimumNode != currentNode)
+                {
+                    this.Swap(currentNode, minimumNode);
+                };
+
+                currentNode = temp;
+            };
 
             return this.ToString();
         }
