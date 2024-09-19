@@ -63,14 +63,16 @@ namespace BasicSorting.Structure
         {
             Console.WriteLine("Debug: Start");
 
+            int currentIndex = 0;
             Node<Type>? currentNode = this.First;
             while (currentNode != null)
             {
                 string previousText = (currentNode.Previous != null) ? currentNode.Previous.Value!.ToString()! : "null";
                 string nextText = (currentNode.Next != null) ? currentNode.Next.Value!.ToString()! : "null";
 
-                Console.WriteLine($"Debug: {previousText} <- {currentNode.Value} -> {nextText}");
+                Console.WriteLine($"Debug {currentIndex + 1}: {previousText} <- {currentNode.Value} -> {nextText}");
 
+                currentIndex += 1;
                 currentNode = currentNode.Next;
             };
 
@@ -258,7 +260,7 @@ namespace BasicSorting.Structure
                     if (((int)(object)currentNode.Value!) > ((int)(object)currentNode.Next.Value!))
                     {
                         this.Swap(currentIndex, currentIndex + 1);
-                        
+
                         swapped = true;
                     };
 
