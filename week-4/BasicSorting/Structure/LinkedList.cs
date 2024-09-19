@@ -41,6 +41,19 @@ namespace BasicSorting.Structure
             set { this._last = value; }
         }
 
+        private int Length()
+        {
+            int count = 0;
+            Node<Type>? currentNode = this.First;
+            while (currentNode != null)
+            {
+                currentNode = currentNode.Next;
+                count++;
+            };
+
+            return count;
+        }
+
         public void Show()
         {
             Console.WriteLine(this);
@@ -102,6 +115,159 @@ namespace BasicSorting.Structure
             {
                 this.Add((Type)(object)random.Next(minimum, maximum + 1));
             };
+        }
+
+        private void Swap(int firstIndex, int secondIndex)
+        {
+            if (this.First == null || this.Last == null)
+            {
+                throw new InvalidOperationException("Linked List is empty");
+            };
+
+            if ((firstIndex < 0) || (this.Length() <= firstIndex))
+            {
+                throw new ArgumentOutOfRangeException(nameof(firstIndex), "First index out of bound");
+            };
+
+            if ((secondIndex < 0) || (this.Length() <= secondIndex))
+            {
+                throw new ArgumentOutOfRangeException(nameof(secondIndex), "Second index out of bound");
+            };
+
+            if (firstIndex == secondIndex)
+            {
+                return;
+            };
+
+            int currentFirstIndex;
+            Node<Type> currentFirstNode;
+            if (firstIndex < (this.Length() / 2))
+            {
+                currentFirstNode = this.First;
+                currentFirstIndex = 0;
+                while (currentFirstIndex < firstIndex)
+                {
+                    currentFirstNode = currentFirstNode.Next!;
+                    currentFirstIndex++;
+                };
+            }
+            else
+            {
+                currentFirstNode = this.Last;
+                currentFirstIndex = this.Length() - 1;
+                while (currentFirstIndex > firstIndex)
+                {
+                    currentFirstNode = currentFirstNode.Previous!;
+                    currentFirstIndex--;
+                };
+            };
+
+            int currentSecondIndex;
+            Node<Type> currentSecondNode;
+            if (secondIndex < (this.Length() / 2))
+            {
+                currentSecondNode = this.First;
+                currentSecondIndex = 0;
+                while (currentSecondIndex < secondIndex)
+                {
+                    currentSecondNode = currentSecondNode.Next!;
+                    currentSecondIndex++;
+                };
+            }
+            else
+            {
+                currentSecondNode = this.Last;
+                currentSecondIndex = this.Length() - 1;
+                while (currentSecondIndex > secondIndex)
+                {
+                    currentSecondNode = currentSecondNode.Previous!;
+                    currentSecondIndex--;
+                };
+            };
+
+            if (currentFirstNode == this.First)
+            {
+                this.First = currentSecondNode;
+            }
+            else if (currentSecondNode == this.First)
+            {
+                this.First = currentFirstNode;
+            };
+
+            if (currentFirstNode == this.Last)
+            {
+                this.Last = currentSecondNode;
+            }
+            else if (currentSecondNode == this.Last)
+            {
+                this.Last = currentFirstNode;
+            };
+
+            Node<Type> temp = currentFirstNode.Next!;
+            currentFirstNode.Next = currentSecondNode.Next;
+            currentSecondNode.Next = temp;
+
+            if (currentFirstNode.Next != null)
+            {
+                currentFirstNode.Next.Previous = currentFirstNode;
+            };
+
+            if (currentSecondNode.Next != null)
+            {
+                currentSecondNode.Next.Previous = currentSecondNode;
+            };
+
+            temp = currentFirstNode.Previous!;
+            currentFirstNode.Previous = currentSecondNode.Previous;
+            currentSecondNode.Previous = temp;
+
+            if (currentFirstNode.Previous != null)
+            {
+                currentFirstNode.Previous.Next = currentFirstNode;
+            };
+
+            if (currentSecondNode.Previous != null)
+            {
+                currentSecondNode.Previous.Next = currentSecondNode;
+            };
+        }
+
+        public string BubbleSort()
+        {
+            if (typeof(Type) != typeof(int))
+            {
+                throw new ArgumentException("Type must be int");
+            };
+
+            if (this.First == null || this.Last == null)
+            {
+                throw new InvalidOperationException("Linked List is empty");
+            };
+
+            bool swapped;
+            int currentIndex;
+            Node<Type>? currentNode;
+            do
+            {
+                swapped = false;
+
+                currentIndex = 0;
+                currentNode = this.First;
+                while (currentNode != null && currentNode.Next != null)
+                {
+                    if (((int)(object)currentNode.Value!) > ((int)(object)currentNode.Next.Value!))
+                    {
+                        this.Swap(currentIndex, currentIndex + 1);
+                        
+                        swapped = true;
+                    };
+
+                    currentIndex++;
+                    currentNode = currentNode.Next;
+                };
+            } while (swapped);
+
+            return this.ToString();
         }
 
         public override string ToString()
