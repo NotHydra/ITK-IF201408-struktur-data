@@ -119,118 +119,57 @@ namespace BasicSorting.Structure
             };
         }
 
-        private void Swap(int firstIndex, int secondIndex)
+        private void Swap(Node<Type> firstNode, Node<Type> secondNode)
         {
             if (this.First == null || this.Last == null)
             {
                 throw new InvalidOperationException("Linked List is empty");
             };
 
-            if ((firstIndex < 0) || (this.Length() <= firstIndex))
+            if (firstNode == this.First)
             {
-                throw new ArgumentOutOfRangeException(nameof(firstIndex), "First index out of bound");
-            };
-
-            if ((secondIndex < 0) || (this.Length() <= secondIndex))
-            {
-                throw new ArgumentOutOfRangeException(nameof(secondIndex), "Second index out of bound");
-            };
-
-            if (firstIndex == secondIndex)
-            {
-                return;
-            };
-
-            int currentFirstIndex;
-            Node<Type> currentFirstNode;
-            if (firstIndex < (this.Length() / 2))
-            {
-                currentFirstNode = this.First;
-                currentFirstIndex = 0;
-                while (currentFirstIndex < firstIndex)
-                {
-                    currentFirstNode = currentFirstNode.Next!;
-                    currentFirstIndex++;
-                };
+                this.First = secondNode;
             }
-            else
+            else if (secondNode == this.First)
             {
-                currentFirstNode = this.Last;
-                currentFirstIndex = this.Length() - 1;
-                while (currentFirstIndex > firstIndex)
-                {
-                    currentFirstNode = currentFirstNode.Previous!;
-                    currentFirstIndex--;
-                };
+                this.First = firstNode;
             };
 
-            int currentSecondIndex;
-            Node<Type> currentSecondNode;
-            if (secondIndex < (this.Length() / 2))
+            if (firstNode == this.Last)
             {
-                currentSecondNode = this.First;
-                currentSecondIndex = 0;
-                while (currentSecondIndex < secondIndex)
-                {
-                    currentSecondNode = currentSecondNode.Next!;
-                    currentSecondIndex++;
-                };
+                this.Last = secondNode;
             }
-            else
+            else if (secondNode == this.Last)
             {
-                currentSecondNode = this.Last;
-                currentSecondIndex = this.Length() - 1;
-                while (currentSecondIndex > secondIndex)
-                {
-                    currentSecondNode = currentSecondNode.Previous!;
-                    currentSecondIndex--;
-                };
+                this.Last = firstNode;
             };
 
-            if (currentFirstNode == this.First)
+            Node<Type> temp = firstNode.Next!;
+            firstNode.Next = secondNode.Next;
+            secondNode.Next = temp;
+
+            if (firstNode.Next != null)
             {
-                this.First = currentSecondNode;
-            }
-            else if (currentSecondNode == this.First)
-            {
-                this.First = currentFirstNode;
+                firstNode.Next.Previous = firstNode;
             };
 
-            if (currentFirstNode == this.Last)
+            if (secondNode.Next != null)
             {
-                this.Last = currentSecondNode;
-            }
-            else if (currentSecondNode == this.Last)
-            {
-                this.Last = currentFirstNode;
+                secondNode.Next.Previous = secondNode;
             };
 
-            Node<Type> temp = currentFirstNode.Next!;
-            currentFirstNode.Next = currentSecondNode.Next;
-            currentSecondNode.Next = temp;
+            temp = firstNode.Previous!;
+            firstNode.Previous = secondNode.Previous;
+            secondNode.Previous = temp;
 
-            if (currentFirstNode.Next != null)
+            if (firstNode.Previous != null)
             {
-                currentFirstNode.Next.Previous = currentFirstNode;
+                firstNode.Previous.Next = firstNode;
             };
 
-            if (currentSecondNode.Next != null)
+            if (secondNode.Previous != null)
             {
-                currentSecondNode.Next.Previous = currentSecondNode;
-            };
-
-            temp = currentFirstNode.Previous!;
-            currentFirstNode.Previous = currentSecondNode.Previous;
-            currentSecondNode.Previous = temp;
-
-            if (currentFirstNode.Previous != null)
-            {
-                currentFirstNode.Previous.Next = currentFirstNode;
-            };
-
-            if (currentSecondNode.Previous != null)
-            {
-                currentSecondNode.Previous.Next = currentSecondNode;
+                secondNode.Previous.Next = secondNode;
             };
         }
 
@@ -247,24 +186,21 @@ namespace BasicSorting.Structure
             };
 
             bool swapped;
-            int currentIndex;
             Node<Type>? currentNode;
             do
             {
                 swapped = false;
 
-                currentIndex = 0;
                 currentNode = this.First;
                 while (currentNode != null && currentNode.Next != null)
                 {
                     if (((int)(object)currentNode.Value!) > ((int)(object)currentNode.Next.Value!))
                     {
-                        this.Swap(currentIndex, currentIndex + 1);
+                        this.Swap(currentNode, currentNode.Next);
 
                         swapped = true;
                     };
 
-                    currentIndex++;
                     currentNode = currentNode.Next;
                 };
             } while (swapped);
