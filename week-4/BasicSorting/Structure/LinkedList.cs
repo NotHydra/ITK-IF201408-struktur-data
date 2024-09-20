@@ -51,8 +51,7 @@ namespace BasicSorting.Structure
             Console.WriteLine("Debug: Start");
 
             int currentIndex = 0;
-            Node<Type>? currentNode = this.First;
-            while (currentNode != null)
+            for (Node<Type>? currentNode = this.First; currentNode != null; currentNode = currentNode.Next)
             {
                 string previousText = (currentNode.Previous != null) ? currentNode.Previous.Value!.ToString()! : "null";
                 string nextText = (currentNode.Next != null) ? currentNode.Next.Value!.ToString()! : "null";
@@ -60,7 +59,6 @@ namespace BasicSorting.Structure
                 Console.WriteLine($"Debug {currentIndex + 1}: {previousText} <- {currentNode.Value} -> {nextText}");
 
                 currentIndex += 1;
-                currentNode = currentNode.Next;
             };
 
             Console.WriteLine("Debug: End");
@@ -100,7 +98,7 @@ namespace BasicSorting.Structure
             };
 
             Random random = new();
-            for (int i = 0; i < amount; i++)
+            for (int _ = 0; _ < amount; _++)
             {
                 this.Add((Type)(object)random.Next(minimum, maximum + 1));
             };
@@ -173,13 +171,10 @@ namespace BasicSorting.Structure
             };
 
             bool swapped;
-            Node<Type>? currentNode;
             do
             {
                 swapped = false;
-
-                currentNode = this.First;
-                while (currentNode != null && currentNode.Next != null)
+                for (Node<Type>? currentNode = this.First; (currentNode != null) && (currentNode.Next != null); currentNode = currentNode.Next)
                 {
                     if (((int)(object)currentNode.Value!) > ((int)(object)currentNode.Next.Value!))
                     {
@@ -187,8 +182,6 @@ namespace BasicSorting.Structure
 
                         swapped = true;
                     };
-
-                    currentNode = currentNode.Next;
                 };
             } while (swapped);
 
@@ -207,31 +200,24 @@ namespace BasicSorting.Structure
                 throw new InvalidOperationException("Linked List is empty");
             };
 
-
-            Node<Type>? currentNode = this.First;
-            while (currentNode != null)
+            for (Node<Type>? currentNode = this.First; (currentNode != null) && (currentNode.Next != null);)
             {
                 Node<Type>? minimumNode = currentNode;
-
-                Node<Type>? comparisonNode = currentNode.Next;
-                while (comparisonNode != null)
+                for (Node<Type>? comparisonNode = currentNode.Next; comparisonNode != null; comparisonNode = comparisonNode.Next)
                 {
                     if (((int)(object)comparisonNode.Value!) < ((int)(object)minimumNode.Value!))
                     {
                         minimumNode = comparisonNode;
                     };
-
-                    comparisonNode = comparisonNode.Next;
                 };
 
-
-                Node<Type>? temp = currentNode.Next;
+                Node<Type>? tempNode = currentNode.Next;
                 if (minimumNode != currentNode)
                 {
                     this.Swap(currentNode, minimumNode);
                 };
 
-                currentNode = temp;
+                currentNode = tempNode;
             };
 
             return this.ToString();
