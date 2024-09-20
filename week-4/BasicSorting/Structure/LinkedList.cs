@@ -225,34 +225,37 @@ namespace BasicSorting.Structure
 
         public string InsertionSort()
         {
-            Node<Type>? sorted = null;
-            Node<Type>? currentNode = this.First;
-
-            while (currentNode != null)
+            if (typeof(Type) != typeof(int))
             {
-                Node<Type>? nextNode = currentNode.Next;
-
-                if ((sorted == null) || (((int)(object)sorted.Value!) >= ((int)(object)currentNode.Value!)))
-                {
-                    currentNode.Next = sorted;
-                    sorted = currentNode;
-                }
-                else
-                {
-                    Node<Type> tempNode = sorted;
-                    while ((tempNode.Next != null) && (((int)(object)tempNode.Next!.Value!) < ((int)(object)currentNode.Value!)))
-                    {
-                        tempNode = tempNode.Next;
-                    };
-
-                    currentNode.Next = tempNode.Next;
-                    tempNode.Next = currentNode;
-                };
-
-                currentNode = nextNode;
+                throw new ArgumentException("Type must be int");
             };
 
-            this.First = sorted;
+            if (this.First == null || this.Last == null)
+            {
+                throw new InvalidOperationException("Linked List is empty");
+            };
+
+            for (Node<Type>? extractedNode = this.First.Next; extractedNode != null;)
+            {
+                Node<Type>? nextNode = extractedNode.Next;
+                for (Node<Type>? currentNode = extractedNode.Previous; currentNode != null;)
+                {
+                    if (((int)(object)currentNode.Value!) > ((int)(object)extractedNode.Value!))
+                    {
+                        Node<Type>? temp = currentNode.Previous;
+
+                        this.Swap(currentNode, extractedNode);
+
+                        currentNode = temp;
+
+                        continue;
+                    };
+
+                    break;
+                };
+
+                extractedNode = nextNode;
+            };
 
             return this.ToString();
         }
