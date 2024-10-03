@@ -28,7 +28,7 @@
             {
                 Console.Clear();
                 Border();
-                Title("Basic Sorting Manager");
+                Title("Advance Sorting Manager");
                 Border();
                 SubTitle("Move = Up/Down | Select = Enter/Right | Exit = Esc/Left");
                 Border();
@@ -463,8 +463,6 @@
 
                                 try
                                 {
-                                    var timer = System.Diagnostics.Stopwatch.StartNew();
-
                                     if (actions[actionOption].ReturnType == typeof(void))
                                     {
                                         actions[actionOption].Invoke(containers[containerOption], null);
@@ -473,13 +471,6 @@
                                     {
                                         Console.WriteLine(actions[actionOption].Invoke(containers[containerOption], null));
                                     };
-
-                                    timer.Stop();
-
-                                    Border();
-
-                                    WriteLineColored($"Time elapsed: {timer.ElapsedMilliseconds} ms", ConsoleColor.Green);
-                                    WriteLineColored(timer.Elapsed.ToString(), ConsoleColor.Green);
                                 }
                                 catch (Exception e)
                                 {
@@ -529,6 +520,7 @@
                                         {
                                             Console.WriteLine(actions[actionOption].Invoke(containers[containerOption], [.. arguments]));
                                         };
+
                                     }
                                     catch (Exception e)
                                     {
