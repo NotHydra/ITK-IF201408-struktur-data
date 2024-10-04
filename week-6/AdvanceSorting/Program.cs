@@ -463,6 +463,8 @@
 
                                 try
                                 {
+                                    var timer = System.Diagnostics.Stopwatch.StartNew();
+
                                     if (actions[actionOption].ReturnType == typeof(void))
                                     {
                                         actions[actionOption].Invoke(containers[containerOption], null);
@@ -471,6 +473,13 @@
                                     {
                                         Console.WriteLine(actions[actionOption].Invoke(containers[containerOption], null));
                                     };
+
+                                    timer.Stop();
+
+                                    Border();
+
+                                    WriteLineColored($"Time elapsed: {timer.ElapsedMilliseconds} ms", ConsoleColor.Green);
+                                    WriteLineColored(timer.Elapsed.ToString(), ConsoleColor.Green);
                                 }
                                 catch (Exception e)
                                 {
@@ -559,8 +568,6 @@
         public static void Main(string[] args)
         {
             CommandLineInterface.Start();
-
-            // Test.Stack();
         }
     }
 }
