@@ -95,6 +95,14 @@ namespace AdvanceSorting.Structure
             this.Last = newNode;
         }
 
+        public void addRange(int minimum, int maximum)
+        {
+            for (int i = minimum; i <= maximum; i++)
+            {
+                this.Add((Type)Convert.ChangeType(i, typeof(Type)));
+            }
+        }
+
         public void AddRandom(int amount, int minimum, int maximum)
         {
             if (typeof(Type) != typeof(int))
