@@ -106,8 +106,12 @@
             containers.Add(linkedList3);
 
             Structure.LinkedList<int> linkedList4 = new();
-            linkedList4.addRange(5, 100);
+            linkedList4.AddRange(1, 10, 1);
             containers.Add(linkedList4);
+
+            Structure.LinkedList<int> linkedList5 = new();
+            linkedList5.AddRange(1, 10, -1);
+            containers.Add(linkedList5);
         }
 
         private static string TypeToAlias(Type type)
