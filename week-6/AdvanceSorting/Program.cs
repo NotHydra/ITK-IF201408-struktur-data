@@ -28,7 +28,7 @@
             {
                 Console.Clear();
                 Border();
-                Title("Basic Sorting Manager");
+                Title("Advance Sorting Manager");
                 Border();
                 SubTitle("Move = Up/Down | Select = Enter/Right | Exit = Esc/Left");
                 Border();
@@ -529,6 +529,7 @@
                                         {
                                             Console.WriteLine(actions[actionOption].Invoke(containers[containerOption], [.. arguments]));
                                         };
+
                                     }
                                     catch (Exception e)
                                     {
@@ -567,8 +568,6 @@
         public static void Main(string[] args)
         {
             CommandLineInterface.Start();
-
-            // Test.Stack();
         }
     }
 }

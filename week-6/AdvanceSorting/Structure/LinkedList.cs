@@ -2,11 +2,11 @@ namespace AdvanceSorting.Structure
 {
     public class Node<Type>(Type value)
     {
-        private readonly Type _value = value;
+        private readonly Type? _value = value;
         private Node<Type>? _next = null;
         private Node<Type>? _previous = null;
 
-        public Type Value
+        public Type? Value
         {
             get { return this._value; }
         }
@@ -21,6 +21,21 @@ namespace AdvanceSorting.Structure
         {
             get { return this._previous; }
             set { this._previous = value; }
+        }
+        
+        public override string ToString()
+        {
+            string text = "null -> ";
+            Node<Type>? currentNode = this;
+            while (currentNode != null)
+            {
+                text += $"{currentNode.Value} -> ";
+                currentNode = currentNode.Next;
+            };
+        
+            text += "null";
+        
+            return text;
         }
     };
 
@@ -64,7 +79,7 @@ namespace AdvanceSorting.Structure
             Console.WriteLine("Debug: End");
         }
 
-        private void Add(Type value)
+        public void Add(Type value)
         {
             Node<Type> newNode = new(value);
             if (this.First == null || this.Last == null)
@@ -157,8 +172,8 @@ namespace AdvanceSorting.Structure
                 secondNode.Previous.Next = secondNode;
             };
         }
-
-        public string BubbleSort()
+        
+        public string MergeSort()
         {
             if (typeof(Type) != typeof(int))
             {
@@ -170,96 +185,79 @@ namespace AdvanceSorting.Structure
                 throw new InvalidOperationException("Linked List is empty");
             };
 
-            bool swapped;
-            do
+            this.First = this.SplitLinkedList(this.First);
+
+            Node<Type> currentNode = this.First;
+            while (currentNode.Next != null)
             {
-                swapped = false;
-                for (Node<Type>? currentNode = this.First; (currentNode != null) && (currentNode.Next != null); currentNode = currentNode.Next)
-                {
-                    if (((int)(object)currentNode.Value!) > ((int)(object)currentNode.Next.Value!))
-                    {
-                        this.Swap(currentNode, currentNode.Next);
-
-                        swapped = true;
-                    };
-                };
-            } while (swapped);
-
+                currentNode = currentNode.Next;
+            };
+            
+            this.Last = currentNode;
+            
             return this.ToString();
         }
-
-        public string SelectionSort()
+    
+        private Node<Type> RightLinkedList(Node<Type> headNode)
         {
-            if (typeof(Type) != typeof(int))
+            Node<Type> middleNode = headNode;
+            Node<Type> lastNode = headNode;
+            while (lastNode.Next != null && lastNode.Next.Next != null)
             {
-                throw new ArgumentException("Type must be int");
+                middleNode = middleNode.Next!;
+                lastNode = lastNode.Next.Next;
             };
 
-            if (this.First == null || this.Last == null)
-            {
-                throw new InvalidOperationException("Linked List is empty");
-            };
+            Node<Type> rightNode = middleNode.Next!;
+            rightNode.Previous = null;
+            middleNode.Next = null;
 
-            for (Node<Type>? currentNode = this.First; (currentNode != null) && (currentNode.Next != null);)
-            {
-                Node<Type>? minimumNode = currentNode;
-                for (Node<Type>? comparisonNode = currentNode.Next; comparisonNode != null; comparisonNode = comparisonNode.Next)
-                {
-                    if (((int)(object)comparisonNode.Value!) < ((int)(object)minimumNode.Value!))
-                    {
-                        minimumNode = comparisonNode;
-                    };
-                };
-
-                Node<Type>? tempNode = currentNode.Next;
-                if (minimumNode != currentNode)
-                {
-                    this.Swap(currentNode, minimumNode);
-                };
-
-                currentNode = tempNode;
-            };
-
-            return this.ToString();
+            return rightNode;
         }
-
-        public string InsertionSort()
+        
+        private Node<Type> SplitLinkedList(Node<Type> headNode)
         {
-            if (typeof(Type) != typeof(int))
+            if (headNode.Next == null)
             {
-                throw new ArgumentException("Type must be int");
+                return headNode;
             };
+            
+            Node<Type> rightNode = this.RightLinkedList(headNode);
 
-            if (this.First == null || this.Last == null)
-            {
-                throw new InvalidOperationException("Linked List is empty");
-            };
-
-            for (Node<Type>? extractedNode = this.First.Next; extractedNode != null;)
-            {
-                Node<Type>? nextNode = extractedNode.Next;
-                for (Node<Type>? currentNode = extractedNode.Previous; currentNode != null;)
-                {
-                    if (((int)(object)currentNode.Value!) > ((int)(object)extractedNode.Value!))
-                    {
-                        Node<Type>? temp = currentNode.Previous;
-
-                        this.Swap(currentNode, extractedNode);
-
-                        currentNode = temp;
-
-                        continue;
-                    };
-
-                    break;
-                };
-
-                extractedNode = nextNode;
-            };
-
-            return this.ToString();
+            headNode = this.SplitLinkedList(headNode);
+            rightNode = this.SplitLinkedList(rightNode);
+            
+            return MergeLinkedList(headNode, rightNode);
         }
 
+        private Node<Type> MergeLinkedList(Node<Type>? leftNode, Node<Type>? rightNode)
+        {
+            if (leftNode == null)
+            {
+                return rightNode!;
+            };
+            
+            if (rightNode == null)
+            {
+                return leftNode!;
+            };
+            
+            if (((int)(object)leftNode.Value!) <= ((int)(object)rightNode.Value!))
+            {
+                leftNode.Next = MergeLinkedList(leftNode.Next, rightNode);
+                leftNode.Next.Previous = leftNode;
+                leftNode.Previous = null;
+                
+                return leftNode;
+            };
+            
+            rightNode.Next = MergeLinkedList(leftNode, rightNode.Next);
+            rightNode.Next.Previous = rightNode;
+            rightNode.Previous = null;
+            
+            return rightNode;
+        }
+        
         public override string ToString()
         {
             string text = "null -> ";
