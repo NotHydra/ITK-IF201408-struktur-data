@@ -104,6 +104,14 @@
             Structure.LinkedList<int> linkedList3 = new();
             linkedList3.AddRandom(15, 0, 100);
             containers.Add(linkedList3);
+
+            Structure.LinkedList<int> linkedList4 = new();
+            linkedList4.AddRange(1, 10, 1);
+            containers.Add(linkedList4);
+
+            Structure.LinkedList<int> linkedList5 = new();
+            linkedList5.AddRange(1, 10, -1);
+            containers.Add(linkedList5);
         }
 
         private static string TypeToAlias(Type type)

@@ -22,7 +22,7 @@ namespace AdvanceSorting.Structure
             get { return this._previous; }
             set { this._previous = value; }
         }
-        
+
         public override string ToString()
         {
             string text = "null -> ";
@@ -32,9 +32,9 @@ namespace AdvanceSorting.Structure
                 text += $"{currentNode.Value} -> ";
                 currentNode = currentNode.Next;
             };
-        
+
             text += "null";
-        
+
             return text;
         }
     };
@@ -95,6 +95,23 @@ namespace AdvanceSorting.Structure
             this.Last = newNode;
         }
 
+        public void AddRange(int minimum, int maximum, int order)
+        {
+            if (order == -1)
+            {
+                for (int i = minimum; i <= maximum; i++)
+                {
+                    this.Add((Type)Convert.ChangeType(i, typeof(Type)));
+                };
+
+                return;
+            };
+
+            for (int i = maximum; i >= minimum; i--)
+            {
+                this.Add((Type)Convert.ChangeType(i, typeof(Type)));
+            };
+        }
         public void AddRandom(int amount, int minimum, int maximum)
         {
             if (typeof(Type) != typeof(int))
@@ -172,7 +189,7 @@ namespace AdvanceSorting.Structure
                 secondNode.Previous.Next = secondNode;
             };
         }
-        
+
         public string MergeSort()
         {
             if (typeof(Type) != typeof(int))
@@ -192,12 +209,12 @@ namespace AdvanceSorting.Structure
             {
                 currentNode = currentNode.Next;
             };
-            
+
             this.Last = currentNode;
-            
+
             return this.ToString();
         }
-    
+
         private Node<Type> RightLinkedList(Node<Type> headNode)
         {
             Node<Type> middleNode = headNode;
@@ -214,19 +231,19 @@ namespace AdvanceSorting.Structure
 
             return rightNode;
         }
-        
+
         private Node<Type> SplitLinkedList(Node<Type> headNode)
         {
             if (headNode.Next == null)
             {
                 return headNode;
             };
-            
+
             Node<Type> rightNode = this.RightLinkedList(headNode);
 
             headNode = this.SplitLinkedList(headNode);
             rightNode = this.SplitLinkedList(rightNode);
-            
+
             return MergeLinkedList(headNode, rightNode);
         }
 
@@ -236,28 +253,28 @@ namespace AdvanceSorting.Structure
             {
                 return rightNode!;
             };
-            
+
             if (rightNode == null)
             {
                 return leftNode!;
             };
-            
+
             if (((int)(object)leftNode.Value!) <= ((int)(object)rightNode.Value!))
             {
                 leftNode.Next = MergeLinkedList(leftNode.Next, rightNode);
                 leftNode.Next.Previous = leftNode;
                 leftNode.Previous = null;
-                
+
                 return leftNode;
             };
-            
+
             rightNode.Next = MergeLinkedList(leftNode, rightNode.Next);
             rightNode.Next.Previous = rightNode;
             rightNode.Previous = null;
-            
+
             return rightNode;
         }
-        
+
         public override string ToString()
         {
             string text = "null -> ";
