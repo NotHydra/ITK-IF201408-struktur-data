@@ -251,6 +251,41 @@ class LinkedList(Generic[Type]):
         if secondCurrentNode.previous is not None:
             secondCurrentNode.previous.next = secondCurrentNode
 
+    def swapNode(self, firstNode: Node[Type], secondNode: Node[Type]) -> None:
+        if (self.first is None) or (self.last is None):
+            raise Exception("Linked List is empty")
+
+        if firstNode == self.first:
+            self.first = secondNode
+
+        elif secondNode == self.first:
+            self.first = firstNode
+
+        if firstNode == self.last:
+            self.last = secondNode
+
+        elif secondNode == self.last:
+            self.last = firstNode
+
+        firstNode.next, secondNode.next = secondNode.next, firstNode.next
+
+        if firstNode.next is not None:
+            firstNode.next.previous = firstNode
+
+        if secondNode.next is not None:
+            secondNode.next.previous = secondNode
+
+        firstNode.previous, secondNode.previous = (
+            secondNode.previous,
+            firstNode.previous,
+        )
+
+        if firstNode.previous is not None:
+            firstNode.previous.next = firstNode
+
+        if secondNode.previous is not None:
+            secondNode.previous.next = secondNode
+
     def remove(self, index: int) -> None:
         if (self.first is None) or (self.last is None):
             raise Exception("Linked List is empty")
@@ -293,6 +328,34 @@ class LinkedList(Generic[Type]):
         currentNode.previous.next = currentNode.next
         currentNode.next.previous = currentNode.previous
 
+    def insertionSort(self) -> str:
+        if (self.first is None) or (self.last is None):
+            raise Exception("Linked List is empty")
+
+        if not isinstance(self.first.data, int):
+            raise Exception("Type must be int")
+
+        extractedNode: Optional[Node[Type]] = self.first.next
+        while extractedNode is not None:
+            nextNode: Optional[Node[Type]] = extractedNode.next
+
+            currentNode: Optional[Node[Type]] = extractedNode.previous
+            while currentNode is not None:
+                if currentNode.data > extractedNode.data:
+                    tempNode: Optional[Node[Type]] = currentNode.previous
+
+                    self.swapNode(currentNode, extractedNode)
+
+                    currentNode = tempNode
+
+                    continue
+
+                break
+
+            extractedNode = nextNode
+
+        return self
+
     def __str__(self) -> str:
         text: str = "null -> "
         currentNode: Optional[Node[Type]] = self.first
@@ -310,9 +373,9 @@ class Program:
         linkedList1: LinkedList[int] = LinkedList[int]()
 
         print("Initialize")
-        linkedList1.add(1)
-        linkedList1.add(2)
         linkedList1.add(3)
+        linkedList1.add(2)
+        linkedList1.add(1)
         print(linkedList1.length())
         linkedList1.show()
         linkedList1.debug()
@@ -331,9 +394,9 @@ class Program:
         print()
 
         print("Insert")
-        linkedList1.insert(0, 0)
-        linkedList1.insert(3, 4)
-        linkedList1.insert(3, 3)
+        linkedList1.insert(0, 4)
+        linkedList1.insert(3, 0)
+        linkedList1.insert(3, 1)
         print(linkedList1.length())
         linkedList1.show()
         linkedList1.debug()
@@ -350,6 +413,15 @@ class Program:
         linkedList1.remove(0)
         linkedList1.remove(3)
         print(linkedList1.length())
+        linkedList1.show()
+        linkedList1.debug()
+        print()
+
+        print("Insertion Sort")
+        linkedList1.show()
+        linkedList1.debug()
+        print()
+        linkedList1.insertionSort()
         linkedList1.show()
         linkedList1.debug()
         print()
