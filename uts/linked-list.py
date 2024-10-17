@@ -176,7 +176,7 @@ class LinkedList(Generic[Type]):
         currentNode.previous.next = newNode
         currentNode.previous = newNode
 
-    def swap(self, firstIndex: int, secondIndex: int) -> None:
+    def swapIndex(self, firstIndex: int, secondIndex: int) -> None:
         if (self.first is None) or (self.last is None):
             raise Exception("Linked List is empty")
 
@@ -356,6 +356,69 @@ class LinkedList(Generic[Type]):
 
         return self
 
+    def mergeSort(self) -> str:
+        if (self.first is None) or (self.last is None):
+            raise Exception("Linked List is empty")
+
+        if not isinstance(self.first.data, int):
+            raise Exception("Type must be int")
+
+        self.first = self.splitLinkedList(self.first)
+
+        currentNode: Node[Type] = self.first
+        while currentNode.next is not None:
+            currentNode = currentNode.next
+
+        self.last = currentNode
+
+        return self
+
+    def rightLinkedList(self, headNode: Node[Type]) -> Node[Type]:
+        middleNode: Node[Type] = headNode
+        lastNode: Node[Type] = headNode
+        while (lastNode.next is not None) and (lastNode.next.next is not None):
+            middleNode = middleNode.next
+            lastNode = lastNode.next.next
+
+        rightNode: Node[Type] = middleNode.next
+        rightNode.previous = None
+        middleNode.next = None
+
+        return rightNode
+
+    def splitLinkedList(self, headNode: Node[Type]) -> Node[Type]:
+        if headNode.next is None:
+            return headNode
+
+        rightNode: Node[Type] = self.rightLinkedList(headNode)
+
+        headNode = self.splitLinkedList(headNode)
+        rightNode = self.splitLinkedList(rightNode)
+
+        return self.mergeLinkedList(headNode, rightNode)
+
+    def mergeLinkedList(
+        self, leftNode: Optional[Node[Type]], rightNode: Optional[Node[Type]]
+    ) -> Node[Type]:
+        if leftNode is None:
+            return rightNode
+
+        if rightNode is None:
+            return leftNode
+
+        if leftNode.data < rightNode.data:
+            leftNode.next = self.mergeLinkedList(leftNode.next, rightNode)
+            leftNode.next.previous = leftNode
+            leftNode.previous = None
+
+            return leftNode
+
+        rightNode.next = self.mergeLinkedList(leftNode, rightNode.next)
+        rightNode.next.previous = rightNode
+        rightNode.previous = None
+
+        return rightNode
+
     def __str__(self) -> str:
         text: str = "null -> "
         currentNode: Optional[Node[Type]] = self.first
@@ -403,7 +466,7 @@ class Program:
         print()
 
         print("Swap")
-        linkedList1.swap(0, 4)
+        linkedList1.swapIndex(0, 4)
         print(linkedList1.length())
         linkedList1.show()
         linkedList1.debug()
@@ -422,6 +485,18 @@ class Program:
         linkedList1.debug()
         print()
         linkedList1.insertionSort()
+        linkedList1.show()
+        linkedList1.debug()
+        print()
+
+        print("Merge Sort")
+        linkedList1.swapIndex(0, 2)
+        linkedList1.swapIndex(1, 2)
+
+        linkedList1.show()
+        linkedList1.debug()
+        print()
+        linkedList1.mergeSort()
         linkedList1.show()
         linkedList1.debug()
         print()
