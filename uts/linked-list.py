@@ -23,11 +23,11 @@ class Node(Generic[Type]):
         return self._previous
 
     @next.setter
-    def next(self, node: Optional["Node[Type]"]) -> None:
+    def next(self, node: "Node[Type]") -> None:
         self._next = node
 
     @previous.setter
-    def previous(self, node: Optional["Node[Type]"]) -> None:
+    def previous(self, node: "Node[Type]") -> None:
         self._previous = node
 
 
@@ -45,11 +45,11 @@ class LinkedList(Generic[Type]):
         return self._last
 
     @first.setter
-    def first(self, node: Optional[Node[Type]]) -> None:
+    def first(self, node: Node[Type]) -> None:
         self._first = node
 
     @last.setter
-    def last(self, node: Optional[Node[Type]]) -> None:
+    def last(self, node: Node[Type]) -> None:
         self._last = node
 
     def length(self) -> int:
