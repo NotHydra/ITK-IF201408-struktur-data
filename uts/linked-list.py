@@ -1,5 +1,6 @@
 from typing import Generic, Optional, TypeVar
 
+import random
 
 Type = TypeVar("Type")
 
@@ -90,6 +91,10 @@ class LinkedList(Generic[Type]):
         self.last.next = newNode
         newNode.previous = self.last
         self.last = newNode
+
+    def addRandom(self, amount: int, minimum: int, maximum: int) -> None:
+        for _ in range(amount):
+            self.add(random.randint(minimum, maximum))
 
     def pop(self) -> Type:
         if (self.first is None) or (self.last is None):
