@@ -1,23 +1,23 @@
 namespace Tree.Structure
 {
-    public class Node<Type>(Type key)
+    public class Node<TypeKey>(TypeKey key)
     {
-        private readonly Type? _key = key;
-        private Node<Type>? _right = null;
-        private Node<Type>? _left = null;
+        private readonly TypeKey? _key = key;
+        private Node<TypeKey>? _right = null;
+        private Node<TypeKey>? _left = null;
 
-        public Type? Key
+        public TypeKey? Key
         {
             get { return this._key; }
         }
 
-        public Node<Type>? Right
+        public Node<TypeKey>? Right
         {
             get { return this._right; }
             set { this._right = value; }
         }
 
-        public Node<Type>? Left
+        public Node<TypeKey>? Left
         {
             get { return this._left; }
             set { this._left = value; }
@@ -29,22 +29,22 @@ namespace Tree.Structure
         }
     };
 
-    public class Tree<Type>()
+    public class Tree<TypeKey>()
     {
-        private Node<Type>? _root = null;
+        private Node<TypeKey>? _root = null;
 
-        public Node<Type>? Root
+        public Node<TypeKey>? Root
         {
             get { return this._root; }
             set { this._root = value; }
         }
-
-        public bool IsExist(Type key)
+        
+        public bool IsExist(TypeKey key)
         {
             return IsExistRecursively(this.Root, key);
         }
 
-        private bool IsExistRecursively(Node<Type>? currentNode, Type key)
+        private bool IsExistRecursively(Node<TypeKey>? currentNode, TypeKey key)
         {
             if (currentNode == null)
             {
@@ -56,7 +56,7 @@ namespace Tree.Structure
                 return true;
             }
 
-            if ((typeof(Type) == typeof(int)) ? ((int)(object)key! < (int)(object)currentNode.Key!) : ((char)(object)key! < (char)(object)currentNode.Key!))
+            if ((typeof(TypeKey) == typeof(int)) ? ((int)(object)key! < (int)(object)currentNode.Key!) : ((char)(object)key! < (char)(object)currentNode.Key!))
             {
                 return IsExistRecursively(currentNode.Left, key);
             }
@@ -66,9 +66,9 @@ namespace Tree.Structure
             }
         }
 
-        public bool Add(Type key)
+        public bool Add(TypeKey key)
         {
-            if (!((typeof(Type) != typeof(int)) || (typeof(Type) != typeof(char))))
+            if (!((typeof(TypeKey) != typeof(int)) || (typeof(TypeKey) != typeof(char))))
             {
                 throw new ArgumentException("Type must be int or char");
             }
@@ -80,7 +80,7 @@ namespace Tree.Structure
 
             if (this.Root == null)
             {
-                this.Root = new Node<Type>(key);
+                this.Root = new Node<TypeKey>(key);
             }
             else
             {
@@ -90,13 +90,13 @@ namespace Tree.Structure
             return true;
         }
 
-        private void AddRecursively(Node<Type> currentNode, Type key)
+        private void AddRecursively(Node<TypeKey> currentNode, TypeKey key)
         {
-            if ((typeof(Type) == typeof(int)) ? ((int)(object)key! < (int)(object)currentNode.Key!) : ((char)(object)key! < (char)(object)currentNode.Key!))
+            if ((typeof(TypeKey) == typeof(int)) ? ((int)(object)key! < (int)(object)currentNode.Key!) : ((char)(object)key! < (char)(object)currentNode.Key!))
             {
                 if (currentNode.Left == null)
                 {
-                    currentNode.Left = new Node<Type>(key);
+                    currentNode.Left = new Node<TypeKey>(key);
                 }
                 else
                 {
@@ -107,7 +107,7 @@ namespace Tree.Structure
             {
                 if (currentNode.Right == null)
                 {
-                    currentNode.Right = new Node<Type>(key);
+                    currentNode.Right = new Node<TypeKey>(key);
                 }
                 else
                 {
@@ -116,14 +116,19 @@ namespace Tree.Structure
             }
         }
 
-        public bool Remove(Type key)
+        public bool Remove(TypeKey key)
         {
+            if (this.Root == null)
+            {
+                throw new InvalidOperationException("Tree is empty");
+            };
+
             this.Root = RemoveRecursively(this.Root, key, out bool wasRemoved);
 
             return wasRemoved;
         }
 
-        private Node<Type>? RemoveRecursively(Node<Type>? currentNode, Type key, out bool wasRemoved)
+        private Node<TypeKey>? RemoveRecursively(Node<TypeKey>? currentNode, TypeKey key, out bool wasRemoved)
         {
             if (currentNode == null)
             {
@@ -131,11 +136,11 @@ namespace Tree.Structure
                 return null;
             }
 
-            if ((typeof(Type) == typeof(int)) ? ((int)(object)key! < (int)(object)currentNode.Key!) : ((char)(object)key! < (char)(object)currentNode.Key!))
+            if ((typeof(TypeKey) == typeof(int)) ? ((int)(object)key! < (int)(object)currentNode.Key!) : ((char)(object)key! < (char)(object)currentNode.Key!))
             {
                 currentNode.Left = RemoveRecursively(currentNode.Left, key, out wasRemoved);
             }
-            else if ((typeof(Type) == typeof(int)) ? ((int)(object)key! > (int)(object)currentNode.Key!) : ((char)(object)key! > (char)(object)currentNode.Key!))
+            else if ((typeof(TypeKey) == typeof(int)) ? ((int)(object)key! > (int)(object)currentNode.Key!) : ((char)(object)key! > (char)(object)currentNode.Key!))
             {
                 currentNode.Right = RemoveRecursively(currentNode.Right, key, out wasRemoved);
             }
@@ -157,8 +162,8 @@ namespace Tree.Structure
                 }
                 else
                 {
-                    Node<Type> smallestNode = FindMin(currentNode.Right);
-                    currentNode = new Node<Type>(smallestNode.Key!);
+                    Node<TypeKey> smallestNode = FindMin(currentNode.Right);
+                    currentNode = new Node<TypeKey>(smallestNode.Key!);
                     currentNode.Right = RemoveRecursively(currentNode.Right, smallestNode.Key!, out _);
                     currentNode.Left = currentNode.Left;
                 }
@@ -167,7 +172,7 @@ namespace Tree.Structure
             return currentNode;
         }
 
-        private Node<Type> FindMin(Node<Type> node)
+        private Node<TypeKey> FindMin(Node<TypeKey> node)
         {
             while (node.Left != null)
             {
@@ -179,14 +184,14 @@ namespace Tree.Structure
 
         public string PreOrder()
         {
-            List<Type> result = [];
+            List<TypeKey> result = [];
 
             PreOrderRecursively(this.Root, result);
 
             return string.Join(", ", result);
         }
 
-        private void PreOrderRecursively(Node<Type>? node, List<Type> result)
+        private void PreOrderRecursively(Node<TypeKey>? node, List<TypeKey> result)
         {
             if (node != null)
             {
@@ -198,14 +203,14 @@ namespace Tree.Structure
 
         public string InOrder()
         {
-            List<Type> result = [];
+            List<TypeKey> result = [];
 
             InOrderRecursively(this.Root, result);
 
             return string.Join(", ", result);
         }
 
-        private void InOrderRecursively(Node<Type>? node, List<Type> result)
+        private void InOrderRecursively(Node<TypeKey>? node, List<TypeKey> result)
         {
             if (node != null)
             {
@@ -217,14 +222,14 @@ namespace Tree.Structure
 
         public string PostOrder()
         {
-            List<Type> result = [];
+            List<TypeKey> result = [];
 
             PostOrderRecursively(this.Root, result);
 
             return string.Join(", ", result);
         }
 
-        private void PostOrderRecursively(Node<Type>? node, List<Type> result)
+        private void PostOrderRecursively(Node<TypeKey>? node, List<TypeKey> result)
         {
             if (node != null)
             {
@@ -234,10 +239,47 @@ namespace Tree.Structure
             }
         }
 
-
         public override string ToString()
         {
-            return this.InOrder();
+            if (this.Root == null)
+            {
+                return "Root(0): null";
+            }
+
+            List<string> textList = [$"Root(0): {this.Root.Key}"];
+            ToStringRecursivelyWithNull(textList, this.Root.Left, 'L');
+            ToStringRecursivelyWithNull(textList, this.Root.Right, 'R');
+
+            return string.Join("\n", textList);
+        }
+
+        public void ToStringRecursively(List<string> textList, Node<TypeKey>? node, char type, int level = 1)
+        {
+            textList.Add($"{string.Concat(Enumerable.Repeat(' ', level))}{type}({level}): {node!.Key}");
+
+            if (node.Left != null)
+            {
+                ToStringRecursively(textList, node.Left, 'L', level + 1);
+            }
+
+            if (node.Right != null)
+            {
+                ToStringRecursively(textList, node.Right, 'R', level + 1);
+            }
+        }
+
+        public void ToStringRecursivelyWithNull(List<string> textList, Node<TypeKey>? node, char type, int level = 1)
+        {
+            if (node == null)
+            {
+                textList.Add($"{string.Concat(Enumerable.Repeat(' ', level))}{type}({level}): null");
+
+                return;
+            }
+
+            textList.Add($"{string.Concat(Enumerable.Repeat(' ', level))}{type}({level}): {node.Key}");
+            ToStringRecursivelyWithNull(textList, node.Left, 'L', level + 1);
+            ToStringRecursivelyWithNull(textList, node.Right, 'R', level + 1);
         }
     }
 }
