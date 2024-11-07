@@ -194,7 +194,6 @@
                     Console.Write($"{containerIndex + 1}. ");
                     WriteLineColored($"( {StructureWithTypeToAlias(containers[containerIndex].GetType(), containers[containerIndex].GetType().GetGenericArguments()[0])} )", ConsoleColor.Green);
                     Console.WriteLine(containers[containerIndex]);
-                    Console.WriteLine();
                 };
 
                 Border();
@@ -362,7 +361,6 @@
                     Console.Write($"{containerIndex + 1}. ");
                     WriteLineColored($"( {StructureWithTypeToAlias(containers[containerIndex].GetType(), containers[containerIndex].GetType().GetGenericArguments()[0])} )", ConsoleColor.Green);
                     Console.WriteLine(containers[containerIndex]);
-                    Console.WriteLine();
 
                     if (containerIndex == containerOption)
                     {

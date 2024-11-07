@@ -251,38 +251,43 @@ namespace Tree.Structure
                 return "Root(0): null";
             }
 
-            List<string> textList = [$"Root(0): {this.Root.Key}"];
+            List<string> textList = [$"Root(0): {this.Root.Key}\n"];
             ToStringRecursivelyWithNull(textList, this.Root.Left, 'L');
             ToStringRecursivelyWithNull(textList, this.Root.Right, 'R');
 
-            return string.Join("\n", textList);
+            return string.Join("", textList);
         }
 
-        private void ToStringRecursively(List<string> textList, Node<TypeKey>? node, char type, int level = 1)
-        {
-            textList.Add($"{string.Concat(Enumerable.Repeat(' ', level))}{type}({level}): {node!.Key}");
+        // private void ToStringRecursively(List<string> textList, Node<TypeKey>? node, char type, int level = 1)
+        // {
+        //     textList.Add($"{string.Concat(Enumerable.Repeat(' ', level))}{type}({level}): {node!.Key}");
 
-            if (node.Left != null)
-            {
-                ToStringRecursively(textList, node.Left, 'L', level + 1);
-            }
+        //     if (node.Left != null)
+        //     {
+        //         ToStringRecursively(textList, node.Left, 'L', level + 1);
+        //     }
 
-            if (node.Right != null)
-            {
-                ToStringRecursively(textList, node.Right, 'R', level + 1);
-            }
-        }
+        //     if (node.Right != null)
+        //     {
+        //         ToStringRecursively(textList, node.Right, 'R', level + 1);
+        //     }
+        // }
 
         private void ToStringRecursivelyWithNull(List<string> textList, Node<TypeKey>? node, char type, int level = 1)
         {
             if (node == null)
             {
-                textList.Add($"{string.Concat(Enumerable.Repeat(' ', level))}{type}({level}): null");
+                textList.Add($"{string.Concat(Enumerable.Repeat(' ', level))}{type}({level}): null\n");
+
+                if (type == 'R')
+                {
+                    textList.Add("\n");
+                }
 
                 return;
             }
 
-            textList.Add($"{string.Concat(Enumerable.Repeat(' ', level))}{type}({level}): {node.Key}");
+            textList.Add($"{string.Concat(Enumerable.Repeat(' ', level))}{type}({level}): {node.Key}\n");
             ToStringRecursivelyWithNull(textList, node.Left, 'L', level + 1);
             ToStringRecursivelyWithNull(textList, node.Right, 'R', level + 1);
         }
