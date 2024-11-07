@@ -258,7 +258,7 @@ namespace Tree.Structure
             return string.Join("\n", textList);
         }
 
-        public void ToStringRecursively(List<string> textList, Node<TypeKey>? node, char type, int level = 1)
+        private void ToStringRecursively(List<string> textList, Node<TypeKey>? node, char type, int level = 1)
         {
             textList.Add($"{string.Concat(Enumerable.Repeat(' ', level))}{type}({level}): {node!.Key}");
 
@@ -273,7 +273,7 @@ namespace Tree.Structure
             }
         }
 
-        public void ToStringRecursivelyWithNull(List<string> textList, Node<TypeKey>? node, char type, int level = 1)
+        private void ToStringRecursivelyWithNull(List<string> textList, Node<TypeKey>? node, char type, int level = 1)
         {
             if (node == null)
             {
