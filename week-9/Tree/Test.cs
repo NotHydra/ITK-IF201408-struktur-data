@@ -4,7 +4,7 @@ namespace Tree
     {
         public static void Tree()
         {
-            Structure.Tree<char> tree1 = new();
+            Structure.BinarySearchTree<char> tree1 = new();
             tree1.Add('R');
             tree1.Add('I');
             tree1.Add('Z');

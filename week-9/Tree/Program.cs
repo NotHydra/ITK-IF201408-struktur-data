@@ -7,7 +7,7 @@
         private static readonly string[] menus = ["List", "Add", "Use"];
 
         private static readonly Type[] structures = [
-            typeof(Structure.Tree<>),
+            typeof(Structure.BinarySearchTree<>),
 
         ];
         private static readonly Type[] types = [
@@ -94,7 +94,7 @@
 
         private static void FillContainer()
         {
-            Structure.Tree<char> tree1 = new();
+            Structure.BinarySearchTree<char> tree1 = new();
             tree1.Add('C');
             tree1.Add('H');
             tree1.Add('A');

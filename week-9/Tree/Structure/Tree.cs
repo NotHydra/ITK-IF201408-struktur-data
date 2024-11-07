@@ -29,7 +29,7 @@ namespace Tree.Structure
         }
     };
 
-    public class Tree<TypeKey>()
+    public class BinarySearchTree<TypeKey>()
     {
         private Node<TypeKey>? _root = null;
 
