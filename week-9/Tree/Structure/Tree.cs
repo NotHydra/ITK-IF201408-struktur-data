@@ -38,7 +38,12 @@ namespace Tree.Structure
             get { return this._root; }
             set { this._root = value; }
         }
-        
+
+        public void Show()
+        {
+            Console.WriteLine(this);
+        }
+
         public bool IsExist(TypeKey key)
         {
             return IsExistRecursively(this.Root, key);
