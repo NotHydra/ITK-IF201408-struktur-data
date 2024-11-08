@@ -5,6 +5,8 @@ export default function App() {
     const canvasRef: React.MutableRefObject<SVGSVGElement | null> = useRef<SVGSVGElement | null>(null);
     const [bst, setBST] = useState(new BinarySearchTree<string>());
 
+    const [addValue, setAddValue] = useState("");
+
     const getElementPosition = (
         element: HTMLElement | null
     ): {
@@ -112,8 +114,37 @@ export default function App() {
         };
     }, [bst]);
 
+    const actionAdd = () => {
+        if (addValue !== "") {
+            const newBST = new BinarySearchTree<string>();
+
+            Object.assign(newBST, bst);
+            newBST.add(addValue);
+
+            setBST(newBST);
+            setAddValue("");
+        }
+    };
+
     return (
         <>
+            <div>
+                <div>
+                    <input
+                        type="text"
+                        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                            if (!/[a-z]/i.test(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
+                        maxLength={1}
+                        value={addValue}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAddValue(e.target.value)}
+                    />
+                    <button onClick={actionAdd}>Add</button>
+                </div>
+            </div>
+
             {Object.values(bst.getNodesByDepth()).map(
                 (nodes: (Node<string> | string)[], nodesIndex: number): JSX.Element => (
                     <div key={nodesIndex} className="nodes">
