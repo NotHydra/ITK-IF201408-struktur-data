@@ -1,4 +1,4 @@
-namespace Tree.Structure
+namespace BinarySearchTree.Structure
 {
     public class Node<TypeKey>(TypeKey key)
     {

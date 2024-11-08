@@ -1,4 +1,4 @@
-﻿namespace Tree
+﻿namespace BinarySearchTree
 {
     public class CommandLineInterface()
     {
@@ -29,7 +29,7 @@
             {
                 Console.Clear();
                 Border();
-                Title("Advance Sorting Manager");
+                Title("Binary Search Tree Manager");
                 Border();
                 SubTitle("Move = Up/Down | Select = Enter/Right | Exit = Esc/Left");
                 Border();

@@ -1,8 +1,8 @@
-namespace Tree
+namespace BinarySearchTree
 {
     public class Test()
     {
-        public static void Tree()
+        public static void BinarySearchTree()
         {
             Structure.BinarySearchTree<char> tree1 = new();
             tree1.Add('R');
