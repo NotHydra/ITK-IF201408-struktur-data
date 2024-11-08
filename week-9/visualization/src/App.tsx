@@ -6,6 +6,7 @@ export default function App() {
     const [bst, setBST] = useState(new BinarySearchTree<string>());
 
     const [addValue, setAddValue] = useState("");
+    const [removeValue, setRemoveValue] = useState("");
 
     const getElementPosition = (
         element: HTMLElement | null
@@ -114,18 +115,6 @@ export default function App() {
         };
     }, [bst]);
 
-    const actionAdd = () => {
-        if (addValue !== "") {
-            const newBST = new BinarySearchTree<string>();
-
-            Object.assign(newBST, bst);
-            newBST.add(addValue);
-
-            setBST(newBST);
-            setAddValue("");
-        }
-    };
-
     return (
         <>
             <div>
@@ -141,7 +130,51 @@ export default function App() {
                         value={addValue}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAddValue(e.target.value)}
                     />
-                    <button onClick={actionAdd}>Add</button>
+                    <button
+                        onClick={() => {
+                            if (addValue !== "") {
+                                const newBST = new BinarySearchTree<string>();
+
+                                Object.assign(newBST, bst);
+                                newBST.add(addValue);
+
+                                setBST(newBST);
+                                setAddValue("");
+                            }
+                        }}
+                    >
+                        Add
+                    </button>
+                </div>
+
+                <div>
+                    <input
+                        type="text"
+                        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                            if (!/[a-z]/i.test(e.key)) {
+                                e.preventDefault();
+                            }
+                        }}
+                        maxLength={1}
+                        value={removeValue}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setRemoveValue(e.target.value)}
+                    />
+
+                    <button
+                        onClick={() => {
+                            if (removeValue !== "") {
+                                const newBST = new BinarySearchTree<string>();
+
+                                Object.assign(newBST, bst);
+                                newBST.remove(removeValue);
+
+                                setBST(newBST);
+                                setRemoveValue("");
+                            }
+                        }}
+                    >
+                        Remove
+                    </button>
                 </div>
             </div>
 
