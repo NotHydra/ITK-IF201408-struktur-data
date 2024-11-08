@@ -93,15 +93,6 @@ export default function App() {
 
     useEffect((): void => {
         const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
-        newBST.add("C");
-        newBST.add("H");
-        newBST.add("A");
-        newBST.add("N");
-        newBST.add("D");
-        newBST.add("R");
-        newBST.add("A");
-        newBST.add("S");
-        newBST.add("U");
 
         setBST(newBST);
     }, []);
