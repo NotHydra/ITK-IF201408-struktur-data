@@ -22,7 +22,32 @@ export default function App() {
 		};
 	};
 
-	const drawLine = () => {
+	const createLine = (
+		startNodePostion: {
+			x: number;
+			y: number;
+		},
+		endNodePostion: {
+			x: number;
+			y: number;
+		}
+	): SVGLineElement => {
+		const line = document.createElementNS(
+			"http://www.w3.org/2000/svg",
+			"line"
+		);
+
+		line.setAttribute("x1", `${startNodePostion.x}`);
+		line.setAttribute("y1", `${startNodePostion.y}`);
+		line.setAttribute("x2", `${endNodePostion.x}`);
+		line.setAttribute("y2", `${endNodePostion.y}`);
+		line.setAttribute("stroke", "black");
+		line.setAttribute("stroke-width", "2");
+
+		return line;
+	};
+
+	const drawLine = (): void => {
 		if (canvasRef.current === null) {
 			return;
 		}
@@ -55,21 +80,12 @@ export default function App() {
 						);
 
 						if (leftNodeElement) {
-							const leftChildPosition =
-								getElementPosition(leftNodeElement);
-
-							const line = document.createElementNS(
-								"http://www.w3.org/2000/svg",
-								"line"
+							canvasRef.current!.appendChild(
+								createLine(
+									nodePosition,
+									getElementPosition(leftNodeElement)
+								)
 							);
-							line.setAttribute("x1", `${nodePosition.x}`);
-							line.setAttribute("y1", `${nodePosition.y}`);
-							line.setAttribute("x2", `${leftChildPosition.x}`);
-							line.setAttribute("y2", `${leftChildPosition.y}`);
-							line.setAttribute("stroke", "black");
-							line.setAttribute("stroke-width", "2");
-
-							canvasRef.current!.appendChild(line);
 						}
 					}
 
@@ -79,21 +95,12 @@ export default function App() {
 						);
 
 						if (rightNodeElement) {
-							const rightChildPosition =
-								getElementPosition(rightNodeElement);
-
-							const line = document.createElementNS(
-								"http://www.w3.org/2000/svg",
-								"line"
+							canvasRef.current!.appendChild(
+								createLine(
+									nodePosition,
+									getElementPosition(rightNodeElement)
+								)
 							);
-							line.setAttribute("x1", `${nodePosition.x}`);
-							line.setAttribute("y1", `${nodePosition.y}`);
-							line.setAttribute("x2", `${rightChildPosition.x}`);
-							line.setAttribute("y2", `${rightChildPosition.y}`);
-							line.setAttribute("stroke", "black");
-							line.setAttribute("stroke-width", "2");
-
-							canvasRef.current!.appendChild(line);
 						}
 					}
 				});
@@ -101,7 +108,7 @@ export default function App() {
 		);
 	};
 
-	useEffect(() => {
+	useEffect((): void => {
 		const newBST = new BinarySearchTree<string>();
 		newBST.add("C");
 		newBST.add("H");
@@ -122,7 +129,7 @@ export default function App() {
 		drawLine();
 
 		window.addEventListener("resize", drawLine);
-		return () => {
+		return (): void => {
 			window.removeEventListener("resize", drawLine);
 		};
 	}, [bst]);
