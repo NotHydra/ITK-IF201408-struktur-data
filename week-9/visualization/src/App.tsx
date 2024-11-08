@@ -1,4 +1,4 @@
-import { BinarySearchTree } from "./structure/binary-search-tree";
+import { BinarySearchTree } from "./structures/binary-search-tree";
 
 export default function App() {
 	const bst1: BinarySearchTree<string> = new BinarySearchTree<string>();
