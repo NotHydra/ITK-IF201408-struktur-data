@@ -1,4 +1,8 @@
-class Node<KeyType> {
+export interface NodesByDepthInterface<KeyType> {
+	[depth: number]: (Node<KeyType> | string)[];
+}
+
+export class Node<KeyType> {
 	private readonly _key: KeyType;
 	private _left: Node<KeyType> | null = null;
 	private _right: Node<KeyType> | null = null;
@@ -41,6 +45,51 @@ export class BinarySearchTree<KeyType> {
 
 	public show(): void {
 		console.log(this.toString());
+	}
+
+	public getNodesByDepth(): NodesByDepthInterface<KeyType> {
+		const nodesByDepthDict: NodesByDepthInterface<KeyType> = {};
+
+		let currentDepth: number = 0;
+		nodesByDepthDict[0] = [this.root === null ? "null" : this.root];
+		while (true) {
+			if (
+				nodesByDepthDict[currentDepth].every(
+					(node: Node<KeyType> | string) => {
+						return node === "null" || node === "empty";
+					}
+				)
+			) {
+				break;
+			}
+
+			const newNodesByDepthList: (Node<KeyType> | string)[] = [];
+			nodesByDepthDict[currentDepth].forEach(
+				(node: Node<KeyType> | string) => {
+					if (node === "null" || node === "empty") {
+						newNodesByDepthList.push("empty");
+						newNodesByDepthList.push("empty");
+					} else {
+						newNodesByDepthList.push(
+							typeof node === "string" || node.left === null
+								? "null"
+								: node.left
+						);
+
+						newNodesByDepthList.push(
+							typeof node === "string" || node.right === null
+								? "null"
+								: node.right
+						);
+					}
+				}
+			);
+
+			currentDepth += 1;
+			nodesByDepthDict[currentDepth] = newNodesByDepthList;
+		}
+
+		return nodesByDepthDict;
 	}
 
 	public isExist(key: KeyType): boolean {

@@ -1,25 +1,69 @@
-import { BinarySearchTree } from "./structures/binary-search-tree";
+import { useEffect, useState } from "react";
+import { Node, BinarySearchTree } from "./structures/binary-search-tree";
 
 export default function App() {
-	const bst1: BinarySearchTree<string> = new BinarySearchTree<string>();
-	bst1.add("C");
-	bst1.add("H");
-	bst1.add("A");
-	bst1.add("N");
-	bst1.add("D");
-	bst1.add("R");
-	bst1.add("A");
+	const [bst, setBST] = useState(new BinarySearchTree<string>());
 
-	console.log(bst1.isExist("A"));
-	console.log(bst1.isExist("B"));
-	console.log(bst1.preOder());
-	console.log(bst1.inOrder());
-	console.log(bst1.postOrder());
-	console.log(bst1.toString());
+	useEffect(() => {
+		const newBST = new BinarySearchTree<string>();
+		newBST.add("C");
+		newBST.add("H");
+		newBST.add("A");
+		newBST.add("N");
+		newBST.add("D");
+		newBST.add("R");
+		newBST.add("A");
+		newBST.add("S");
+		newBST.add("U");
+		newBST.add("T");
+		newBST.add("V");
 
-	bst1.show();
-	bst1.remove("D");
-	bst1.show();
+		setBST(newBST);
+	}, []);
 
-	return <>Test</>;
+	return (
+		<>
+			{Object.values(bst.getNodesByDepth()).map(
+				(
+					nodes: (Node<string> | string)[],
+					nodesIndex: number
+				): JSX.Element => (
+					<div key={nodesIndex} className="nodes">
+						{nodes.map(
+							(
+								node: Node<string> | string,
+								nodeIndex: number
+							): JSX.Element => {
+								let nodeType: string;
+								let nodeValue: string;
+								if (node === "null") {
+									nodeType = "null";
+									nodeValue = "null";
+								} else if (node === "empty") {
+									nodeType = "empty";
+									nodeValue = "";
+								} else {
+									nodeType = "node";
+									nodeValue = (node as Node<string>).key;
+								}
+
+								return (
+									<span
+										key={nodeIndex}
+										className={`${
+											nodeType === "empty"
+												? "empty"
+												: "node"
+										}`}
+									>
+										{nodeValue}
+									</span>
+								);
+							}
+						)}
+					</div>
+				)
+			)}
+		</>
+	);
 }
