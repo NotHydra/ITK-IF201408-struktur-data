@@ -132,7 +132,7 @@ export class BinarySearchTree<KeyType> {
         }
     }
 
-    public remove(key: KeyType): boolean {
+    public remove(key: KeyType, left: boolean = true): boolean {
         if (this.root === null) {
             return false;
         }
@@ -141,18 +141,18 @@ export class BinarySearchTree<KeyType> {
             return false;
         }
 
-        this.removeRecursively(this.root, this.root, key);
+        this.removeRecursively(this.root, this.root, key, left);
 
         return true;
     }
 
-    private removeRecursively(parentNode: Node<KeyType> | null, currentNode: Node<KeyType> | null, key: KeyType): void {
+    private removeRecursively(parentNode: Node<KeyType> | null, currentNode: Node<KeyType> | null, key: KeyType, left: boolean = true): void {
         if (key < (currentNode as Node<KeyType>).key) {
-            this.removeRecursively(currentNode, (currentNode as Node<KeyType>).left, key);
+            this.removeRecursively(currentNode, (currentNode as Node<KeyType>).left, key, left);
 
             return;
         } else if (key > (currentNode as Node<KeyType>).key) {
-            this.removeRecursively(currentNode, (currentNode as Node<KeyType>).right, key);
+            this.removeRecursively(currentNode, (currentNode as Node<KeyType>).right, key, left);
 
             return;
         } else {
@@ -164,35 +164,37 @@ export class BinarySearchTree<KeyType> {
             } else if ((currentNode as Node<KeyType>).right === null) {
                 replacementNode = (currentNode as Node<KeyType>).left;
             } else {
-                // let leftMostNode = (currentNode as Node<KeyType>).right;
-                // let leftMostNodeParent = currentNode;
-                // while ((leftMostNode as Node<KeyType>).left !== null) {
-                //     leftMostNodeParent = leftMostNode;
-                //     leftMostNode = (leftMostNode as Node<KeyType>).left;
-                // }
+                if (left) {
+                    let rightMostNode: Node<KeyType> | null = (currentNode as Node<KeyType>).left;
+                    let rightMostNodeParent: Node<KeyType> | null = currentNode;
+                    while ((rightMostNode as Node<KeyType>).right !== null) {
+                        rightMostNodeParent = rightMostNode;
+                        rightMostNode = (rightMostNode as Node<KeyType>).right;
+                    }
 
-                // if (leftMostNodeParent !== currentNode) {
-                //     (leftMostNodeParent as Node<KeyType>).left = (leftMostNode as Node<KeyType>).right;
-                //     (leftMostNode as Node<KeyType>).right = (currentNode as Node<KeyType>).right;
-                // }
+                    if (rightMostNodeParent !== currentNode) {
+                        (rightMostNodeParent as Node<KeyType>).right = (rightMostNode as Node<KeyType>).left;
+                        (rightMostNode as Node<KeyType>).left = (currentNode as Node<KeyType>).left;
+                    }
 
-                // (leftMostNode as Node<KeyType>).left = (currentNode as Node<KeyType>).left;
-                // replacementNode = leftMostNode;
+                    (rightMostNode as Node<KeyType>).right = (currentNode as Node<KeyType>).right;
+                    replacementNode = rightMostNode;
+                } else {
+                    let leftMostNode: Node<KeyType> | null = (currentNode as Node<KeyType>).right;
+                    let leftMostNodeParent: Node<KeyType> | null = currentNode;
+                    while ((leftMostNode as Node<KeyType>).left !== null) {
+                        leftMostNodeParent = leftMostNode;
+                        leftMostNode = (leftMostNode as Node<KeyType>).left;
+                    }
 
-                let rightMostNode = (currentNode as Node<KeyType>).left;
-                let rightMostNodeParent = currentNode;
-                while ((rightMostNode as Node<KeyType>).right !== null) {
-                    rightMostNodeParent = rightMostNode;
-                    rightMostNode = (rightMostNode as Node<KeyType>).right;
+                    if (leftMostNodeParent !== currentNode) {
+                        (leftMostNodeParent as Node<KeyType>).left = (leftMostNode as Node<KeyType>).right;
+                        (leftMostNode as Node<KeyType>).right = (currentNode as Node<KeyType>).right;
+                    }
+
+                    (leftMostNode as Node<KeyType>).left = (currentNode as Node<KeyType>).left;
+                    replacementNode = leftMostNode;
                 }
-
-                if (rightMostNodeParent !== currentNode) {
-                    (rightMostNodeParent as Node<KeyType>).right = (rightMostNode as Node<KeyType>).left;
-                    (rightMostNode as Node<KeyType>).left = (currentNode as Node<KeyType>).left;
-                }
-
-                (rightMostNode as Node<KeyType>).right = (currentNode as Node<KeyType>).right;
-                replacementNode = rightMostNode;
             }
 
             if (parentNode === currentNode) {

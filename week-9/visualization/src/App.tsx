@@ -6,7 +6,8 @@ export default function App() {
     const [bst, setBST] = useState(new BinarySearchTree<string>());
 
     const [addValue, setAddValue] = useState("");
-    const [removeValue, setRemoveValue] = useState("");
+    const [removeFromLeftValue, setRemoveFromLeftValue] = useState("");
+    const [removeFromRightValue, setRemoveFromRightValue] = useState("");
     const [isExistValue, setIsExistValue] = useState("");
 
     const [responseValue, setResponseValue] = useState("None");
@@ -184,19 +185,19 @@ export default function App() {
                         <button
                             className="button"
                             onClick={(): void => {
-                                if (removeValue !== "") {
+                                if (removeFromLeftValue !== "") {
                                     const newBST = new BinarySearchTree<string>();
 
                                     Object.assign(newBST, bst);
-                                    setResponseValue(newBST.remove(removeValue).toString());
+                                    setResponseValue(newBST.remove(removeFromLeftValue).toString());
                                     setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
 
                                     setBST(newBST);
-                                    setRemoveValue("");
+                                    setRemoveFromLeftValue("");
                                 }
                             }}
                         >
-                            Remove
+                            Remove From Left
                         </button>
 
                         <input
@@ -208,8 +209,41 @@ export default function App() {
                                 }
                             }}
                             maxLength={1}
-                            value={removeValue}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setRemoveValue(e.target.value)}
+                            value={removeFromLeftValue}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setRemoveFromLeftValue(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="action">
+                        <button
+                            className="button"
+                            onClick={(): void => {
+                                if (removeFromRightValue !== "") {
+                                    const newBST = new BinarySearchTree<string>();
+
+                                    Object.assign(newBST, bst);
+                                    setResponseValue(newBST.remove(removeFromRightValue, false).toString());
+                                    setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
+
+                                    setBST(newBST);
+                                    setRemoveFromRightValue("");
+                                }
+                            }}
+                        >
+                            Remove From Right
+                        </button>
+
+                        <input
+                            className="input"
+                            type="text"
+                            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>): void => {
+                                if (!/[a-z]/i.test(e.key)) {
+                                    e.preventDefault();
+                                }
+                            }}
+                            maxLength={1}
+                            value={removeFromRightValue}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setRemoveFromRightValue(e.target.value)}
                         />
                     </div>
 
