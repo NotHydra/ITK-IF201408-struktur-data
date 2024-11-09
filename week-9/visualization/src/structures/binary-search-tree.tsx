@@ -205,7 +205,7 @@ export class BinarySearchTree<KeyType> {
         }
     }
 
-    public preOder(): string {
+    public preOrder(): string {
         const result: KeyType[] = [];
 
         this.preOrderRecursively(this.root, result);

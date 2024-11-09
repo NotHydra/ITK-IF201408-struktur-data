@@ -113,7 +113,7 @@ export default function App() {
                 <div className="action">
                     <button
                         className="button"
-                        onClick={() => {
+                        onClick={(): void => {
                             if (addValue !== "") {
                                 const newBST = new BinarySearchTree<string>();
 
@@ -131,21 +131,21 @@ export default function App() {
                     <input
                         className="input"
                         type="text"
-                        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>): void => {
                             if (!/[a-z]/i.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
                         maxLength={1}
                         value={addValue}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAddValue(e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setAddValue(e.target.value)}
                     />
                 </div>
 
                 <div className="action">
                     <button
                         className="button"
-                        onClick={() => {
+                        onClick={(): void => {
                             if (removeValue !== "") {
                                 const newBST = new BinarySearchTree<string>();
 
@@ -163,21 +163,21 @@ export default function App() {
                     <input
                         className="input"
                         type="text"
-                        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>): void => {
                             if (!/[a-z]/i.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
                         maxLength={1}
                         value={removeValue}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setRemoveValue(e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setRemoveValue(e.target.value)}
                     />
                 </div>
 
                 <div className="action">
                     <button
                         className="button"
-                        onClick={() => {
+                        onClick={(): void => {
                             if (isExistValue !== "") {
                                 const newBST = new BinarySearchTree<string>();
 
@@ -195,15 +195,44 @@ export default function App() {
                     <input
                         className="input"
                         type="text"
-                        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>): void => {
                             if (!/[a-z]/i.test(e.key)) {
                                 e.preventDefault();
                             }
                         }}
                         maxLength={1}
                         value={isExistValue}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setIsExistValue(e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setIsExistValue(e.target.value)}
                     />
+                </div>
+
+                <div className="action">
+                    <button
+                        className="button"
+                        onClick={(): void => {
+                            bst.preOrder();
+                        }}
+                    >
+                        Pre Order
+                    </button>
+
+                    <button
+                        className="button"
+                        onClick={(): void => {
+                            bst.inOrder();
+                        }}
+                    >
+                        In Order
+                    </button>
+
+                    <button
+                        className="button"
+                        onClick={(): void => {
+                            bst.postOrder();
+                        }}
+                    >
+                        Post Order
+                    </button>
                 </div>
             </div>
 
