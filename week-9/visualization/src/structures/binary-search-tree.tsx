@@ -142,6 +142,7 @@ export class BinarySearchTree<KeyType> {
             [alphabet[i], alphabet[j]] = [alphabet[j], alphabet[i]];
         }
 
+        this.clear();
         alphabet.forEach((letter: string) => {
             this.add(letter as KeyType);
         });
@@ -220,6 +221,10 @@ export class BinarySearchTree<KeyType> {
                 (parentNode as Node<KeyType>).right = replacementNode;
             }
         }
+    }
+
+    public clear(): void {
+        this.root = null;
     }
 
     public preOrder(): string {

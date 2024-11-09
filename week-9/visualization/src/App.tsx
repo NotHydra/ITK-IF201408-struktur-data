@@ -121,13 +121,9 @@ export default function App() {
                             className="button"
                             onClick={(): void => {
                                 if (isExistValue !== "") {
-                                    const newBST = new BinarySearchTree<string>();
-
-                                    Object.assign(newBST, bst);
-                                    setResponseValue(newBST.isExist(isExistValue).toString());
+                                    setResponseValue(bst.isExist(isExistValue).toString());
                                     setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
 
-                                    setBST(newBST);
                                     setIsExistValue("");
                                 }
                             }}
@@ -154,7 +150,7 @@ export default function App() {
                             className="button"
                             onClick={(): void => {
                                 if (addValue !== "") {
-                                    const newBST = new BinarySearchTree<string>();
+                                    const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
 
                                     Object.assign(newBST, bst);
                                     setResponseValue(newBST.add(addValue).toString());
@@ -187,7 +183,7 @@ export default function App() {
                             className="button"
                             onClick={(): void => {
                                 if (removeFromLeftValue !== "") {
-                                    const newBST = new BinarySearchTree<string>();
+                                    const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
 
                                     Object.assign(newBST, bst);
                                     setResponseValue(newBST.remove(removeFromLeftValue).toString());
@@ -220,7 +216,7 @@ export default function App() {
                             className="button"
                             onClick={(): void => {
                                 if (removeFromRightValue !== "") {
-                                    const newBST = new BinarySearchTree<string>();
+                                    const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
 
                                     Object.assign(newBST, bst);
                                     setResponseValue(newBST.remove(removeFromRightValue, false).toString());
@@ -284,7 +280,7 @@ export default function App() {
                         <button
                             className="button"
                             onClick={(): void => {
-                                const newBST = new BinarySearchTree<string>();
+                                const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
 
                                 Object.assign(newBST, bst);
                                 newBST.addRandomLetters("az");
@@ -292,7 +288,6 @@ export default function App() {
                                 setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
 
                                 setBST(newBST);
-                                setAddValue("");
                             }}
                         >
                             Add Random a-z
@@ -301,7 +296,7 @@ export default function App() {
                         <button
                             className="button"
                             onClick={(): void => {
-                                const newBST = new BinarySearchTree<string>();
+                                const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
 
                                 Object.assign(newBST, bst);
                                 newBST.addRandomLetters("AZ");
@@ -309,7 +304,6 @@ export default function App() {
                                 setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
 
                                 setBST(newBST);
-                                setAddValue("");
                             }}
                         >
                             Add Random A-Z
@@ -318,7 +312,7 @@ export default function App() {
                         <button
                             className="button"
                             onClick={(): void => {
-                                const newBST = new BinarySearchTree<string>();
+                                const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
 
                                 Object.assign(newBST, bst);
                                 newBST.addRandomLetters("aZ");
@@ -326,10 +320,27 @@ export default function App() {
                                 setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
 
                                 setBST(newBST);
-                                setAddValue("");
                             }}
                         >
                             Add Random a-Z
+                        </button>
+                    </div>
+
+                    <div className="action">
+                        <button
+                            className="button"
+                            onClick={(): void => {
+                                const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
+
+                                Object.assign(newBST, bst);
+                                newBST.clear();
+                                setResponseValue("Finished");
+                                setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
+
+                                setBST(newBST);
+                            }}
+                        >
+                            Clear
                         </button>
                     </div>
                 </div>
