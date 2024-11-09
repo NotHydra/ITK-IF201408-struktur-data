@@ -78,7 +78,7 @@ namespace BinarySearchTree.Structure
                 throw new ArgumentException("Type must be int or char");
             }
 
-            if (IsExist(key))
+            if (this.IsExist(key))
             {
                 return false;
             }
@@ -133,7 +133,7 @@ namespace BinarySearchTree.Structure
                 throw new InvalidOperationException("Tree is empty");
             };
 
-            if (!IsExist(key))
+            if (!this.IsExist(key))
             {
                 return false;
             }

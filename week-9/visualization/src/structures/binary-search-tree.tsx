@@ -133,49 +133,75 @@ export class BinarySearchTree<KeyType> {
     }
 
     public remove(key: KeyType): boolean {
-        const [newRoot, deleted] = this.removeRecursively(this.root, key);
-
-        this.root = newRoot;
-
-        return deleted;
-    }
-
-    private removeRecursively(currentNode: Node<KeyType> | null, key: KeyType): [Node<KeyType> | null, boolean] {
-        if (currentNode === null) {
-            return [null, false];
+        if (this.root === null) {
+            return false;
         }
 
-        if (key < currentNode.key) {
-            const [newLeft, deleted] = this.removeRecursively(currentNode.left, key);
+        if (!this.isExist(key)) {
+            return false;
+        }
 
-            currentNode.left = newLeft;
+        this.removeRecursively(this.root, this.root, key);
 
-            return [currentNode, deleted];
-        } else if (key > currentNode.key) {
-            const [newRight, deleted] = this.removeRecursively(currentNode.right, key);
+        return true;
+    }
 
-            currentNode.right = newRight;
+    private removeRecursively(parentNode: Node<KeyType> | null, currentNode: Node<KeyType> | null, key: KeyType): void {
+        if (key < (currentNode as Node<KeyType>).key) {
+            this.removeRecursively(currentNode, (currentNode as Node<KeyType>).left, key);
 
-            return [currentNode, deleted];
+            return;
+        } else if (key > (currentNode as Node<KeyType>).key) {
+            this.removeRecursively(currentNode, (currentNode as Node<KeyType>).right, key);
+
+            return;
         } else {
-            if (!currentNode.left) {
-                return [currentNode.right, true];
+            let replacementNode: Node<KeyType> | null;
+            if ((currentNode as Node<KeyType>).left === null && (currentNode as Node<KeyType>).right === null) {
+                replacementNode = null;
+            } else if ((currentNode as Node<KeyType>).left === null) {
+                replacementNode = (currentNode as Node<KeyType>).right;
+            } else if ((currentNode as Node<KeyType>).right === null) {
+                replacementNode = (currentNode as Node<KeyType>).left;
+            } else {
+                // let leftMostNode = (currentNode as Node<KeyType>).right;
+                // let leftMostNodeParent = currentNode;
+                // while ((leftMostNode as Node<KeyType>).left !== null) {
+                //     leftMostNodeParent = leftMostNode;
+                //     leftMostNode = (leftMostNode as Node<KeyType>).left;
+                // }
+
+                // if (leftMostNodeParent !== currentNode) {
+                //     (leftMostNodeParent as Node<KeyType>).left = (leftMostNode as Node<KeyType>).right;
+                //     (leftMostNode as Node<KeyType>).right = (currentNode as Node<KeyType>).right;
+                // }
+
+                // (leftMostNode as Node<KeyType>).left = (currentNode as Node<KeyType>).left;
+                // replacementNode = leftMostNode;
+
+                let rightMostNode = (currentNode as Node<KeyType>).left;
+                let rightMostNodeParent = currentNode;
+                while ((rightMostNode as Node<KeyType>).right !== null) {
+                    rightMostNodeParent = rightMostNode;
+                    rightMostNode = (rightMostNode as Node<KeyType>).right;
+                }
+
+                if (rightMostNodeParent !== currentNode) {
+                    (rightMostNodeParent as Node<KeyType>).right = (rightMostNode as Node<KeyType>).left;
+                    (rightMostNode as Node<KeyType>).left = (currentNode as Node<KeyType>).left;
+                }
+
+                (rightMostNode as Node<KeyType>).right = (currentNode as Node<KeyType>).right;
+                replacementNode = rightMostNode;
             }
 
-            if (!currentNode.right) {
-                return [currentNode.left, true];
+            if (parentNode === currentNode) {
+                this.root = replacementNode;
+            } else if ((parentNode as Node<KeyType>).left === currentNode) {
+                (parentNode as Node<KeyType>).left = replacementNode;
+            } else {
+                (parentNode as Node<KeyType>).right = replacementNode;
             }
-
-            let successor: Node<KeyType> = currentNode.right;
-            while (successor.left) {
-                successor = successor.left;
-            }
-
-            currentNode = new Node<KeyType>(successor.key);
-            currentNode.left = currentNode.left;
-            currentNode.right = this.removeRecursively(currentNode.right, successor.key)[0];
-
-            return [currentNode, true];
         }
     }
 
