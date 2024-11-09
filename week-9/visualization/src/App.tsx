@@ -109,97 +109,106 @@ export default function App() {
     return (
         <>
             <div>
-                <div>
-                    <input
-                        type="text"
-                        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-                            if (!/[a-z]/i.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
-                        maxLength={1}
-                        value={addValue}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAddValue(e.target.value)}
-                    />
-                    <button
-                        onClick={() => {
-                            if (addValue !== "") {
-                                const newBST = new BinarySearchTree<string>();
+                <div style={{ width: "40%" }}>
+                    <div className="action">
+                        <button
+                            className="button"
+                            onClick={() => {
+                                if (addValue !== "") {
+                                    const newBST = new BinarySearchTree<string>();
 
-                                Object.assign(newBST, bst);
-                                newBST.add(addValue);
+                                    Object.assign(newBST, bst);
+                                    newBST.add(addValue);
 
-                                setBST(newBST);
-                                setAddValue("");
-                            }
-                        }}
-                    >
-                        Add
-                    </button>
+                                    setBST(newBST);
+                                    setAddValue("");
+                                }
+                            }}
+                        >
+                            Add
+                        </button>
+
+                        <input
+                            className="input"
+                            type="text"
+                            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                                if (!/[a-z]/i.test(e.key)) {
+                                    e.preventDefault();
+                                }
+                            }}
+                            maxLength={1}
+                            value={addValue}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAddValue(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="action">
+                        <button
+                            className="button"
+                            onClick={() => {
+                                if (removeValue !== "") {
+                                    const newBST = new BinarySearchTree<string>();
+
+                                    Object.assign(newBST, bst);
+                                    newBST.remove(removeValue);
+
+                                    setBST(newBST);
+                                    setRemoveValue("");
+                                }
+                            }}
+                        >
+                            Remove
+                        </button>
+
+                        <input
+                            className="input"
+                            type="text"
+                            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                                if (!/[a-z]/i.test(e.key)) {
+                                    e.preventDefault();
+                                }
+                            }}
+                            maxLength={1}
+                            value={removeValue}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setRemoveValue(e.target.value)}
+                        />
+                    </div>
                 </div>
 
                 <div>
-                    <input
-                        type="text"
-                        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-                            if (!/[a-z]/i.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
-                        maxLength={1}
-                        value={removeValue}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setRemoveValue(e.target.value)}
-                    />
+                    {Object.values(bst.getNodesByDepth()).map(
+                        (nodes: (Node<string> | string)[], nodesIndex: number): JSX.Element => (
+                            <div key={nodesIndex} className="nodes">
+                                {nodes.map((node: Node<string> | string, nodeIndex: number): JSX.Element => {
+                                    let nodeType: string;
+                                    let nodeValue: string;
 
-                    <button
-                        onClick={() => {
-                            if (removeValue !== "") {
-                                const newBST = new BinarySearchTree<string>();
+                                    // if (node === "null") {
+                                    // 	nodeType = "null";
+                                    // 	nodeValue = "null";
+                                    // } else if (node === "empty") {
 
-                                Object.assign(newBST, bst);
-                                newBST.remove(removeValue);
+                                    if (node === "null" || node === "empty") {
+                                        nodeType = "empty";
+                                        nodeValue = "";
+                                    } else {
+                                        nodeType = "node";
+                                        nodeValue = (node as Node<string>).key;
+                                    }
 
-                                setBST(newBST);
-                                setRemoveValue("");
-                            }
-                        }}
-                    >
-                        Remove
-                    </button>
+                                    return (
+                                        <span key={nodeIndex} id={`node-${nodeValue}`} className={`${nodeType === "empty" ? "empty" : "node"}`}>
+                                            {nodeValue}
+                                        </span>
+                                    );
+                                })}
+                            </div>
+                        )
+                    )}
+
+                    <svg ref={canvasRef}></svg>
                 </div>
             </div>
-
-            {Object.values(bst.getNodesByDepth()).map(
-                (nodes: (Node<string> | string)[], nodesIndex: number): JSX.Element => (
-                    <div key={nodesIndex} className="nodes">
-                        {nodes.map((node: Node<string> | string, nodeIndex: number): JSX.Element => {
-                            let nodeType: string;
-                            let nodeValue: string;
-
-                            // if (node === "null") {
-                            // 	nodeType = "null";
-                            // 	nodeValue = "null";
-                            // } else if (node === "empty") {
-
-                            if (node === "null" || node === "empty") {
-                                nodeType = "empty";
-                                nodeValue = "";
-                            } else {
-                                nodeType = "node";
-                                nodeValue = (node as Node<string>).key;
-                            }
-
-                            return (
-                                <span key={nodeIndex} id={`node-${nodeValue}`} className={`${nodeType === "empty" ? "empty" : "node"}`}>
-                                    {nodeValue}
-                                </span>
-                            );
-                        })}
-                    </div>
-                )
-            )}
-
-            <svg ref={canvasRef}></svg>
         </>
     );
 }
