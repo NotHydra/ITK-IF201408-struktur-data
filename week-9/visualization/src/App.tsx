@@ -9,6 +9,9 @@ export default function App() {
     const [removeValue, setRemoveValue] = useState("");
     const [isExistValue, setIsExistValue] = useState("");
 
+    const [responseValue, setResponseValue] = useState("None");
+    const [timestampValue, setTimestampValue] = useState(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
+
     const getElementPosition = (
         element: HTMLElement | null
     ): {
@@ -109,130 +112,145 @@ export default function App() {
 
     return (
         <>
-            <div>
-                <div className="action">
-                    <button
-                        className="button"
-                        onClick={(): void => {
-                            if (addValue !== "") {
-                                const newBST = new BinarySearchTree<string>();
+            <div style={{ display: "flex" }}>
+                <div>
+                    <div className="action">
+                        <button
+                            className="button"
+                            onClick={(): void => {
+                                if (addValue !== "") {
+                                    const newBST = new BinarySearchTree<string>();
 
-                                Object.assign(newBST, bst);
-                                newBST.add(addValue);
+                                    Object.assign(newBST, bst);
+                                    setResponseValue(newBST.add(addValue).toString());
+                                    setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
 
-                                setBST(newBST);
-                                setAddValue("");
-                            }
-                        }}
-                    >
-                        Add
-                    </button>
+                                    setBST(newBST);
+                                    setAddValue("");
+                                }
+                            }}
+                        >
+                            Add
+                        </button>
 
-                    <input
-                        className="input"
-                        type="text"
-                        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>): void => {
-                            if (!/[a-z]/i.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
-                        maxLength={1}
-                        value={addValue}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setAddValue(e.target.value)}
-                    />
+                        <input
+                            className="input"
+                            type="text"
+                            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>): void => {
+                                if (!/[a-z]/i.test(e.key)) {
+                                    e.preventDefault();
+                                }
+                            }}
+                            maxLength={1}
+                            value={addValue}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setAddValue(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="action">
+                        <button
+                            className="button"
+                            onClick={(): void => {
+                                if (removeValue !== "") {
+                                    const newBST = new BinarySearchTree<string>();
+
+                                    Object.assign(newBST, bst);
+                                    setResponseValue(newBST.remove(removeValue).toString());
+                                    setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
+
+                                    setBST(newBST);
+                                    setRemoveValue("");
+                                }
+                            }}
+                        >
+                            Remove
+                        </button>
+
+                        <input
+                            className="input"
+                            type="text"
+                            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>): void => {
+                                if (!/[a-z]/i.test(e.key)) {
+                                    e.preventDefault();
+                                }
+                            }}
+                            maxLength={1}
+                            value={removeValue}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setRemoveValue(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="action">
+                        <button
+                            className="button"
+                            onClick={(): void => {
+                                if (isExistValue !== "") {
+                                    const newBST = new BinarySearchTree<string>();
+
+                                    Object.assign(newBST, bst);
+                                    setResponseValue(newBST.isExist(isExistValue).toString());
+                                    setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
+
+                                    setBST(newBST);
+                                    setIsExistValue("");
+                                }
+                            }}
+                        >
+                            Is Exist
+                        </button>
+
+                        <input
+                            className="input"
+                            type="text"
+                            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>): void => {
+                                if (!/[a-z]/i.test(e.key)) {
+                                    e.preventDefault();
+                                }
+                            }}
+                            maxLength={1}
+                            value={isExistValue}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setIsExistValue(e.target.value)}
+                        />
+                    </div>
+
+                    <div className="action">
+                        <button
+                            className="button"
+                            onClick={(): void => {
+                                setResponseValue(bst.preOrder());
+                                setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
+                            }}
+                        >
+                            Pre Order
+                        </button>
+
+                        <button
+                            className="button"
+                            onClick={(): void => {
+                                setResponseValue(bst.inOrder());
+                                setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
+                            }}
+                        >
+                            In Order
+                        </button>
+
+                        <button
+                            className="button"
+                            onClick={(): void => {
+                                setResponseValue(bst.postOrder());
+                                setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
+                            }}
+                        >
+                            Post Order
+                        </button>
+                    </div>
                 </div>
 
-                <div className="action">
-                    <button
-                        className="button"
-                        onClick={(): void => {
-                            if (removeValue !== "") {
-                                const newBST = new BinarySearchTree<string>();
-
-                                Object.assign(newBST, bst);
-                                newBST.remove(removeValue);
-
-                                setBST(newBST);
-                                setRemoveValue("");
-                            }
-                        }}
-                    >
-                        Remove
-                    </button>
-
-                    <input
-                        className="input"
-                        type="text"
-                        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>): void => {
-                            if (!/[a-z]/i.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
-                        maxLength={1}
-                        value={removeValue}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setRemoveValue(e.target.value)}
-                    />
-                </div>
-
-                <div className="action">
-                    <button
-                        className="button"
-                        onClick={(): void => {
-                            if (isExistValue !== "") {
-                                const newBST = new BinarySearchTree<string>();
-
-                                Object.assign(newBST, bst);
-                                newBST.isExist(isExistValue);
-
-                                setBST(newBST);
-                                setIsExistValue("");
-                            }
-                        }}
-                    >
-                        Is Exist
-                    </button>
-
-                    <input
-                        className="input"
-                        type="text"
-                        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>): void => {
-                            if (!/[a-z]/i.test(e.key)) {
-                                e.preventDefault();
-                            }
-                        }}
-                        maxLength={1}
-                        value={isExistValue}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>): void => setIsExistValue(e.target.value)}
-                    />
-                </div>
-
-                <div className="action">
-                    <button
-                        className="button"
-                        onClick={(): void => {
-                            bst.preOrder();
-                        }}
-                    >
-                        Pre Order
-                    </button>
-
-                    <button
-                        className="button"
-                        onClick={(): void => {
-                            bst.inOrder();
-                        }}
-                    >
-                        In Order
-                    </button>
-
-                    <button
-                        className="button"
-                        onClick={(): void => {
-                            bst.postOrder();
-                        }}
-                    >
-                        Post Order
-                    </button>
+                <div style={{ marginLeft: "16px" }}>
+                    <div>
+                        Response (<span id="timestamp">{timestampValue}</span>):
+                    </div>
+                    <div id="response">{responseValue}</div>
                 </div>
             </div>
 
