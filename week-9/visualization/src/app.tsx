@@ -347,16 +347,22 @@ export default function App() {
                         <button
                             className="button"
                             onClick={(): void => {
-                                const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
-
                                 setIsShowNullValue(!isShowNullValue);
                                 setResponseValue("Finished");
                                 setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
-
-                                setBST(newBST);
                             }}
                         >
                             {isShowNullValue ? "Hide" : "Show"} Null
+                        </button>
+
+                        <button
+                            className="button"
+                            onClick={(): void => {
+                                setResponseValue(bst.getTotal().toString());
+                                setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
+                            }}
+                        >
+                            Total
                         </button>
                     </div>
                 </div>

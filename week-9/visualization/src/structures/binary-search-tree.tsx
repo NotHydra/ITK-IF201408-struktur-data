@@ -47,6 +47,18 @@ export class BinarySearchTree<KeyType> {
         console.log(this.toString());
     }
 
+    public getTotal(): number {
+        return this.getTotalRecursively(this.root);
+    }
+
+    private getTotalRecursively(currentNode: Node<KeyType> | null): number {
+        if (currentNode === null) {
+            return 0;
+        }
+
+        return 1 + this.getTotalRecursively(currentNode.left) + this.getTotalRecursively(currentNode.right);
+    }
+
     public getNodesByDepth(): NodesByDepthInterface<KeyType> {
         const nodesByDepthDict: NodesByDepthInterface<KeyType> = {};
 
