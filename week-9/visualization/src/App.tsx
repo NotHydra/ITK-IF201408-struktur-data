@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Node, BinarySearchTree } from "./structures/binary-search-tree";
 
 export default function App() {
-    const showNull: boolean = false;
+    const [isShowNullValue, setIsShowNullValue] = useState(false);
     const canvasRef: React.MutableRefObject<SVGSVGElement | null> = useRef<SVGSVGElement | null>(null);
     const [bst, setBST] = useState(new BinarySearchTree<string>());
 
@@ -40,7 +40,8 @@ export default function App() {
         endNodePostion: {
             x: number;
             y: number;
-        }
+        },
+        color: string = "black"
     ): SVGLineElement => {
         const line: SVGLineElement = document.createElementNS("http://www.w3.org/2000/svg", "line");
 
@@ -48,7 +49,7 @@ export default function App() {
         line.setAttribute("y1", `${startNodePostion.y}`);
         line.setAttribute("x2", `${endNodePostion.x}`);
         line.setAttribute("y2", `${endNodePostion.y}`);
-        line.setAttribute("stroke", "black");
+        line.setAttribute("stroke", color);
         line.setAttribute("stroke-width", "2");
 
         return line;
@@ -83,14 +84,14 @@ export default function App() {
                 if (leftNode) {
                     const leftNodeElement: HTMLElement | null = document.getElementById(`node-${leftNode.key}`);
                     if (leftNodeElement) {
-                        canvasRef.current!.appendChild(createLine(nodePosition, getElementPosition(leftNodeElement)));
+                        canvasRef.current!.appendChild(createLine(nodePosition, getElementPosition(leftNodeElement), "blue"));
                     }
                 }
 
                 if (rightNode) {
                     const rightNodeElement: HTMLElement | null = document.getElementById(`node-${rightNode.key}`);
                     if (rightNodeElement) {
-                        canvasRef.current!.appendChild(createLine(nodePosition, getElementPosition(rightNodeElement)));
+                        canvasRef.current!.appendChild(createLine(nodePosition, getElementPosition(rightNodeElement), "green"));
                     }
                 }
             });
@@ -342,6 +343,21 @@ export default function App() {
                         >
                             Clear
                         </button>
+
+                        <button
+                            className="button"
+                            onClick={(): void => {
+                                const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
+
+                                setIsShowNullValue(!isShowNullValue);
+                                setResponseValue("Finished");
+                                setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
+
+                                setBST(newBST);
+                            }}
+                        >
+                            {isShowNullValue ? "Hide" : "Show"} Null
+                        </button>
                     </div>
                 </div>
 
@@ -350,6 +366,11 @@ export default function App() {
                         Response (<span id="timestamp">{timestampValue}</span>):
                     </div>
                     <div id="response">{responseValue}</div>
+
+                    <div style={{ marginTop: "16px" }}>
+                        <div>Blue Line: Arrow To Left Node</div>
+                        <div>Green Line: Arrow To Right Node</div>
+                    </div>
                 </div>
             </div>
 
@@ -361,12 +382,12 @@ export default function App() {
                                 let nodeType: string;
                                 let nodeValue: string;
 
-                                if (node === "empty" || (node === "null" && showNull === false)) {
+                                if (node === "empty" || (node === "null" && isShowNullValue === false)) {
                                     nodeType = "empty";
                                     nodeValue = "";
                                 } else if (node === "null") {
                                     nodeType = "null";
-                                    nodeValue = "null";
+                                    nodeValue = "*";
                                 } else {
                                     nodeType = "node";
                                     nodeValue = (node as Node<string>).key;
