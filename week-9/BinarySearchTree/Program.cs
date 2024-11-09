@@ -103,6 +103,24 @@
             tree1.Add('R');
             tree1.Add('A');
             containers.Add(tree1);
+
+            Structure.BinarySearchTree<char> tree2 = new();
+            tree2.Add('D');
+            tree2.Add('B');
+            tree2.Add('A');
+            tree2.Add('C');
+            containers.Add(tree2);
+
+            Structure.BinarySearchTree<char> tree3 = new();
+            tree3.Add('C');
+            tree3.Add('H');
+            tree3.Add('N');
+            tree3.Add('D');
+            containers.Add(tree3);
+
+            Structure.BinarySearchTree<char> tree4 = new();
+            tree4.Add('C');
+            containers.Add(tree4);
         }
 
         private static string TypeToAlias(Type type)

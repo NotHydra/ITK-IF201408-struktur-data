@@ -123,68 +123,105 @@ namespace BinarySearchTree.Structure
 
         public bool Remove(TypeKey key)
         {
+            if (!((typeof(TypeKey) != typeof(int)) || (typeof(TypeKey) != typeof(char))))
+            {
+                throw new ArgumentException("Type must be int or char");
+            }
+
             if (this.Root == null)
             {
                 throw new InvalidOperationException("Tree is empty");
             };
 
-            this.Root = RemoveRecursively(this.Root, key, out bool wasRemoved);
-
-            return wasRemoved;
-        }
-
-        private Node<TypeKey>? RemoveRecursively(Node<TypeKey>? currentNode, TypeKey key, out bool wasRemoved)
-        {
-            if (currentNode == null)
+            if (!IsExist(key))
             {
-                wasRemoved = false;
-                return null;
+                return false;
             }
 
+            this.RemoveRecursively(this.Root, this.Root, key);
+
+            return true;
+        }
+
+        private void RemoveRecursively(Node<TypeKey> parentNode, Node<TypeKey> currentNode, TypeKey key)
+        {
             if ((typeof(TypeKey) == typeof(int)) ? ((int)(object)key! < (int)(object)currentNode.Key!) : ((char)(object)key! < (char)(object)currentNode.Key!))
             {
-                currentNode.Left = RemoveRecursively(currentNode.Left, key, out wasRemoved);
+                RemoveRecursively(parentNode, currentNode.Left!, key);
+
+                return;
             }
             else if ((typeof(TypeKey) == typeof(int)) ? ((int)(object)key! > (int)(object)currentNode.Key!) : ((char)(object)key! > (char)(object)currentNode.Key!))
             {
-                currentNode.Right = RemoveRecursively(currentNode.Right, key, out wasRemoved);
+                RemoveRecursively(parentNode, currentNode.Right!, key);
+
+                return;
             }
             else
             {
-                wasRemoved = true;
-
+                Node<TypeKey>? replacementNode;
                 if (currentNode.Left == null && currentNode.Right == null)
                 {
-                    return null;
+                    replacementNode = null;
                 }
                 else if (currentNode.Left == null)
                 {
-                    return currentNode.Right;
+                    replacementNode = currentNode.Right;
                 }
                 else if (currentNode.Right == null)
                 {
-                    return currentNode.Left;
+                    replacementNode = currentNode.Left;
                 }
                 else
                 {
-                    Node<TypeKey> smallestNode = FindMin(currentNode.Right);
-                    currentNode = new Node<TypeKey>(smallestNode.Key!);
-                    currentNode.Right = RemoveRecursively(currentNode.Right, smallestNode.Key!, out _);
-                    currentNode.Left = currentNode.Left;
+                    // Node<TypeKey> leftMostNode = currentNode.Right!;
+                    // Node<TypeKey> leftMostNodeParent = currentNode;
+                    // while (leftMostNode.Left != null)
+                    // {
+                    //     leftMostNodeParent = leftMostNode;
+                    //     leftMostNode = leftMostNode.Left;
+                    // }
+
+                    // if (leftMostNodeParent != currentNode)
+                    // {
+                    //     leftMostNodeParent.Left = leftMostNode.Right;
+                    //     leftMostNode.Right = currentNode.Right;
+                    // }
+
+                    // leftMostNode.Left = currentNode.Left;
+                    // replacementNode = leftMostNode;
+
+                    Node<TypeKey> rightMostNode = currentNode.Left!;
+                    Node<TypeKey> rightMostNodeParent = currentNode;
+                    while (rightMostNode.Right != null)
+                    {
+                        rightMostNodeParent = rightMostNode;
+                        rightMostNode = rightMostNode.Right;
+                    }
+
+                    if (rightMostNodeParent != currentNode)
+                    {
+                        rightMostNodeParent.Right = rightMostNode.Left;
+                        rightMostNode.Left = currentNode.Left;
+                    }
+
+                    rightMostNode.Right = currentNode.Right;
+                    replacementNode = rightMostNode;
+                }
+
+                if (this.Root == currentNode)
+                {
+                    this.Root = replacementNode;
+                }
+                else if (parentNode.Left == currentNode)
+                {
+                    parentNode.Left = replacementNode;
+                }
+                else
+                {
+                    parentNode.Right = replacementNode;
                 }
             }
-
-            return currentNode;
-        }
-
-        private Node<TypeKey> FindMin(Node<TypeKey> node)
-        {
-            while (node.Left != null)
-            {
-                node = node.Left;
-            }
-
-            return node;
         }
 
         public string PreOrder()
