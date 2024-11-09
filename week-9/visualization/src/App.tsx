@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Node, BinarySearchTree } from "./structures/binary-search-tree";
 
 export default function App() {
+    const showNull: boolean = false;
     const canvasRef: React.MutableRefObject<SVGSVGElement | null> = useRef<SVGSVGElement | null>(null);
     const [bst, setBST] = useState(new BinarySearchTree<string>());
 
@@ -278,6 +279,59 @@ export default function App() {
                             Post Order
                         </button>
                     </div>
+
+                    <div className="action">
+                        <button
+                            className="button"
+                            onClick={(): void => {
+                                const newBST = new BinarySearchTree<string>();
+
+                                Object.assign(newBST, bst);
+                                newBST.addRandomLetters("az");
+                                setResponseValue("Finished");
+                                setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
+
+                                setBST(newBST);
+                                setAddValue("");
+                            }}
+                        >
+                            Add Random a-z
+                        </button>
+
+                        <button
+                            className="button"
+                            onClick={(): void => {
+                                const newBST = new BinarySearchTree<string>();
+
+                                Object.assign(newBST, bst);
+                                newBST.addRandomLetters("AZ");
+                                setResponseValue("Finished");
+                                setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
+
+                                setBST(newBST);
+                                setAddValue("");
+                            }}
+                        >
+                            Add Random A-Z
+                        </button>
+
+                        <button
+                            className="button"
+                            onClick={(): void => {
+                                const newBST = new BinarySearchTree<string>();
+
+                                Object.assign(newBST, bst);
+                                newBST.addRandomLetters("aZ");
+                                setResponseValue("Finished");
+                                setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
+
+                                setBST(newBST);
+                                setAddValue("");
+                            }}
+                        >
+                            Add Random a-Z
+                        </button>
+                    </div>
                 </div>
 
                 <div style={{ marginLeft: "16px" }}>
@@ -296,14 +350,12 @@ export default function App() {
                                 let nodeType: string;
                                 let nodeValue: string;
 
-                                // if (node === "null") {
-                                // 	nodeType = "null";
-                                // 	nodeValue = "null";
-                                // } else if (node === "empty") {
-
-                                if (node === "null" || node === "empty") {
+                                if (node === "empty" || (node === "null" && showNull === false)) {
                                     nodeType = "empty";
                                     nodeValue = "";
+                                } else if (node === "null") {
+                                    nodeType = "null";
+                                    nodeValue = "null";
                                 } else {
                                     nodeType = "node";
                                     nodeValue = (node as Node<string>).key;

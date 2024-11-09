@@ -132,6 +132,21 @@ export class BinarySearchTree<KeyType> {
         }
     }
 
+    public addRandomLetters(type: string): void {
+        const alphabet: string[] = (
+            type === "az" ? "abcdefghijklmnopqrstuvwxyz" : type === "AZ" ? "ABCDEFGHIJKLMNOPQRSTUVWXYZ" : "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        ).split("");
+
+        for (let i: number = alphabet.length - 1; i > 0; i--) {
+            const j: number = Math.floor(Math.random() * (i + 1));
+            [alphabet[i], alphabet[j]] = [alphabet[j], alphabet[i]];
+        }
+
+        alphabet.forEach((letter: string) => {
+            this.add(letter as KeyType);
+        });
+    }
+
     public remove(key: KeyType, left: boolean = true): boolean {
         if (this.root === null) {
             return false;
