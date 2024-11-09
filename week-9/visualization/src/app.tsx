@@ -111,7 +111,7 @@ export default function App() {
         return (): void => {
             window.removeEventListener("resize", drawLine);
         };
-    }, [bst]);
+    }, [bst, isShowNullValue]);
 
     return (
         <>
