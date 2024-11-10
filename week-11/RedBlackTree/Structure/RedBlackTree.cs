@@ -197,6 +197,21 @@ namespace RedBlackTree.Structure
             return node;
         }
 
+        public void AddUniqueRandomChar(int count)
+        {
+            Random random = new();
+            for (int i = 0; i < count; i++)
+            {
+                char randomChar = (char)random.Next('A', 'Z' + 1);
+                while (this.IsExist((TypeKey)(object)randomChar))
+                {
+                    randomChar = (char)random.Next('A', 'Z' + 1);
+                }
+
+                this.Add((TypeKey)(object)randomChar);
+            }
+        }
+
         public bool Add(TypeKey key)
         {
             if (!((typeof(TypeKey) != typeof(int)) || (typeof(TypeKey) != typeof(char))))
