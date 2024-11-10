@@ -160,7 +160,7 @@ export class BinarySearchTree<KeyType> {
         });
     }
 
-    public remove(key: KeyType, left: boolean = true): boolean {
+    public remove(key: KeyType, isLeft: boolean = true): boolean {
         if (this.root === null) {
             return false;
         }
@@ -169,18 +169,18 @@ export class BinarySearchTree<KeyType> {
             return false;
         }
 
-        this.removeRecursively(this.root, this.root, key, left);
+        this.removeRecursively(this.root, this.root, key, isLeft);
 
         return true;
     }
 
-    private removeRecursively(parentNode: Node<KeyType> | null, currentNode: Node<KeyType> | null, key: KeyType, left: boolean = true): void {
+    private removeRecursively(parentNode: Node<KeyType> | null, currentNode: Node<KeyType> | null, key: KeyType, isLeft: boolean = true): void {
         if (key < (currentNode as Node<KeyType>).key) {
-            this.removeRecursively(currentNode, (currentNode as Node<KeyType>).left, key, left);
+            this.removeRecursively(currentNode, (currentNode as Node<KeyType>).left, key, isLeft);
 
             return;
         } else if (key > (currentNode as Node<KeyType>).key) {
-            this.removeRecursively(currentNode, (currentNode as Node<KeyType>).right, key, left);
+            this.removeRecursively(currentNode, (currentNode as Node<KeyType>).right, key, isLeft);
 
             return;
         } else {
@@ -192,7 +192,7 @@ export class BinarySearchTree<KeyType> {
             } else if ((currentNode as Node<KeyType>).right === null) {
                 replacementNode = (currentNode as Node<KeyType>).left;
             } else {
-                if (left) {
+                if (isLeft) {
                     let rightMostNode: Node<KeyType> | null = (currentNode as Node<KeyType>).left;
                     let rightMostNodeParent: Node<KeyType> | null = currentNode;
                     while ((rightMostNode as Node<KeyType>).right !== null) {

@@ -121,7 +121,18 @@ namespace BinarySearchTree.Structure
             }
         }
 
-        public bool Remove(TypeKey key)
+        public bool RemoveFromLeft(TypeKey key)
+        {
+            return Remove(key, true);
+        }
+
+
+        public bool RemoveFromRight(TypeKey key)
+        {
+            return Remove(key, false);
+        }
+
+        private bool Remove(TypeKey key, bool isLeft)
         {
             if (!((typeof(TypeKey) != typeof(int)) || (typeof(TypeKey) != typeof(char))))
             {
@@ -138,22 +149,22 @@ namespace BinarySearchTree.Structure
                 return false;
             }
 
-            this.RemoveRecursively(this.Root, this.Root, key);
+            this.RemoveRecursively(this.Root, this.Root, key, isLeft);
 
             return true;
         }
 
-        private void RemoveRecursively(Node<TypeKey> parentNode, Node<TypeKey> currentNode, TypeKey key)
+        private void RemoveRecursively(Node<TypeKey> parentNode, Node<TypeKey> currentNode, TypeKey key, bool isLeft)
         {
             if ((typeof(TypeKey) == typeof(int)) ? ((int)(object)key! < (int)(object)currentNode.Key!) : ((char)(object)key! < (char)(object)currentNode.Key!))
             {
-                RemoveRecursively(parentNode, currentNode.Left!, key);
+                RemoveRecursively(parentNode, currentNode.Left!, key, isLeft);
 
                 return;
             }
             else if ((typeof(TypeKey) == typeof(int)) ? ((int)(object)key! > (int)(object)currentNode.Key!) : ((char)(object)key! > (char)(object)currentNode.Key!))
             {
-                RemoveRecursively(parentNode, currentNode.Right!, key);
+                RemoveRecursively(parentNode, currentNode.Right!, key, isLeft);
 
                 return;
             }
@@ -174,39 +185,45 @@ namespace BinarySearchTree.Structure
                 }
                 else
                 {
-                    // Node<TypeKey> leftMostNode = currentNode.Right!;
-                    // Node<TypeKey> leftMostNodeParent = currentNode;
-                    // while (leftMostNode.Left != null)
-                    // {
-                    //     leftMostNodeParent = leftMostNode;
-                    //     leftMostNode = leftMostNode.Left;
-                    // }
 
-                    // if (leftMostNodeParent != currentNode)
-                    // {
-                    //     leftMostNodeParent.Left = leftMostNode.Right;
-                    //     leftMostNode.Right = currentNode.Right;
-                    // }
-
-                    // leftMostNode.Left = currentNode.Left;
-                    // replacementNode = leftMostNode;
-
-                    Node<TypeKey> rightMostNode = currentNode.Left!;
-                    Node<TypeKey> rightMostNodeParent = currentNode;
-                    while (rightMostNode.Right != null)
+                    if (isLeft)
                     {
-                        rightMostNodeParent = rightMostNode;
-                        rightMostNode = rightMostNode.Right;
-                    }
+                        Node<TypeKey> rightMostNode = currentNode.Left!;
+                        Node<TypeKey> rightMostNodeParent = currentNode;
+                        while (rightMostNode.Right != null)
+                        {
+                            rightMostNodeParent = rightMostNode;
+                            rightMostNode = rightMostNode.Right;
+                        }
 
-                    if (rightMostNodeParent != currentNode)
+                        if (rightMostNodeParent != currentNode)
+                        {
+                            rightMostNodeParent.Right = rightMostNode.Left;
+                            rightMostNode.Left = currentNode.Left;
+                        }
+
+                        rightMostNode.Right = currentNode.Right;
+                        replacementNode = rightMostNode;
+                    }
+                    else
                     {
-                        rightMostNodeParent.Right = rightMostNode.Left;
-                        rightMostNode.Left = currentNode.Left;
-                    }
+                        Node<TypeKey> leftMostNode = currentNode.Right!;
+                        Node<TypeKey> leftMostNodeParent = currentNode;
+                        while (leftMostNode.Left != null)
+                        {
+                            leftMostNodeParent = leftMostNode;
+                            leftMostNode = leftMostNode.Left;
+                        }
 
-                    rightMostNode.Right = currentNode.Right;
-                    replacementNode = rightMostNode;
+                        if (leftMostNodeParent != currentNode)
+                        {
+                            leftMostNodeParent.Left = leftMostNode.Right;
+                            leftMostNode.Right = currentNode.Right;
+                        }
+
+                        leftMostNode.Left = currentNode.Left;
+                        replacementNode = leftMostNode;
+                    }
                 }
 
                 if (this.Root == currentNode)
