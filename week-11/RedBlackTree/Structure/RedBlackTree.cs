@@ -103,6 +103,168 @@ namespace RedBlackTree.Structure
             }
         }
 
+        public bool Add(TypeKey key)
+        {
+            if (!((typeof(TypeKey) != typeof(int)) || (typeof(TypeKey) != typeof(char))))
+            {
+                throw new ArgumentException("Type must be int or char");
+            }
+
+            if (this.IsExist(key))
+            {
+                return false;
+            }
+
+            if (this.Root == null)
+            {
+                this.Root = new Node<TypeKey>(key, false, null);
+
+                return true;
+            }
+
+            Node<TypeKey> node = this.Add(this.Root, key);
+            KeyDirection childDirection = this.CompareKey(node.Key!, node.Parent!.Key!);
+            node = node.Parent;
+
+            int addCase;
+            do
+            {
+                addCase = GetAddCase(node);
+
+                switch (addCase)
+                {
+                    case 1:
+                        break;
+
+                    case 2:
+                        Node<TypeKey> oldParent = node.Parent!;
+                        node = AddCase2(node)!;
+
+                        if (node != null)
+                        {
+                            childDirection = this.CompareKey(oldParent.Key!, oldParent.Parent!.Key!);
+                        }
+
+                        break;
+
+                    case 4:
+                        node.Red = false;
+                        break;
+
+                    case 56:
+                        AddCase56(node, this.CompareKey(node.Key!, node.Parent!.Key!), childDirection);
+                        break;
+                }
+            } while (addCase == 2 && node != null);
+
+            return true;
+        }
+
+        private Node<TypeKey> Add(Node<TypeKey> node, TypeKey key)
+        {
+            Node<TypeKey> newNode;
+            while (true)
+            {
+                if (this.CompareKey(key, node.Key!) == KeyDirection.Left)
+                {
+                    if (node.Left == null)
+                    {
+                        newNode = new Node<TypeKey>(key, true, node);
+                        node.Left = newNode;
+                        break;
+                    }
+                    else
+                    {
+                        node = node.Left;
+                    }
+                }
+                else
+                {
+                    if (node.Right == null)
+                    {
+                        newNode = new Node<TypeKey>(key, true, node);
+                        node.Right = newNode;
+                        break;
+                    }
+                    else
+                    {
+                        node = node.Right;
+                    }
+                }
+            }
+
+            return newNode;
+        }
+
+        private int GetAddCase(Node<TypeKey> node)
+        {
+            if (node.Red == false)
+            {
+                return 1;
+            }
+            else if (node.Parent == null)
+            {
+                return 4;
+            }
+            else
+            {
+                Node<TypeKey> grandParent = node.Parent;
+                KeyDirection parentDirection = this.CompareKey(node.Key!, node.Parent.Key!);
+                Node<TypeKey> uncle = parentDirection == KeyDirection.Left ? grandParent.Right! : grandParent.Left!;
+
+                if (uncle == null || uncle.Red == false)
+                {
+                    return 56;
+                }
+
+                return 2;
+            }
+        }
+
+        private Node<TypeKey>? AddCase2(Node<TypeKey> node)
+        {
+            Node<TypeKey> grandParent = node.Parent!;
+            KeyDirection parentDirection = this.CompareKey(node.Key!, node.Parent!.Key!);
+            Node<TypeKey> uncle = parentDirection == KeyDirection.Left ? grandParent.Right! : grandParent.Left!;
+
+            node.Red = false;
+            uncle.Red = false;
+            grandParent.Red = true;
+
+            if (node.Parent.Parent == null)
+            {
+                node.Parent.Red = false;
+            }
+
+            return node.Parent.Parent;
+        }
+
+        private void AddCase56(Node<TypeKey> node, KeyDirection parentDirection, KeyDirection childDirection)
+        {
+            if (parentDirection == KeyDirection.Left)
+            {
+                if (childDirection == KeyDirection.Right)
+                {
+                    node = RotateLeft(node);
+                }
+
+                node = RotateRight(node.Parent!);
+                node.Red = false;
+                node.Right!.Red = true;
+            }
+            else
+            {
+                if (childDirection == KeyDirection.Left)
+                {
+                    node = RotateRight(node);
+                }
+
+                node = RotateLeft(node.Parent!);
+                node.Red = false;
+                node.Left!.Red = true;
+            }
+        }
+
         private Node<TypeKey> RotateLeft(Node<TypeKey> node)
         {
             Node<TypeKey>? temp1 = node;
