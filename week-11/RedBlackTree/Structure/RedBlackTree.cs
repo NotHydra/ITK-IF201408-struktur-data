@@ -1,14 +1,34 @@
 namespace RedBlackTree.Structure
 {
-    public class Node<TypeKey>(TypeKey key)
+    public enum KeyDirection
+    {
+        Left,
+        Right,
+    }
+
+    public class Node<TypeKey>(TypeKey key, bool red, Node<TypeKey>? parent)
     {
         private readonly TypeKey? _key = key;
+        private bool _red = red;
+        private Node<TypeKey>? _parent = parent;
         private Node<TypeKey>? _right = null;
         private Node<TypeKey>? _left = null;
 
         public TypeKey? Key
         {
             get { return this._key; }
+        }
+
+        public bool Red
+        {
+            get { return this._red; }
+            set { this._red = value; }
+        }
+
+        public Node<TypeKey>? Parent
+        {
+            get { return this._parent; }
+            set { this._parent = value; }
         }
 
         public Node<TypeKey>? Right
@@ -44,6 +64,18 @@ namespace RedBlackTree.Structure
             Console.WriteLine(this);
         }
 
+        public KeyDirection CompareKey(TypeKey key1, TypeKey key2)
+        {
+            if (typeof(TypeKey) == typeof(int))
+            {
+                return (int)(object)key1! < (int)(object)key2! ? KeyDirection.Left : KeyDirection.Right;
+            }
+            else
+            {
+                return (char)(object)key1! < (char)(object)key2! ? KeyDirection.Left : KeyDirection.Right;
+            }
+        }
+
         public bool IsExist(TypeKey key)
         {
             return IsExistRecursively(this.Root, key);
@@ -61,7 +93,7 @@ namespace RedBlackTree.Structure
                 return true;
             }
 
-            if ((typeof(TypeKey) == typeof(int)) ? ((int)(object)key! < (int)(object)currentNode.Key!) : ((char)(object)key! < (char)(object)currentNode.Key!))
+            if (this.CompareKey(key, currentNode.Key!) == KeyDirection.Left)
             {
                 return IsExistRecursively(currentNode.Left, key);
             }
@@ -69,6 +101,78 @@ namespace RedBlackTree.Structure
             {
                 return IsExistRecursively(currentNode.Right, key);
             }
+        }
+
+        private Node<TypeKey> RotateLeft(Node<TypeKey> node)
+        {
+            Node<TypeKey>? temp1 = node;
+            Node<TypeKey>? temp2 = node!.Right!.Left;
+
+            node = node.Right;
+            node.Parent = temp1.Parent;
+            if (node.Parent != null)
+            {
+                if (this.CompareKey(node.Key!, node.Parent.Key!) == KeyDirection.Left)
+                {
+                    node.Parent.Left = node;
+                }
+                else
+                {
+                    node.Parent.Right = node;
+                }
+            }
+
+            node.Left = temp1;
+            node.Left.Parent = node;
+
+            node.Left.Right = temp2;
+            if (temp2 != null)
+            {
+                node.Left.Right!.Parent = temp1;
+            }
+
+            if (node.Parent == null)
+            {
+                this.Root = node;
+            }
+
+            return node;
+        }
+
+        private Node<TypeKey> RotateRight(Node<TypeKey> node)
+        {
+            Node<TypeKey>? temp1 = node;
+            Node<TypeKey>? temp2 = node!.Left!.Right;
+
+            node = node.Left;
+            node.Parent = temp1.Parent;
+            if (node.Parent != null)
+            {
+                if (this.CompareKey(node.Key!, node.Parent.Key!) == KeyDirection.Left)
+                {
+                    node.Parent.Left = node;
+                }
+                else
+                {
+                    node.Parent.Right = node;
+                }
+            }
+
+            node.Right = temp1;
+            node.Right.Parent = node;
+
+            node.Right.Left = temp2;
+            if (temp2 != null)
+            {
+                node.Right.Left!.Parent = temp1;
+            }
+
+            if (node.Parent == null)
+            {
+                this.Root = node;
+            }
+
+            return node;
         }
 
         public string PreOrder()
@@ -141,21 +245,6 @@ namespace RedBlackTree.Structure
 
             return string.Join("", textList);
         }
-
-        // private void ToStringRecursively(List<string> textList, Node<TypeKey>? node, char type, int level = 1)
-        // {
-        //     textList.Add($"{string.Concat(Enumerable.Repeat(' ', level))}{type}({level}): {node!.Key}");
-
-        //     if (node.Left != null)
-        //     {
-        //         ToStringRecursively(textList, node.Left, 'L', level + 1);
-        //     }
-
-        //     if (node.Right != null)
-        //     {
-        //         ToStringRecursively(textList, node.Right, 'R', level + 1);
-        //     }
-        // }
 
         private void ToStringRecursivelyWithNull(List<string> textList, Node<TypeKey>? node, char type, int level = 1)
         {
