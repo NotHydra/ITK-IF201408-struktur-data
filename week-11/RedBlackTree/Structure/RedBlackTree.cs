@@ -64,7 +64,7 @@ namespace RedBlackTree.Structure
             Console.WriteLine(this);
         }
 
-        public KeyDirection CompareKey(TypeKey key1, TypeKey key2)
+        private KeyDirection CompareKeyDirection(TypeKey key1, TypeKey key2)
         {
             if (typeof(TypeKey) == typeof(int))
             {
@@ -93,7 +93,7 @@ namespace RedBlackTree.Structure
                 return true;
             }
 
-            if (this.CompareKey(key, currentNode.Key!) == KeyDirection.Left)
+            if (this.CompareKeyDirection(key, currentNode.Key!) == KeyDirection.Left)
             {
                 return IsExistRecursively(currentNode.Left, key);
             }
@@ -101,6 +101,78 @@ namespace RedBlackTree.Structure
             {
                 return IsExistRecursively(currentNode.Right, key);
             }
+        }
+
+        private Node<TypeKey> RotateLeft(Node<TypeKey> node)
+        {
+            Node<TypeKey>? temp1 = node;
+            Node<TypeKey>? temp2 = node!.Right!.Left;
+
+            node = node.Right;
+            node.Parent = temp1.Parent;
+            if (node.Parent != null)
+            {
+                if (this.CompareKeyDirection(node.Key!, node.Parent.Key!) == KeyDirection.Left)
+                {
+                    node.Parent.Left = node;
+                }
+                else
+                {
+                    node.Parent.Right = node;
+                }
+            }
+
+            node.Left = temp1;
+            node.Left.Parent = node;
+
+            node.Left.Right = temp2;
+            if (temp2 != null)
+            {
+                node.Left.Right!.Parent = temp1;
+            }
+
+            if (node.Parent == null)
+            {
+                this.Root = node;
+            }
+
+            return node;
+        }
+
+        private Node<TypeKey> RotateRight(Node<TypeKey> node)
+        {
+            Node<TypeKey>? temp1 = node;
+            Node<TypeKey>? temp2 = node!.Left!.Right;
+
+            node = node.Left;
+            node.Parent = temp1.Parent;
+            if (node.Parent != null)
+            {
+                if (this.CompareKeyDirection(node.Key!, node.Parent.Key!) == KeyDirection.Left)
+                {
+                    node.Parent.Left = node;
+                }
+                else
+                {
+                    node.Parent.Right = node;
+                }
+            }
+
+            node.Right = temp1;
+            node.Right.Parent = node;
+
+            node.Right.Left = temp2;
+            if (temp2 != null)
+            {
+                node.Right.Left!.Parent = temp1;
+            }
+
+            if (node.Parent == null)
+            {
+                this.Root = node;
+            }
+
+            return node;
         }
 
         public bool Add(TypeKey key)
@@ -123,7 +195,7 @@ namespace RedBlackTree.Structure
             }
 
             Node<TypeKey> node = this.Add(this.Root, key);
-            KeyDirection childDirection = this.CompareKey(node.Key!, node.Parent!.Key!);
+            KeyDirection childDirection = this.CompareKeyDirection(node.Key!, node.Parent!.Key!);
             node = node.Parent;
 
             int addCase;
@@ -142,7 +214,7 @@ namespace RedBlackTree.Structure
 
                         if (node != null)
                         {
-                            childDirection = this.CompareKey(oldParent.Key!, oldParent.Parent!.Key!);
+                            childDirection = this.CompareKeyDirection(oldParent.Key!, oldParent.Parent!.Key!);
                         }
 
                         break;
@@ -152,7 +224,7 @@ namespace RedBlackTree.Structure
                         break;
 
                     case 56:
-                        AddCase56(node, this.CompareKey(node.Key!, node.Parent!.Key!), childDirection);
+                        AddCase56(node, this.CompareKeyDirection(node.Key!, node.Parent!.Key!), childDirection);
                         break;
                 }
             } while (addCase == 2 && node != null);
@@ -165,7 +237,7 @@ namespace RedBlackTree.Structure
             Node<TypeKey> newNode;
             while (true)
             {
-                if (this.CompareKey(key, node.Key!) == KeyDirection.Left)
+                if (this.CompareKeyDirection(key, node.Key!) == KeyDirection.Left)
                 {
                     if (node.Left == null)
                     {
@@ -209,7 +281,7 @@ namespace RedBlackTree.Structure
             else
             {
                 Node<TypeKey> grandParent = node.Parent;
-                KeyDirection parentDirection = this.CompareKey(node.Key!, node.Parent.Key!);
+                KeyDirection parentDirection = this.CompareKeyDirection(node.Key!, node.Parent.Key!);
                 Node<TypeKey> uncle = parentDirection == KeyDirection.Left ? grandParent.Right! : grandParent.Left!;
 
                 if (uncle == null || uncle.Red == false)
@@ -224,7 +296,7 @@ namespace RedBlackTree.Structure
         private Node<TypeKey>? AddCase2(Node<TypeKey> node)
         {
             Node<TypeKey> grandParent = node.Parent!;
-            KeyDirection parentDirection = this.CompareKey(node.Key!, node.Parent!.Key!);
+            KeyDirection parentDirection = this.CompareKeyDirection(node.Key!, node.Parent!.Key!);
             Node<TypeKey> uncle = parentDirection == KeyDirection.Left ? grandParent.Right! : grandParent.Left!;
 
             node.Red = false;
@@ -263,78 +335,6 @@ namespace RedBlackTree.Structure
                 node.Red = false;
                 node.Left!.Red = true;
             }
-        }
-
-        private Node<TypeKey> RotateLeft(Node<TypeKey> node)
-        {
-            Node<TypeKey>? temp1 = node;
-            Node<TypeKey>? temp2 = node!.Right!.Left;
-
-            node = node.Right;
-            node.Parent = temp1.Parent;
-            if (node.Parent != null)
-            {
-                if (this.CompareKey(node.Key!, node.Parent.Key!) == KeyDirection.Left)
-                {
-                    node.Parent.Left = node;
-                }
-                else
-                {
-                    node.Parent.Right = node;
-                }
-            }
-
-            node.Left = temp1;
-            node.Left.Parent = node;
-
-            node.Left.Right = temp2;
-            if (temp2 != null)
-            {
-                node.Left.Right!.Parent = temp1;
-            }
-
-            if (node.Parent == null)
-            {
-                this.Root = node;
-            }
-
-            return node;
-        }
-
-        private Node<TypeKey> RotateRight(Node<TypeKey> node)
-        {
-            Node<TypeKey>? temp1 = node;
-            Node<TypeKey>? temp2 = node!.Left!.Right;
-
-            node = node.Left;
-            node.Parent = temp1.Parent;
-            if (node.Parent != null)
-            {
-                if (this.CompareKey(node.Key!, node.Parent.Key!) == KeyDirection.Left)
-                {
-                    node.Parent.Left = node;
-                }
-                else
-                {
-                    node.Parent.Right = node;
-                }
-            }
-
-            node.Right = temp1;
-            node.Right.Parent = node;
-
-            node.Right.Left = temp2;
-            if (temp2 != null)
-            {
-                node.Right.Left!.Parent = temp1;
-            }
-
-            if (node.Parent == null)
-            {
-                this.Root = node;
-            }
-
-            return node;
         }
 
         public string PreOrder()

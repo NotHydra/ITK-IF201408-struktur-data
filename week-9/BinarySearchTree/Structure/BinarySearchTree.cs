@@ -126,7 +126,6 @@ namespace BinarySearchTree.Structure
             return Remove(key, true);
         }
 
-
         public bool RemoveFromRight(TypeKey key)
         {
             return Remove(key, false);
