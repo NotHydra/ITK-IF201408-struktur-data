@@ -144,7 +144,7 @@ export class BinarySearchTree<KeyType> {
         }
     }
 
-    public addRandomLetters(type: string): void {
+    public setRandomLetters(type: string): void {
         const alphabet: string[] = (
             type === "az" ? "abcdefghijklmnopqrstuvwxyz" : type === "AZ" ? "ABCDEFGHIJKLMNOPQRSTUVWXYZ" : "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         ).split("");
@@ -155,9 +155,9 @@ export class BinarySearchTree<KeyType> {
         }
 
         this.clear();
-        alphabet.forEach((letter: string) => {
-            this.add(letter as KeyType);
-        });
+        for (let i: number = 1; i <= 10; i++) {
+            this.add(alphabet[i] as KeyType);
+        }
     }
 
     public remove(key: KeyType, isLeft: boolean = true): boolean {

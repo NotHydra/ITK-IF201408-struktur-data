@@ -183,6 +183,56 @@ export default function App() {
                         <button
                             className="button"
                             onClick={(): void => {
+                                const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
+
+                                Object.assign(newBST, bst);
+                                newBST.setRandomLetters("az");
+                                setResponseValue("Finished");
+                                setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
+
+                                setBST(newBST);
+                            }}
+                        >
+                            Set Random a-z
+                        </button>
+
+                        <button
+                            className="button"
+                            onClick={(): void => {
+                                const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
+
+                                Object.assign(newBST, bst);
+                                newBST.setRandomLetters("AZ");
+                                setResponseValue("Finished");
+                                setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
+
+                                setBST(newBST);
+                            }}
+                        >
+                            Set Random A-Z
+                        </button>
+
+                        <button
+                            className="button"
+                            onClick={(): void => {
+                                const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
+
+                                Object.assign(newBST, bst);
+                                newBST.setRandomLetters("aZ");
+                                setResponseValue("Finished");
+                                setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
+
+                                setBST(newBST);
+                            }}
+                        >
+                            Set Random a-Z
+                        </button>
+                    </div>
+
+                    <div className="action">
+                        <button
+                            className="button"
+                            onClick={(): void => {
                                 if (removeFromLeftValue !== "") {
                                     const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
 
@@ -281,53 +331,13 @@ export default function App() {
                         <button
                             className="button"
                             onClick={(): void => {
-                                const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
-
-                                Object.assign(newBST, bst);
-                                newBST.addRandomLetters("az");
-                                setResponseValue("Finished");
+                                setResponseValue(bst.getTotal().toString());
                                 setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
-
-                                setBST(newBST);
                             }}
                         >
-                            Add Random a-z
+                            Total
                         </button>
 
-                        <button
-                            className="button"
-                            onClick={(): void => {
-                                const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
-
-                                Object.assign(newBST, bst);
-                                newBST.addRandomLetters("AZ");
-                                setResponseValue("Finished");
-                                setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
-
-                                setBST(newBST);
-                            }}
-                        >
-                            Add Random A-Z
-                        </button>
-
-                        <button
-                            className="button"
-                            onClick={(): void => {
-                                const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
-
-                                Object.assign(newBST, bst);
-                                newBST.addRandomLetters("aZ");
-                                setResponseValue("Finished");
-                                setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
-
-                                setBST(newBST);
-                            }}
-                        >
-                            Add Random a-Z
-                        </button>
-                    </div>
-
-                    <div className="action">
                         <button
                             className="button"
                             onClick={(): void => {
@@ -344,7 +354,7 @@ export default function App() {
                             Clear
                         </button>
 
-                        <button
+                        {/* <button
                             className="button"
                             onClick={(): void => {
                                 setIsShowNullValue(!isShowNullValue);
@@ -353,17 +363,7 @@ export default function App() {
                             }}
                         >
                             {isShowNullValue ? "Hide" : "Show"} Null
-                        </button>
-
-                        <button
-                            className="button"
-                            onClick={(): void => {
-                                setResponseValue(bst.getTotal().toString());
-                                setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
-                            }}
-                        >
-                            Total
-                        </button>
+                        </button> */}
                     </div>
                 </div>
 
