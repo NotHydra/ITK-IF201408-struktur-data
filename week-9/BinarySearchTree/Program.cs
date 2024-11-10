@@ -94,26 +94,30 @@
 
         private static void FillContainer()
         {
-            Structure.BinarySearchTree<char> tree1 = new();
-            tree1.Add('C');
-            tree1.Add('H');
-            tree1.Add('A');
-            tree1.Add('N');
-            tree1.Add('D');
-            tree1.Add('R');
-            tree1.Add('A');
-            containers.Add(tree1);
+            // Structure.BinarySearchTree<char> tree1 = new();
+            // tree1.Add('C');
+            // tree1.Add('H');
+            // tree1.Add('A');
+            // tree1.Add('N');
+            // tree1.Add('D');
+            // tree1.Add('R');
+            // tree1.Add('A');
+            // containers.Add(tree1);
 
-            Structure.BinarySearchTree<char> tree2 = new();
-            tree2.Add('C');
-            tree2.Add('H');
-            tree2.Add('N');
-            tree2.Add('D');
-            containers.Add(tree2);
+            // Structure.BinarySearchTree<char> tree2 = new();
+            // tree2.Add('C');
+            // tree2.Add('H');
+            // tree2.Add('N');
+            // tree2.Add('D');
+            // containers.Add(tree2);
 
-            Structure.BinarySearchTree<char> tree3 = new();
-            tree3.Add('C');
-            containers.Add(tree3);
+            // Structure.BinarySearchTree<char> tree3 = new();
+            // tree3.Add('C');
+            // containers.Add(tree3);
+
+            Structure.BinarySearchTree<char> tree4 = new();
+            tree4.AddUniqueRandomChar(10);
+            containers.Add(tree4);
         }
 
         private static string TypeToAlias(Type type)

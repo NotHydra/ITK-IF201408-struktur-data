@@ -71,6 +71,21 @@ namespace BinarySearchTree.Structure
             }
         }
 
+        public void AddUniqueRandomChar(int count)
+        {
+            Random random = new();
+            for (int i = 0; i < count; i++)
+            {
+                char randomChar = (char)random.Next('A', 'Z' + 1);
+                while (this.IsExist((TypeKey)(object)randomChar))
+                {
+                    randomChar = (char)random.Next('A', 'Z' + 1);
+                }
+
+                this.Add((TypeKey)(object)randomChar);
+            }
+        }
+
         public bool Add(TypeKey key)
         {
             if (!((typeof(TypeKey) != typeof(int)) || (typeof(TypeKey) != typeof(char))))
@@ -310,21 +325,6 @@ namespace BinarySearchTree.Structure
 
             return string.Join("", textList);
         }
-
-        // private void ToStringRecursively(List<string> textList, Node<TypeKey>? node, char type, int level = 1)
-        // {
-        //     textList.Add($"{string.Concat(Enumerable.Repeat(' ', level))}{type}({level}): {node!.Key}");
-
-        //     if (node.Left != null)
-        //     {
-        //         ToStringRecursively(textList, node.Left, 'L', level + 1);
-        //     }
-
-        //     if (node.Right != null)
-        //     {
-        //         ToStringRecursively(textList, node.Right, 'R', level + 1);
-        //     }
-        // }
 
         private void ToStringRecursivelyWithNull(List<string> textList, Node<TypeKey>? node, char type, int level = 1)
         {
