@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { Node, BinarySearchTree } from "./structures/binary-search-tree";
+import { Node, RedBlackTree } from "./structures/red-black-tree.ts";
 
 export default function App() {
     const [isShowNullValue, setIsShowNullValue] = useState(false);
     const canvasRef: React.MutableRefObject<SVGSVGElement | null> = useRef<SVGSVGElement | null>(null);
-    const [bst, setBST] = useState(new BinarySearchTree<string>());
+    const [rbt, setRbt] = useState(new RedBlackTree<string>());
 
     const [addValue, setAddValue] = useState("");
     const [removeFromLeftValue, setRemoveFromLeftValue] = useState("");
@@ -62,7 +62,7 @@ export default function App() {
 
         canvasRef.current.innerHTML = "";
 
-        Object.values(bst.getNodesByDepth()).forEach((nodes: (Node<string> | string)[]) => {
+        Object.values(rbt.getNodesByDepth()).forEach((nodes: (Node<string> | string)[]) => {
             nodes.forEach((node: Node<string> | string) => {
                 if (node === "null" || node === "empty") {
                     return;
@@ -99,9 +99,9 @@ export default function App() {
     };
 
     useEffect((): void => {
-        const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
+        const newBST: RedBlackTree<string> = new RedBlackTree<string>();
 
-        setBST(newBST);
+        setRbt(newBST);
     }, []);
 
     useEffect(() => {
@@ -111,7 +111,7 @@ export default function App() {
         return (): void => {
             window.removeEventListener("resize", drawLine);
         };
-    }, [bst, isShowNullValue]);
+    }, [rbt, isShowNullValue]);
 
     return (
         <>
@@ -122,7 +122,7 @@ export default function App() {
                             className="button"
                             onClick={(): void => {
                                 if (isExistValue !== "") {
-                                    setResponseValue(bst.isExist(isExistValue).toString());
+                                    setResponseValue(rbt.isExist(isExistValue).toString());
                                     setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
 
                                     setIsExistValue("");
@@ -151,13 +151,13 @@ export default function App() {
                             className="button"
                             onClick={(): void => {
                                 if (addValue !== "") {
-                                    const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
+                                    const newBST: RedBlackTree<string> = new RedBlackTree<string>();
 
-                                    Object.assign(newBST, bst);
+                                    Object.assign(newBST, rbt);
                                     setResponseValue(newBST.add(addValue).toString());
                                     setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
 
-                                    setBST(newBST);
+                                    setRbt(newBST);
                                     setAddValue("");
                                 }
                             }}
@@ -183,14 +183,14 @@ export default function App() {
                         <button
                             className="button"
                             onClick={(): void => {
-                                const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
+                                const newBST: RedBlackTree<string> = new RedBlackTree<string>();
 
-                                Object.assign(newBST, bst);
+                                Object.assign(newBST, rbt);
                                 newBST.setRandomLetters("az");
                                 setResponseValue("Finished");
                                 setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
 
-                                setBST(newBST);
+                                setRbt(newBST);
                             }}
                         >
                             Set Random a-z
@@ -199,14 +199,14 @@ export default function App() {
                         <button
                             className="button"
                             onClick={(): void => {
-                                const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
+                                const newBST: RedBlackTree<string> = new RedBlackTree<string>();
 
-                                Object.assign(newBST, bst);
+                                Object.assign(newBST, rbt);
                                 newBST.setRandomLetters("AZ");
                                 setResponseValue("Finished");
                                 setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
 
-                                setBST(newBST);
+                                setRbt(newBST);
                             }}
                         >
                             Set Random A-Z
@@ -215,14 +215,14 @@ export default function App() {
                         <button
                             className="button"
                             onClick={(): void => {
-                                const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
+                                const newBST: RedBlackTree<string> = new RedBlackTree<string>();
 
-                                Object.assign(newBST, bst);
+                                Object.assign(newBST, rbt);
                                 newBST.setRandomLetters("aZ");
                                 setResponseValue("Finished");
                                 setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
 
-                                setBST(newBST);
+                                setRbt(newBST);
                             }}
                         >
                             Set Random a-Z
@@ -234,13 +234,13 @@ export default function App() {
                             className="button"
                             onClick={(): void => {
                                 if (removeFromLeftValue !== "") {
-                                    const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
+                                    const newBST: RedBlackTree<string> = new RedBlackTree<string>();
 
-                                    Object.assign(newBST, bst);
+                                    Object.assign(newBST, rbt);
                                     setResponseValue(newBST.remove(removeFromLeftValue).toString());
                                     setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
 
-                                    setBST(newBST);
+                                    setRbt(newBST);
                                     setRemoveFromLeftValue("");
                                 }
                             }}
@@ -267,13 +267,13 @@ export default function App() {
                             className="button"
                             onClick={(): void => {
                                 if (removeFromRightValue !== "") {
-                                    const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
+                                    const newBST: RedBlackTree<string> = new RedBlackTree<string>();
 
-                                    Object.assign(newBST, bst);
+                                    Object.assign(newBST, rbt);
                                     setResponseValue(newBST.remove(removeFromRightValue, false).toString());
                                     setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
 
-                                    setBST(newBST);
+                                    setRbt(newBST);
                                     setRemoveFromRightValue("");
                                 }
                             }}
@@ -299,7 +299,7 @@ export default function App() {
                         <button
                             className="button"
                             onClick={(): void => {
-                                setResponseValue(bst.preOrder());
+                                setResponseValue(rbt.preOrder());
                                 setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
                             }}
                         >
@@ -309,7 +309,7 @@ export default function App() {
                         <button
                             className="button"
                             onClick={(): void => {
-                                setResponseValue(bst.inOrder());
+                                setResponseValue(rbt.inOrder());
                                 setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
                             }}
                         >
@@ -319,7 +319,7 @@ export default function App() {
                         <button
                             className="button"
                             onClick={(): void => {
-                                setResponseValue(bst.postOrder());
+                                setResponseValue(rbt.postOrder());
                                 setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
                             }}
                         >
@@ -331,7 +331,7 @@ export default function App() {
                         <button
                             className="button"
                             onClick={(): void => {
-                                setResponseValue(bst.getTotal().toString());
+                                setResponseValue(rbt.getTotal().toString());
                                 setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
                             }}
                         >
@@ -341,14 +341,14 @@ export default function App() {
                         <button
                             className="button"
                             onClick={(): void => {
-                                const newBST: BinarySearchTree<string> = new BinarySearchTree<string>();
+                                const newBST: RedBlackTree<string> = new RedBlackTree<string>();
 
-                                Object.assign(newBST, bst);
+                                Object.assign(newBST, rbt);
                                 newBST.clear();
                                 setResponseValue("Finished");
                                 setTimestampValue(new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Makassar", hour12: false }));
 
-                                setBST(newBST);
+                                setRbt(newBST);
                             }}
                         >
                             Clear
@@ -381,7 +381,7 @@ export default function App() {
             </div>
 
             <div>
-                {Object.values(bst.getNodesByDepth()).map(
+                {Object.values(rbt.getNodesByDepth()).map(
                     (nodes: (Node<string> | string)[], nodesIndex: number): JSX.Element => (
                         <div key={nodesIndex} className="nodes">
                             {nodes.map((node: Node<string> | string, nodeIndex: number): JSX.Element => {
@@ -399,8 +399,10 @@ export default function App() {
                                     nodeValue = (node as Node<string>).key;
                                 }
 
+                                const isRed = (node as Node<string>).red ?? false;
+
                                 return (
-                                    <span key={nodeIndex} id={`node-${nodeValue}`} className={`${nodeType === "empty" ? "empty" : "node"}`}>
+                                    <span key={nodeIndex} id={`node-${nodeValue}`} className={`${nodeType === "empty" ? "empty" : "node"} ${isRed ? "node__red" : ""}`}>
                                         {nodeValue}
                                     </span>
                                 );
