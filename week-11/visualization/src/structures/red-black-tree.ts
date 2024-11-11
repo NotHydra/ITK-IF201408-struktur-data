@@ -9,6 +9,7 @@ export type SortableKeyType = number | string
 export enum NodeAddCase {
     ONE = 1,
     TWO = 2,
+    THREE = 3,
     FOUR = 4,
     FIVE = 5,
     SIX = 6,
@@ -19,7 +20,7 @@ export interface NodesByDepthInterface<T extends SortableKeyType> {
 }
 
 export class Node<T extends SortableKeyType> {
-    private readonly _key: T;
+    private _key: T;
     private _red: boolean;
     private _parent: Node<T> | null = null;
     private _left: Node<T> | null = null;
@@ -33,6 +34,10 @@ export class Node<T extends SortableKeyType> {
 
     public get key(): T {
         return this._key;
+    }
+
+    public set key(value: T) {
+        this._key = value;
     }
 
     public get red(): boolean {
@@ -324,16 +329,6 @@ export class RedBlackTree<T extends SortableKeyType> {
         return node;
     }
 
-    private compareKeyDirection(key1: T, key2: T): KeyDirection {
-        if (key1 < key2) {
-            return KeyDirection.Left;
-        }
-
-        return key1 === key2
-            ? KeyDirection.Middle
-            : KeyDirection.Right;
-    }
-
     private getAddCase(node: Node<T>): NodeAddCase {
         if (!node.red) {
             return NodeAddCase.ONE;
@@ -354,7 +349,7 @@ export class RedBlackTree<T extends SortableKeyType> {
         }
     }
 
-    public remove(key: T, isLeft: boolean = true): boolean {
+    public remove(key: T): boolean {
         if (this.root === null) {
             return false;
         }
@@ -363,70 +358,247 @@ export class RedBlackTree<T extends SortableKeyType> {
             return false;
         }
 
-        this.removeRecursively(this.root, this.root, key, isLeft);
+        let node = this.removeNode(this.root, key);
+        node = this.removeSimpleCases(node)!;
+
+        if (!node){
+            return true;
+        }
+
+        this.removeLeaf(node.parent!, this.compareKeyDirection(node.key, node.parent!.key));
+
+        do {
+            node = this.removeColor(node)!;
+        }
+        while (node && node.parent)
 
         return true;
     }
 
-    private removeRecursively(parentNode: Node<T> | null, currentNode: Node<T> | null, key: T, isLeft: boolean = true): void {
-        if (key < (currentNode as Node<T>).key) {
-            this.removeRecursively(currentNode, (currentNode as Node<T>).left, key, isLeft);
+    private removeNode(node: Node<T>, key: T): Node<T> {
+        while (true) {
+            const direction = this.compareKeyDirection(key, node.key);
 
-            return;
-        } else if (key > (currentNode as Node<T>).key) {
-            this.removeRecursively(currentNode, (currentNode as Node<T>).right, key, isLeft);
-
-            return;
-        } else {
-            let replacementNode: Node<T> | null;
-            if ((currentNode as Node<T>).left === null && (currentNode as Node<T>).right === null) {
-                replacementNode = null;
-            } else if ((currentNode as Node<T>).left === null) {
-                replacementNode = (currentNode as Node<T>).right;
-            } else if ((currentNode as Node<T>).right === null) {
-                replacementNode = (currentNode as Node<T>).left;
-            } else {
-                if (isLeft) {
-                    let rightMostNode: Node<T> | null = (currentNode as Node<T>).left;
-                    let rightMostNodeParent: Node<T> | null = currentNode;
-                    while ((rightMostNode as Node<T>).right !== null) {
-                        rightMostNodeParent = rightMostNode;
-                        rightMostNode = (rightMostNode as Node<T>).right;
-                    }
-
-                    if (rightMostNodeParent !== currentNode) {
-                        (rightMostNodeParent as Node<T>).right = (rightMostNode as Node<T>).left;
-                        (rightMostNode as Node<T>).left = (currentNode as Node<T>).left;
-                    }
-
-                    (rightMostNode as Node<T>).right = (currentNode as Node<T>).right;
-                    replacementNode = rightMostNode;
-                } else {
-                    let leftMostNode: Node<T> | null = (currentNode as Node<T>).right;
-                    let leftMostNodeParent: Node<T> | null = currentNode;
-                    while ((leftMostNode as Node<T>).left !== null) {
-                        leftMostNodeParent = leftMostNode;
-                        leftMostNode = (leftMostNode as Node<T>).left;
-                    }
-
-                    if (leftMostNodeParent !== currentNode) {
-                        (leftMostNodeParent as Node<T>).left = (leftMostNode as Node<T>).right;
-                        (leftMostNode as Node<T>).right = (currentNode as Node<T>).right;
-                    }
-
-                    (leftMostNode as Node<T>).left = (currentNode as Node<T>).left;
-                    replacementNode = leftMostNode;
-                }
+            if (direction === KeyDirection.Left) {
+                node = node.left!;
             }
-
-            if (parentNode === currentNode) {
-                this.root = replacementNode;
-            } else if ((parentNode as Node<T>).left === currentNode) {
-                (parentNode as Node<T>).left = replacementNode;
-            } else {
-                (parentNode as Node<T>).right = replacementNode;
+            else if (direction === KeyDirection.Right) {
+                node = node.right!;
+            }
+            else {
+                break;
             }
         }
+
+        return node;
+    }
+
+    private removeSimpleCases(node: Node<T>): Node<T> | null {
+        if (!node.parent && !node.left && !node.right) {
+            this.root = null;
+
+            return null;
+        }
+
+        if (node.left && node.right) {
+            const successor = this.getMin(node.right!);
+            node.key = successor.key
+            node = successor;
+        }
+
+        if (node.red) {
+            this.removeLeaf(node.parent!, this.compareKeyDirection(node.key, node.parent!.key));
+
+            return null;
+        }
+
+        return this.removeBlackNode(node);
+    }
+
+    private removeLeaf(node: Node<T>, childDirection: KeyDirection): void {
+        if (childDirection === KeyDirection.Left) {
+            node.left = null;
+        }
+        else {
+            node.right = null;
+        }
+    }
+
+    private removeBlackNode(node: Node<T>): Node<T> | null {
+        const child = node.left ?? node.right;
+
+        if (!child) {
+            return node;
+        }
+
+        child.red = false;
+        child.parent = node.parent;
+
+        const childDirection = !node.parent
+            ? KeyDirection.Middle
+            : this.compareKeyDirection(node.key, node.parent!.key);
+
+        this.transplant(node.parent!, child, childDirection);
+
+        return null;
+    }
+
+    private transplant(node: Node<T>, child: Node<T>, childDirection: KeyDirection): void {
+        if (!node)
+        {
+            this.root = child;
+        }
+        else if (!child)
+        {
+            this.removeLeaf(node, childDirection);
+        }
+        else if (childDirection === KeyDirection.Left)
+        {
+            node.left = child;
+        }
+        else
+        {
+            node.right = child;
+        }
+    }
+
+    private removeColor(node: Node<T>): Node<T> | null {
+        const removeCase = this.getRemoveCase(node);
+
+        const direction = this.compareKeyDirection(node.key, node.parent!.key);
+
+        const sibling = direction === KeyDirection.Left ? node.parent!.right! : node.parent!.left!;
+        const closeNephew = direction === KeyDirection.Left ? sibling.left! : sibling.right!;
+        const farNephew = direction === KeyDirection.Left ? sibling.right! : sibling.left!;
+
+        switch (removeCase) {
+            case NodeAddCase.ONE:
+                sibling.red = true;
+                return node.parent;
+            case NodeAddCase.THREE:
+                this.removeCase3(node, closeNephew, direction);
+                break;
+            case NodeAddCase.FOUR:
+                this.removeCase4(sibling);
+                break;
+            case NodeAddCase.FIVE:
+                this.removeCase5(node, sibling, direction);
+                break;
+            case NodeAddCase.SIX:
+                this.removeCase6(node, farNephew, direction);
+                break;
+        }
+
+        return null;
+    }
+
+    private removeCase3(node: Node<T>, closeNephew: Node<T>, childDirection: KeyDirection): void {
+        let sibling = childDirection == KeyDirection.Left ? this.rotateLeft(node.parent!) : this.rotateRight(node.parent!);
+
+        sibling.red = false;
+
+        if (childDirection == KeyDirection.Left)
+        {
+            sibling.left!.red = true;
+        }
+        else
+        {
+            sibling.right!.red = true;
+        }
+
+        sibling = closeNephew!;
+
+        const farNephew = childDirection === KeyDirection.Left ? sibling.right! : sibling.left!;
+
+        if (farNephew && farNephew.red)
+        {
+            this.removeCase6(node, farNephew, childDirection);
+            return;
+        }
+
+        closeNephew = childDirection === KeyDirection.Left ? sibling.left! : sibling.right!;
+        if (closeNephew && closeNephew.red)
+        {
+            this.removeCase5(node, sibling, childDirection);
+            return;
+        }
+
+        this.removeCase4(sibling);
+    }
+
+    private removeCase4(sibling: Node<T>): void {
+        sibling.red = true;
+        sibling.parent!.red = false;
+    }
+
+    private removeCase5(node: Node<T>, sibling: Node<T>, childDirection: KeyDirection): void {
+        sibling = childDirection == KeyDirection.Left ? this.rotateRight(sibling) : this.rotateLeft(sibling);
+        const farNephew = childDirection === KeyDirection.Left ? sibling.right! : sibling.left!;
+
+        sibling.red = false;
+        farNephew.red = true;
+
+        this.removeCase6(node, farNephew, childDirection);
+    }
+
+    private removeCase6(node: Node<T>, farNephew: Node<T>, childDirection: KeyDirection): void {
+        const oldParent = node.parent!;
+        node = childDirection == KeyDirection.Left ? this.rotateLeft(oldParent) : this.rotateRight(oldParent);
+
+        node.red = oldParent.red;
+        oldParent.red = false;
+        farNephew.red = false;
+    }
+
+    private getRemoveCase(node: Node<T>): NodeAddCase {
+        const direction = this.compareKeyDirection(node.key, node.parent!.key);
+
+        const sibling = direction === KeyDirection.Left ? node.parent!.right! : node.parent!.left!;
+        const closeNephew = direction === KeyDirection.Left ? sibling.left! : sibling.right!;
+        const farNephew = direction === KeyDirection.Left ? sibling.right! : sibling.left!;
+
+        if (sibling.red) {
+            return NodeAddCase.THREE;
+        }
+        else if (farNephew && farNephew.red) {
+            return NodeAddCase.SIX;
+        }
+        else if (closeNephew && closeNephew.red) {
+            return NodeAddCase.FIVE;
+        }
+        else if (node.parent!.red) {
+            return NodeAddCase.FOUR;
+        }
+        else {
+            return NodeAddCase.ONE
+        }
+    }
+
+    // === Utilities ===
+    private getMax(node: Node<T>): Node<T> {
+        while (node.right) {
+            node = node.right
+        }
+
+        return node;
+    }
+
+    private getMin(node: Node<T>): Node<T> {
+        while (node.left) {
+            node = node.left
+        }
+
+        return node;
+    }
+
+    private compareKeyDirection(key1: T, key2: T): KeyDirection {
+        if (key1 < key2) {
+            return KeyDirection.Left;
+        }
+
+        return key1 === key2
+            ? KeyDirection.Middle
+            : KeyDirection.Right;
     }
 
     public clear(): void {
