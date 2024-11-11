@@ -1,0 +1,3 @@
+cd .\week-9\visualization\
+
+npm run dev

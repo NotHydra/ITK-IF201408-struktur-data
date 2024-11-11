@@ -1,4 +1,4 @@
-﻿namespace Tree
+﻿namespace RedBlackTree
 {
     public class CommandLineInterface()
     {
@@ -7,7 +7,7 @@
         private static readonly string[] menus = ["List", "Add", "Use"];
 
         private static readonly Type[] structures = [
-            typeof(Structure.Tree<>),
+            typeof(Structure.RedBlackTree<>),
 
         ];
         private static readonly Type[] types = [
@@ -29,7 +29,7 @@
             {
                 Console.Clear();
                 Border();
-                Title("Advance Sorting Manager");
+                Title("Red Black Tree Manager");
                 Border();
                 SubTitle("Move = Up/Down | Select = Enter/Right | Exit = Esc/Left");
                 Border();
@@ -94,28 +94,29 @@
 
         private static void FillContainer()
         {
-            Structure.Tree<int> tree1 = new();
-            tree1.Add(1);
-            tree1.Add(2);
-            tree1.Add(3);
-            containers.Add(tree1);
+            // Structure.RedBlackTree<char> tree1 = new();
+            // tree1.Add('C');
+            // tree1.Add('H');
+            // tree1.Add('A');
+            // tree1.Add('N');
+            // tree1.Add('D');
+            // tree1.Add('R');
+            // tree1.Add('A');
+            // containers.Add(tree1);
 
-            Structure.Tree<int> tree2 = new();
-            tree2.Add(3);
-            tree2.Add(2);
-            tree2.Add(1);
-            containers.Add(tree2);
+            // Structure.RedBlackTree<char> tree2 = new();
+            // tree2.Add('C');
+            // tree2.Add('H');
+            // tree2.Add('N');
+            // tree2.Add('D');
+            // containers.Add(tree2);
 
-            Structure.Tree<char> tree3 = new();
-            tree3.Add('a');
-            tree3.Add('b');
-            tree3.Add('c');
-            containers.Add(tree3);
+            // Structure.RedBlackTree<char> tree3 = new();
+            // tree3.Add('C');
+            // containers.Add(tree3);
 
-            Structure.Tree<char> tree4 = new();
-            tree4.Add('c');
-            tree4.Add('b');
-            tree4.Add('a');
+            Structure.RedBlackTree<char> tree4 = new();
+            tree4.AddUniqueRandomChar(10);
             containers.Add(tree4);
         }
 
@@ -205,8 +206,9 @@
 
                 for (int containerIndex = 0; containerIndex < containers.Count; containerIndex++)
                 {
-                    Console.Write($"{containerIndex + 1}. {containers[containerIndex]} ");
+                    Console.Write($"{containerIndex + 1}. ");
                     WriteLineColored($"( {StructureWithTypeToAlias(containers[containerIndex].GetType(), containers[containerIndex].GetType().GetGenericArguments()[0])} )", ConsoleColor.Green);
+                    Console.WriteLine(containers[containerIndex]);
                 };
 
                 Border();
@@ -371,8 +373,9 @@
                         Console.Write("  ");
                     };
 
-                    Console.Write($"{containers[containerIndex]} ");
+                    Console.Write($"{containerIndex + 1}. ");
                     WriteLineColored($"( {StructureWithTypeToAlias(containers[containerIndex].GetType(), containers[containerIndex].GetType().GetGenericArguments()[0])} )", ConsoleColor.Green);
+                    Console.WriteLine(containers[containerIndex]);
 
                     if (containerIndex == containerOption)
                     {
@@ -586,7 +589,6 @@
         public static void Main(string[] args)
         {
             CommandLineInterface.Start();
-            // Test.Tree();
         }
     }
 }
